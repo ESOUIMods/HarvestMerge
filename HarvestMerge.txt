@@ -1,8 +1,12 @@
 ## Title: HarvestMerge
 ## Author: Sharlikran
-## APIVersion: 100003
+## Version: 0.1.0
+## APIVersion: 100004
+## SavedVariables: HarvestMerge_SavedVariables
 
 HarvestMerge.lua
 
 Localization/HarvestMergeNodesLoc.lua
 Localization/HarvestMergeMapNames.lua
+
+HarvestMergeData.lua
