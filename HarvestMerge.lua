@@ -261,7 +261,7 @@ function HarvestMerge.importFromEsoheadMerge()
                         if HarvestMerge.CheckProfessionTypeOnImport(node[5], node[4]) then -- << If Valid Profession Type
                             professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
                             if professionFound >= 1 then
-                                HarvestMerge.saveData( newMapName, node[1], node[2], professionFound, node[4], node[5] )
+                                HarvestMerge.saveData("harvest", newMapName, node[1], node[2], professionFound, node[4], node[5] )
                             end
                         else -- << If Valid Profession Type
                             HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
@@ -283,7 +283,7 @@ function HarvestMerge.importFromEsoheadMerge()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                HarvestMerge.saveData( newMapName, node[1], node[2], 6, "chest", nil )
+                HarvestMerge.saveData("chest", newMapName, node[1], node[2], 6, "chest", nil )
             end
         end
     end
@@ -295,7 +295,7 @@ function HarvestMerge.importFromEsoheadMerge()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                HarvestMerge.saveData( newMapName, node[1], node[2], 8, "fish", nil )
+                HarvestMerge.saveData("fish", newMapName, node[1], node[2], 8, "fish", nil )
             end
         end
     end
@@ -338,7 +338,7 @@ function HarvestMerge.importFromHarvester()
 
     local professionFound
     d("Import Harvest Nodes:")
-    for map, data in pairs( Harvester.savedVars["harvest"].data) do
+    for map, data in pairs(Harvester.savedVars["harvest"].data) do
         d("import data from "..map)
         newMapName = HarvestMerge.GetNewMapName(map)
         if newMapName then
@@ -349,7 +349,7 @@ function HarvestMerge.importFromHarvester()
                         if HarvestMerge.CheckProfessionTypeOnImport(node[5], node[4]) then -- << If Valid Profession Type
                             professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
                             if professionFound >= 1 then
-                                HarvestMerge.saveData( newMapName, node[1], node[2], professionFound, node[4], node[5] )
+                                HarvestMerge.saveData("harvest", newMapName, node[1], node[2], professionFound, node[4], node[5] )
                             end
                         else -- << If Valid Profession Type
                             HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
@@ -365,25 +365,25 @@ function HarvestMerge.importFromHarvester()
     end
 
     d("Import Chests:")
-    for map, nodes in pairs( Harvester.savedVars["chest"].data) do
+    for map, nodes in pairs(Harvester.savedVars["chest"].data) do
         d("import data from "..map)
         newMapName = HarvestMerge.GetNewMapName(map)
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                HarvestMerge.saveData( newMapName, node[1], node[2], 6, "chest", nil )
+                HarvestMerge.saveData("chest", newMapName, node[1], node[2], 6, "chest", nil )
             end
         end
     end
 
     d("Import Fishing Holes:")
-    for map, nodes in pairs( Harvester.savedVars["fish"].data) do
+    for map, nodes in pairs(Harvester.savedVars["fish"].data) do
         d("import data from "..map)
         newMapName = HarvestMerge.GetNewMapName(map)
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                HarvestMerge.saveData( newMapName, node[1], node[2], 8, "fish", nil )
+                HarvestMerge.saveData("fish", newMapName, node[1], node[2], 8, "fish", nil )
             end
         end
     end
@@ -437,7 +437,7 @@ function HarvestMerge.importFromHarvestMap()
                         if HarvestMerge.CheckProfessionTypeOnImport(node[5], node[4]) then -- << If Valid Profession Type
                             professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
                             if professionFound >= 1 then
-                                HarvestMerge.saveData( newMapName, node[1], node[2], professionFound, node[4], node[5] )
+                                HarvestMerge.saveData("harvest", newMapName, node[1], node[2], professionFound, node[4], node[5] )
                             end
                         else -- << If Valid Profession Type
                             HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
@@ -459,7 +459,7 @@ function HarvestMerge.importFromHarvestMap()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                HarvestMerge.saveData( newMapName, node[1], node[2], 6, "chest", nil )
+                HarvestMerge.saveData("chest", newMapName, node[1], node[2], 6, "chest", nil )
             end
         end
     end
@@ -471,7 +471,7 @@ function HarvestMerge.importFromHarvestMap()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                HarvestMerge.saveData( newMapName, node[1], node[2], 8, "fish", nil )
+                HarvestMerge.saveData("fish", newMapName, node[1], node[2], 8, "fish", nil )
             end
         end
     end
