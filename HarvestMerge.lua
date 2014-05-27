@@ -138,7 +138,7 @@ function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, s
     end
 
     if HarvestMerge.savedVars[type] == nil or HarvestMerge.savedVars[type].data == nil then
-        HarvestMerge.Debug("Attempted to log unknown type: " .. type)
+        d("Attempted to log unknown type: " .. type)
         return
     end
 
@@ -679,10 +679,11 @@ function HarvestMerge.importFromHarvestMap()
     end
 
     d("import data from HarvestMap")
-    for newMapName, data in pairs(Harvest.nodes.data) do
+    for newMapName, data in pairs(Harvest.savedVars["nodes"].data) do
         for profession, nodes in pairs(data) do
             for _, node in pairs(nodes) do
                 for _, nodeName in ipairs(node[3]) do
+                    --d(newMapName .. " : " .. node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. nodeName)
                     HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
 
                     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
@@ -698,6 +699,7 @@ function HarvestMerge.importFromHarvestMap()
                         if node[4] == nil then
                             -- Get the profession, 7 if solvent and -1 if not found
                             ProfessionOnUpdate = HarvestMerge.GetProfessionTypeOnUpdate(nodeName)
+                            -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
                             if not HarvestMerge.IsValidContainerOnImport(nodeName) then
                                 if ProfessionOnUpdate >= 1 then -- << greater the -1, so a profession was found
                                     HarvestMerge.NumbersNodesAdded = HarvestMerge.NumbersNodesAdded + 1
@@ -708,11 +710,12 @@ function HarvestMerge.importFromHarvestMap()
                                 end
                             else -- It is a Container
                                 HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
-                                HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], ProfessionOnUpdate, nodeName, nil, nil )
+                                HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], profession, nodeName, nil, nil )
                             end
                         else -- node[4] which is the ItemID should not be nil at this point
                             -- << Not a Container and a valid item i.e not a Bottle
                             ProfessionOnUpdate = HarvestMerge.GetProfessionTypeOnUpdate(nodeName)
+                            -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
                             if not HarvestMerge.IsValidContainerOnImport(nodeName) then
                                 if HarvestMerge.CheckProfessionTypeOnImport(node[4], nodeName) then
                                     HarvestMerge.NumbersNodesAdded = HarvestMerge.NumbersNodesAdded + 1
@@ -723,7 +726,7 @@ function HarvestMerge.importFromHarvestMap()
                                 end
                             else -- It is a Container
                                 HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
-                                HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], ProfessionOnUpdate, nodeName, node[4], nil )
+                                HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], profession, nodeName, node[4], nil )
                             end
                         end
                     end
