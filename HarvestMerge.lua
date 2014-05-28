@@ -86,19 +86,15 @@ function HarvestMerge.LogCheck(type, nodes, x, y, scale, name)
         dy = item[2] - y
         -- (x - center_x)2 + (y - center_y)2 = r2, where center is the player
         dist = math.pow(dx, 2) + math.pow(dy, 2)
-        if dx <= 0 and dy <= 0 then -- Dupe Node
+        -- d(string.format("distance argument : %10.7f", distance) )
+        -- d(string.format("radius : %10.7f", dist) )
+        -- d(" 1) : " .. item[1] .. " 2) : " .. item[2] .. " 3) : " .. item[3] .. " 4) : " .. tostring(item[4]))
+        if dist < distance then
             if name == nil then -- name is nil because it's not harvesting
                 log = item
             else -- harvesting only
                 if item[4] == name then
-                    log = item
-                end
-            end
-        elseif dist < distance then
-            if name == nil then -- name is nil because it's not harvesting
-                log = item
-            else -- harvesting only
-                if item[4] == name then
+                    -- d("Name was the same!")
                     log = item
                 end
             end
@@ -111,8 +107,6 @@ end
 -----------------------------------------
 --         HarvestMap Routines         --
 -----------------------------------------
--- "harvest", "chest", "fish", "mapinvalid"
--- "esoharvest", "esochest", "esofish", "esoinvalid"
 
 function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
