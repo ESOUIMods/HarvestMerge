@@ -11,9 +11,6 @@ Resets a specific type of data
 ```/merger debug on|off```
 Toggles verbose addon debugging.
 
-```/merger datalog```
-Displays the total number of each data type the addon has gathered.
-
 ```/merger import ADDON```
 Imports data from the specified mod.  Addons supported are "esohead", "esomerge", "harvester", "harvestmap".
 
