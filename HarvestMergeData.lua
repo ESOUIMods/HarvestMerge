@@ -105,13 +105,6 @@ HarvestMerge.professions = {
     },
     -- : Alchemy
     [4] = {
-        883,
-        1187,
-        4570,
-        23265,
-        23266,
-        23267,
-        23268,
         30148,
         30149,
         30151,
@@ -153,6 +146,13 @@ HarvestMerge.professions = {
     [6] = {
     },
     [7] = {
+        883,
+        1187,
+        4570,
+        23265,
+        23266,
+        23267,
+        23268,
     },
     [8] = {
     },
@@ -296,17 +296,17 @@ HarvestMerge.alchemy = {
         "Akelei",
         "Kornblume",
         "Drachendorn",
-        "Speitäubling",
+        "Brechtäubling",
         "Koboldschemel",
         "Wiesenschaumkraut",
         "Leuchttäubling",
         "Bergblume",
-        "Namira's Fäulnis",
+        "Namiras Fäulnis",
         "Nirnwurz",
         "Stinkmorchel",
-        "Violetter Coprinus",
+        "Violetter Tintling",
         "Wasserhyazinthe",
-        "Weiße Kappe",
+        "Weißkappe",
         "Wermut",
     },
     ["fr"] = {
@@ -345,7 +345,7 @@ HarvestMerge.woodworking = {
     },
     ["de"] = {
         "Eschenholz",
-        "Buchenholz",
+        "Buche", -- "Buchenholz"
         "Birkenholz",
         "Hickoryholz",
         "Mahagoniholz",

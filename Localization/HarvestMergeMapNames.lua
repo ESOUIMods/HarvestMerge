@@ -19,10 +19,10 @@ HarvestMerge.mapSystem = {
     ["grahtwood/eldenhollow_base"] = {"Elden Hollow"},
     ["reapersmarch/greenhillcatacombs_base"] = {"Greenhill Catacombs"},
     ["alikr/alikr_base"] = {"Alik'r Desert", "Alik'r-Wüste^N,in", "désert d'Alik'r^md"},
-    ["stormhaven/bonesnapruins_base"] = {"Bonesnap Ruins"},
+    ["stormhaven/bonesnapruins_base"] = {"Bonesnap Ruins", "ruines de l'Esquille^pfd", "Knochenknackerruinen^pd,in",},
     ["stormhaven/menevia_base"] = {"Menevia"},
     ["stormhaven/wayrest_base"] = {"Wayrest"},
-    ["stormhaven/alcairecastle_base"] = {"Alcaire Castle"},
+    ["stormhaven/alcairecastle_base"] = {"Alcaire Castle", "Kastell Alcaire^nd,in", "château d'Alcaire^md",},
     ["stormhaven/emericsdream_base"] = {"Emeric's Dream"},
     ["stormhaven/godrunsdream_base"] = {"Godrun's Dream"},
     ["rivenspire/obsidianscar_base"] = {"Obsidian Scar", "Obsidiannarbe^fd,in"},
@@ -384,9 +384,9 @@ HarvestMerge.mapSystem = {
     ["bangkorai/nilataruins_base"] = {"Nilata"},
     ["bangkorai/hallofheroes_base"] = {"Hall of Heroes"},
     ["coldharbor/hollowcity_base"] = {"The Hollow City"},
-    ["coldharbor/blackgarrison_base"] = {"Black Garrison"},
-    ["coldharbor/shroudedplain_base"] = {"The Shrouded Plain"},
-    ["coldharbor/fistofstone_base"] = {"The Fist of Stone"},
+    ["coldharbor/blackgarrison_base"] = {"Black Garrison"}, -- existed pre 1.1.2
+    ["coldharbor/shroudedplain_base"] = {"The Shrouded Plain"}, -- existed pre 1.1.2
+    ["coldharbor/fistofstone_base"] = {"The Fist of Stone"}, -- existed pre 1.1.2
     ["bangkorai/thefarshores_base"] = {"The Far Shores"},
     ["grahtwood/boneorchard_base"] = {"Bone Orchard"},
     ["grahtwood/tombofanahbi_base"] = {"Tomb of Anahbi"},
@@ -397,12 +397,12 @@ HarvestMerge.mapSystem = {
     ["coldharbor/mainquest1map4_base"] = {"The Wailing Prison"},
     ["main/visionofthecompanions_base"] = {"Vision of the Companions"},
     ["greenshade/albeceansea_base"] = {"Abecean Sea"},
-    ["tamriel/mundus_base"] = {"Mundus", "Mundus", "Mundus^md"},
+    ["tamriel/mundus_base"] = {"Oblivion", "Mundus", "Mundus^md"}, -- {"Mundus"} pre 1.1.2
     ["grahtwood/tarlainheights_base"] = {"Tarlain Heights"},
     ["grahtwood/longcoast_base"] = {"The Long Coast"},
     ["rivenspire/doomcragtop_base"] = {"Doomcrag"},
     ["shadowfen/mudminesofskulrpahan_base"] = {"Mud Mines of Skulraphan"},
-    ["stonefalls/tormentedspire_base"] = {"Tormented Spire"},
+    ["stonefalls/tormentedspire_base"] = {"Tormented Spire"}, -- existed pre 1.1.2
     ["grahtwood/eldenrootgroundfloor_base"] = {"Elden Root"},
     ["grahtwood/eldenrootcrafting_base"] = {"Elden Root"},
     ["grahtwood/eldenrootfightersguildup_base"] = {"Elden Root"},
@@ -414,6 +414,7 @@ HarvestMerge.mapSystem = {
     ["aldmeri/aldmeridominion_base"] = {"Aldmeri Dominion"},
     ["coldharbor/vaultsofmadness1_base"] = {"Vaults of Madness"},
     ["coldharbor/vaultsofmadness2_base"] = {"Vaults of Madness"},
+    ["craglorn/craglorn_base"] = {"Craglorn"},
     ["bangkorai/bloodmatronscryptgroup_base"] = {"Blood Matron's Crypt"},
     ["bangkorai/bloodmatronscryptsingle_base"] = {"Blood Matron's Crypt"},
     ["therift/fallowstonevault_base"] = {"Fallowstone Vault"},
@@ -479,7 +480,7 @@ HarvestMerge.mapSystem = {
     ["grahtwood/karthdar_base"] = {"Karthdar"},
     ["greenshade/hollowlair_base"] = {"Hollow Den"},
     ["greenshade/oldmerchantcaves_base"] = {"Old Merchant Caves"},
-    ["reapersmarch/senelana_base"] = {"Senelana"},
+    ["reapersmarch/senelana_base"] = {"Senalana", "Senelana"}, -- {"Senelana"} pre 1.1.2
     ["rivenspire/hoarfrost_base"] = {"Hoarfrost Downs"},
     ["greenshade/woodhearth_base"] = {"Woodhearth"},
     ["glenumbra/porthunding_base"] = {"Port Hunding", "Hundingshafen^N,in"},
@@ -516,7 +517,7 @@ HarvestMerge.mapSystem = {
     ["shadowfen/mudtreemine_base"] = {"Mud Tree Mine", "Mine von Schlammbaum^fd,in"},
     ["shadowfen/visionofthehist_base"] = {"Vision of the Hist"},
     ["guildmaps/abagarlas_base"] = {"Abagarlas", "Abagarlas^N,in"},
-    ["grahtwood/greymire_base"] = {"Grey Mire"},
+    ["grahtwood/greymire_base"] = {"Gray Mire", "Grey Mire"}, -- {"Grey Mire"} pre 1.1.2
     ["coldharbor/toweroflies_base"] = {"Tower of Lies"},
     ["auridon/mistral_base"] = {"Mistral", "Mistral^N,in"},
     ["greenshade/falinesticave_base"] = {"Falinesti Cave"},
@@ -553,7 +554,38 @@ HarvestMerge.mapSystem = {
     ["auridon/reliquaryvaultbottom_base"] = {"Reliquary Vault"},
     ["auridon/reliquaryvaulttop_base"] = {"Reliquary Vault"},
     ["auridon/hazikslair_base"] = {"Hazak's Lair"},
+    ["craglorn/thaliasretreat_base"] = {"Zalgaz's Den"},
+    ["craglorn/mtharnaz_base"] = {"Mtharnaz"},
+    ["craglorn/cryptoftarishzi2_base"] = {"Tombs of the Na-Totambu"},
+    ["craglorn/cryptoftarishzi_base"] = {"Tombs of the Na-Totambu"},
 }
+
+--supported localizations
+HarvestMerge.langs = { "en", "de", "fr", }
+
+--zones
+--[[
+-- HarvestMerge.DataStore["zones"] = {
+   ["alikr"] = {},      --Alik'r Desert
+   ["auridon"] = {},    --Auridon, Khenarthi's Roost
+   ["bangkorai"] = {},  --Bangkorai
+   ["coldharbor"] = {}, --Coldharbour
+   ["cyrodiil"] = {},   --Cyrodiil
+   ["deshaan"] = {},    --"Deshaan"
+   ["eastmarch"] = {},  --Eastmarch
+   ["glenumbra"] = {},  --Glenumbra, Betnikh, Stros M'Kai
+   ["grahtwood"] = {},  --Grahtwood
+   ["greenshade"] = {}, --Greenshade
+   ["malabaltor"] = {}, --Malabal Tor
+   ["reapersmarch"] = {},  --Reaper's March
+   ["rivenspire"] = {}, --Rivenspire
+   ["shadowfen"] = {},  --Shadowfen
+   ["stonefalls"] = {}, --Stonefalls, Bal Foyen, Bleakrock Isle
+   ["stormhaven"] = {}, --Stormhaven
+   ["therift"] = {},    --The Rift
+   ["craglorn"] = {},    --Craglorn
+}
+]]--
 
 function HarvestMerge.GetNewMapName(mapName)
     local result = nil
@@ -580,3 +612,63 @@ function HarvestMerge.hasNewMapName(mapName)
     return found
 end
 
+function HarvestMerge.updateNodes(type)
+
+    if HarvestMerge.savedVars["nodes"][type] == nil then
+        return
+    end
+
+    local oldData = HarvestMerge.savedVars["nodes"][type]
+    HarvestMerge.savedVars["nodes"][type] = {}
+    --if not HarvestMerge.savedVars["nodes"].oldData then
+    --    HarvestMerge.savedVars["nodes"].oldData = {}
+    --end
+    --if not HarvestMerge.savedVars["nodes"].oldMapData then
+    --    HarvestMerge.savedVars["nodes"].oldMapData = {}
+    --end
+    local newMapName
+
+    for map, data in pairs(oldData) do
+        if HarvestMerge.hasNewMapName(map) then
+            newMapName = map
+        else
+            newMapName = HarvestMerge.GetNewMapName(map)
+        end
+        if newMapName then
+            for profession, nodes in pairs(data) do
+                for index, node in pairs(nodes) do
+                    for contents, nodeName in ipairs(node[3]) do
+
+                        if (nodeName) == "chest" or (nodeName) == "fish" then
+                            HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
+                        else
+                            if node[4] == nil then
+                                HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName)
+                            else -- node[4] which is the ItemID should not be nil at this point
+                                HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
+                            end
+                        end
+
+                    end
+                end
+            end
+        else -- << New Map Name NOT found
+            for profession, nodes in pairs(data) do
+                for index, node in pairs(nodes) do
+
+                        if profession == 6 or profession == 8 then
+                            HarvestMerge.oldMapNameFishChest(profession, map, node[1], node[2])
+                        else
+                            if node[4] == nil then
+                                HarvestMerge.oldMapNilItemIDHarvest(map, node[1], node[2], profession, nodeName)
+                            else -- node[4] which is the ItemID should not be nil at this point
+                                HarvestMerge.oldMapItemIDHarvest(map, node[1], node[2], profession, nodeName, node[4])
+                            end
+                        end
+
+                end
+            end
+        end
+
+    end
+end
