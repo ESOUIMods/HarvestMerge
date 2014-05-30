@@ -860,6 +860,16 @@ SLASH_COMMANDS["/merger"] = function (cmd)
             HarvestMerge.importFromHarvestMap()
         end
 
+    elseif #commands == 2 and commands[1] == "update" then
+        if  HarvestMerge.IsValidCategory(commands[2]) then
+             HarvestMerge.updateNodes(commands[2])
+        else
+            d("Please enter a valid HarvestMap category to update")
+            d("Valid categories are mapinvalid, esonodes, esoinvalid,")
+            d("and nodes (Not recomended)")
+            return
+        end
+
     elseif commands[1] == "reset" then
         if #commands ~= 2 then 
             for type,sv in pairs(HarvestMerge.savedVars) do
