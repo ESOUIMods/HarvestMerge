@@ -519,8 +519,8 @@ HarvestMerge.books = {
     },
 }
 
-function HarvestMerge.IsValidMining(id, name)
-    local nameMatch = false
+function HarvestMerge.IsValidMiningIDName(id, name)
+    local nameMatch = HarvestMerge.IsValidMiningName(name)
     local itemIDMatch = false
 
     for key1, value in pairs(HarvestMerge.professions[1]) do
@@ -529,22 +529,6 @@ function HarvestMerge.IsValidMining(id, name)
         end
     end
 
-    for k, v in pairs(HarvestMerge.mining["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.mining["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.mining["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
     if nameMatch and itemIDMatch then
         return true
     end
@@ -552,8 +536,8 @@ function HarvestMerge.IsValidMining(id, name)
     return false
 end
 
-function HarvestMerge.IsValidClothing(id, name)
-    local nameMatch = false
+function HarvestMerge.IsValidClothingIDName(id, name)
+    local nameMatch = HarvestMerge.IsValidClothingName(name)
     local itemIDMatch = false
 
     for key1, value in pairs(HarvestMerge.professions[2]) do
@@ -562,22 +546,6 @@ function HarvestMerge.IsValidClothing(id, name)
         end
     end
 
-    for k, v in pairs(HarvestMerge.clothing["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.clothing["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.clothing["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
     if nameMatch and itemIDMatch then
         return true
     end
@@ -585,8 +553,8 @@ function HarvestMerge.IsValidClothing(id, name)
     return false
 end
 
-function HarvestMerge.IsValidEnchanting(id, name)
-    local nameMatch = false
+function HarvestMerge.IsValidEnchantingIDName(id, name)
+    local nameMatch = HarvestMerge.IsValidEnchantingName(name)
     local itemIDMatch = false
 
     for key1, value in pairs(HarvestMerge.professions[3]) do
@@ -595,22 +563,6 @@ function HarvestMerge.IsValidEnchanting(id, name)
         end
     end
 
-    for k, v in pairs(HarvestMerge.enchanting["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.enchanting["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.enchanting["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
     if nameMatch and itemIDMatch then
         return true
     end
@@ -618,8 +570,8 @@ function HarvestMerge.IsValidEnchanting(id, name)
     return false
 end
 
-function HarvestMerge.IsValidAlchemy(id, name)
-    local nameMatch = false
+function HarvestMerge.IsValidAlchemyIDName(id, name)
+    local nameMatch = HarvestMerge.IsValidAlchemyName(name)
     local itemIDMatch = false
 
     for key1, value in pairs(HarvestMerge.professions[4]) do
@@ -628,22 +580,6 @@ function HarvestMerge.IsValidAlchemy(id, name)
         end
     end
 
-    for k, v in pairs(HarvestMerge.alchemy["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.alchemy["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.alchemy["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
     if nameMatch and itemIDMatch then
         return true
     end
@@ -651,8 +587,8 @@ function HarvestMerge.IsValidAlchemy(id, name)
     return false
 end
 
-function HarvestMerge.IsValidWoodworking(id, name)
-    local nameMatch = false
+function HarvestMerge.IsValidWoodworkingIDName(id, name)
+    local nameMatch = HarvestMerge.IsValidWoodworkingName(name)
     local itemIDMatch = false
 
     for key1, value in pairs(HarvestMerge.professions[5]) do
@@ -661,22 +597,6 @@ function HarvestMerge.IsValidWoodworking(id, name)
         end
     end
 
-    for k, v in pairs(HarvestMerge.woodworking["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.woodworking["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.woodworking["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
     if nameMatch and itemIDMatch then
         return true
     end
@@ -684,202 +604,89 @@ function HarvestMerge.IsValidWoodworking(id, name)
     return false
 end
 
-function HarvestMerge.IsValidSolventOnImport(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.solvent["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.solvent["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.solvent["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
-function HarvestMerge.IsValidContainerOnImport(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.container["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.container["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.container["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
 -- (1)Mining
-function HarvestMerge.IsValidMiningOnUpdate(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.mining["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.mining["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.mining["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
--- (2)Clothing
-function HarvestMerge.IsValidClothingOnUpdate(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.clothing["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.clothing["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.clothing["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
--- (3)Enchanting
-function HarvestMerge.IsValidEnchantingOnUpdate(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.enchanting["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.enchanting["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.enchanting["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
--- (4)Alchemy
-function HarvestMerge.IsValidAlchemyOnUpdate(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.alchemy["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.alchemy["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.alchemy["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
--- (5)Woodworking
-function HarvestMerge.IsValidWoodworkingOnUpdate(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.woodworking["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.woodworking["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.woodworking["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
--- (6)Container - Put Containers in 4 Alchemy just as if it were 2.2
-function HarvestMerge.IsValidContainerOnUpdate(name)
-    local nameMatch = false
-
-    for k, v in pairs(HarvestMerge.container["en"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.container["de"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-    for k, v in pairs(HarvestMerge.container["fr"]) do
-        if v == name then
-            nameMatch = true
-        end
-    end
-
-    return nameMatch
-end
-
-function HarvestMerge.IsValidSolvent(name)
-    for k, v in pairs(HarvestMerge.solvent[HarvestMerge.language]) do
-        if v == name then
-            return true
+function HarvestMerge.IsValidMiningName(name)
+    for lang, langs in pairs(HarvestMerge.langs) do
+        for k, v in pairs(HarvestMerge.mining[langs]) do
+            if v == name then
+                return true
+            end
         end
     end
 
     return false
 end
 
-function HarvestMerge.IsValidContainer(name)
-    for k, v in pairs(HarvestMerge.container[HarvestMerge.language]) do
-        if v == name then
-            return true
+-- (2)Clothing
+function HarvestMerge.IsValidClothingName(name)
+    for lang, langs in pairs(HarvestMerge.langs) do
+        for k, v in pairs(HarvestMerge.clothing[langs]) do
+            if v == name then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+-- (3)Enchanting
+function HarvestMerge.IsValidEnchantingName(name)
+    for lang, langs in pairs(HarvestMerge.langs) do
+        for k, v in pairs(HarvestMerge.enchanting[langs]) do
+            if v == name then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+-- (4)Alchemy
+function HarvestMerge.IsValidAlchemyName(name)
+    for lang, langs in pairs(HarvestMerge.langs) do
+        for k, v in pairs(HarvestMerge.alchemy[langs]) do
+            if v == name then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+-- (5)Woodworking
+function HarvestMerge.IsValidWoodworkingName(name)
+    for lang, langs in pairs(HarvestMerge.langs) do
+        for k, v in pairs(HarvestMerge.woodworking[langs]) do
+            if v == name then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+function HarvestMerge.IsValidSolventName(name)
+    for lang, langs in pairs(HarvestMerge.langs) do
+        for k, v in pairs(HarvestMerge.solvent[langs]) do
+            if v == name then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+function HarvestMerge.IsValidContainerName(name)
+    for lang, langs in pairs(HarvestMerge.langs) do
+        for k, v in pairs(HarvestMerge.container[langs]) do
+            if v == name then
+                return true
+            end
         end
     end
 
@@ -896,27 +703,27 @@ function HarvestMerge.CheckProfessionTypeOnImport(id, name)
     id = tonumber(id)
 
     -- Set (1)Mining
-    if HarvestMerge.IsValidMining(id, name) then
+    if HarvestMerge.IsValidMiningIDName(id, name) then
         isOk = true
     end
     -- Set (2)Clothing
-     if HarvestMerge.IsValidClothing(id, name) then
+     if HarvestMerge.IsValidClothingIDName(id, name) then
         isOk = true
     end
     -- Set (3)Enchanting
-     if HarvestMerge.IsValidEnchanting(id, name) then
+     if HarvestMerge.IsValidEnchantingIDName(id, name) then
         isOk = true
     end
     -- Set (4)Alchemy
-     if HarvestMerge.IsValidAlchemy(id, name) then
+     if HarvestMerge.IsValidAlchemyIDName(id, name) then
         isOk = true
     end
     -- Set (5)Woodworking
-     if HarvestMerge.IsValidWoodworking(id, name) then
+     if HarvestMerge.IsValidWoodworkingIDName(id, name) then
         isOk = true
     end
     -- Set (7)Solvent
-    if HarvestMerge.IsValidSolventOnImport(name) then
+    if HarvestMerge.IsValidSolventName(name) then
         isOk = true
     end
 
@@ -931,37 +738,37 @@ end
 function HarvestMerge.GetProfessionTypeOnUpdate(name)
     local tsId
 
-    if HarvestMerge.IsValidSolvent(name) then
+    if HarvestMerge.IsValidSolventName(name) then
         tsId = 7
         return tsId
     end
 
-    if HarvestMerge.IsValidMiningOnUpdate(name) then
+    if HarvestMerge.IsValidMiningName(name) then
         tsId = 1
         return tsId
     end
 
-    if HarvestMerge.IsValidClothingOnUpdate(name) then
+    if HarvestMerge.IsValidClothingName(name) then
         tsId = 2
         return tsId
     end
 
-    if HarvestMerge.IsValidEnchantingOnUpdate(name) then
+    if HarvestMerge.IsValidEnchantingName(name) then
         tsId = 3
         return tsId
     end
 
-    if HarvestMerge.IsValidAlchemyOnUpdate(name) then
+    if HarvestMerge.IsValidAlchemyName(name) then
         tsId = 4
         return tsId
     end
 
-    if HarvestMerge.IsValidWoodworkingOnUpdate(name) then
+    if HarvestMerge.IsValidWoodworkingName(name) then
         tsId = 5
         return tsId
     end
 
-    if HarvestMerge.IsValidContainerOnUpdate(name) then
+    if HarvestMerge.IsValidContainerName(name) then
         tsId = 4
         return tsId
     end
@@ -978,24 +785,24 @@ function HarvestMerge.GetProfessionType(id, name)
     local tsId
     id = tonumber(id)
 
-    if HarvestMerge.savedVars["internal"].debug == 1 then
+    if HarvestMerge.defaults.verbose then
         d("Attempting GetProfessionType with id : " .. id)
         d("Node Name : " .. name)
     end
 
-    if HarvestMerge.IsValidSolvent(name) then
-        tsId = 7
-        if HarvestMerge.savedVars["internal"].debug == 1 then
-            d("Solvent id assigned : " .. tsId)
-        end
-        return tsId
-    end
+    --if HarvestMerge.IsValidSolvent(name) then
+    --    tsId = 7
+    --    if HarvestMerge.settings.verbose then
+    --        d("Solvent id assigned : " .. tsId)
+    --    end
+    --    return tsId
+    --end
 
     -- For this HarvestMap version there are no containers
     -- Set any container found to 0 so that it is not recorded.
-    if HarvestMerge.IsValidContainer(name) then
+    if HarvestMerge.IsValidContainerName(name) then
         tsId = 0
-        if HarvestMerge.savedVars["internal"].debug == 1 then
+        if HarvestMerge.defaults.verbose then
             d("Container is not used in this version id assigned : " .. tsId)
         end
         return tsId
@@ -1006,7 +813,7 @@ function HarvestMerge.GetProfessionType(id, name)
         for key2, value in pairs(tsData) do
             if value == id then
                 tsId = key1
-                if HarvestMerge.savedVars["internal"].debug == 1 then
+                if HarvestMerge.defaults.verbose then
                     d("Esohead id assigned : " .. tsId)
                 end
                 return tsId
@@ -1014,7 +821,7 @@ function HarvestMerge.GetProfessionType(id, name)
         end
     end
 
-    if HarvestMerge.savedVars["internal"].debug == 1 then
+    if HarvestMerge.defaults.verbose then
         d("No Profession Type found with id : " .. id)
         d("In GetProfessionType with name : " .. name)
     end

@@ -558,34 +558,55 @@ HarvestMerge.mapSystem = {
     ["craglorn/mtharnaz_base"] = {"Mtharnaz"},
     ["craglorn/cryptoftarishzi2_base"] = {"Tombs of the Na-Totambu"},
     ["craglorn/cryptoftarishzi_base"] = {"Tombs of the Na-Totambu"},
+    ["craglorn/cryptoftarishzizone_base"] = {"Tombs of the Na-Totambu"},
+    ["craglorn/hircineshaunt_base"] = {"Hircine's Haunt"},
+    ["craglorn/belkarth_base"] = {"Belkarth"},
+    ["craglorn/helracitadel_base"] = {"Hel Ra Citadel"},
+    ["craglorn/helracitadelentry_base"] = {"Hel Ra Citadel"},
+    ["craglorn/helracitadelhallofwarrior_base"] = {"Hel Ra Hall of the Warrior"},
+    ["craglorn/rahniza_1"] = {"Rahni'Za, School of Blades"},
+    ["craglorn/rahniza_2"] = {"Rahni'Za School"},
+    ["craglorn/shadahallofworship_base"] = {"Hall of Worship"},
+    ["craglorn/shadamaincity_base"] = {"Shada's Tear"},
+    ["craglorn/rahniza_3"] = {"Rahni'Za School"},
+    ["craglorn/shadacitydistrict_base"] = {"City District"},
+    ["craglorn/shadaburialgrounds_base"] = {"Burial Grounds"},
+    ["craglorn/rkhardahrk"] = {"Rkhardahrk"},
+    ["craglorn/rkundzelft_base"] = {"Rkundzelft"},
+    ["craglorn/elinhirmagevision_base"] = {"Apex Stone Room"},
+    ["craglorn/elinhirsewerworks_base"] = {"Elinhir Sewerworks"},
+    ["craglorn/burriedsands_base"] = {"Buried Sands"},
+    ["craglorn/balamath_base"] = {"Balamath"},
+    ["craglorn/balamathairmonarchcham_base"] = {"Balamath Hall"},
+    ["craglorn/balamathlibrary_base"] = {"Balamath Library"},
+    ["craglorn/themagesstaff_base"] = {"Spellscar"},
+    ["craglorn/stormlair_base"] = {"Storm Lair"},
+    ["craglorn/molavar_base"] = {"Molavar"},
+    ["craglorn/haddock_base"] = {"Haddock's Market"},
+    ["craglorn/chiselshriek_base"] = {"Chiselshriek Mine"},
+    ["craglorn/kardala_base"] = {"Ruins of Kardala"},
+    ["craglorn/seekersarchiveup_base"] = {"Seeker's Archive"},
+    ["craglorn/seekersarchivedown_base"] = {"Seeker's Archive"},
+    ["craglorn/aetherianarchiveend_base"] = {"Aetherian Archive"},
+    ["craglorn/aetherianarchiveislandc_base"] = {"Aetherian Archive"},
+    ["craglorn/aetherianarchiveislanda_base"] = {"Aetherian Archive"},
+    ["craglorn/reinholdsretreatcave_base"] = {"Reinhold's Retreat"},
+    ["craglorn/aetherianarchiveislandb_base"] = {"Aetherian Archive"},
+    ["craglorn/aetherianarchivemiddle_base"] = {"Aetherian Archive"},
+    ["craglorn/aetherianarchivebottom_base"] = {"Aetherian Archive"},
+    ["rivenspire/edraldundercroftdomed_base"] = {"Edrald Undercroft"},
+    ["glenumbra/stonetoothfortress_base"] = {"Stonetooth Fortress"},
+    ["shadowfen/mudshallowcave_base"] = {"Mudshallow Cave"},
+    ["craglorn/frostmonarchlair_base"] = {"Frost Monarch Lair"},
+    ["rivenspire/cryptofheartsheroic_base"] = {"Crypt of Hearts"},
+    ["rivenspire/cryptofheartsheroicboss"] = {"Crypt of Hearts"},
+    ["therift/trolhettasummit_base"] = {"Trolhetta Summit"},
+    ["alikr/eyeschamber_base"] = {"The Eye's Chamber"},
+    ["alikr/guardiansorbit_base"] = {"The Guardian's Orbit"},
 }
 
 --supported localizations
 HarvestMerge.langs = { "en", "de", "fr", }
-
---zones
---[[
--- HarvestMerge.DataStore["zones"] = {
-   ["alikr"] = {},      --Alik'r Desert
-   ["auridon"] = {},    --Auridon, Khenarthi's Roost
-   ["bangkorai"] = {},  --Bangkorai
-   ["coldharbor"] = {}, --Coldharbour
-   ["cyrodiil"] = {},   --Cyrodiil
-   ["deshaan"] = {},    --"Deshaan"
-   ["eastmarch"] = {},  --Eastmarch
-   ["glenumbra"] = {},  --Glenumbra, Betnikh, Stros M'Kai
-   ["grahtwood"] = {},  --Grahtwood
-   ["greenshade"] = {}, --Greenshade
-   ["malabaltor"] = {}, --Malabal Tor
-   ["reapersmarch"] = {},  --Reaper's March
-   ["rivenspire"] = {}, --Rivenspire
-   ["shadowfen"] = {},  --Shadowfen
-   ["stonefalls"] = {}, --Stonefalls, Bal Foyen, Bleakrock Isle
-   ["stormhaven"] = {}, --Stormhaven
-   ["therift"] = {},    --The Rift
-   ["craglorn"] = {},    --Craglorn
-}
-]]--
 
 function HarvestMerge.GetNewMapName(mapName)
     local result = nil
@@ -612,14 +633,14 @@ function HarvestMerge.hasNewMapName(mapName)
     return found
 end
 
-function HarvestMerge.updateNodes(type)
+function HarvestMerge.updateHarvestNodes(type)
 
-    if HarvestMerge.savedVars["nodes"][type] == nil then
+    if HarvestMerge.savedVars[type].data == nil then
         return
     end
 
-    local oldData = HarvestMerge.savedVars["nodes"][type]
-    HarvestMerge.savedVars["nodes"][type] = {}
+    local oldData = HarvestMerge.savedVars[type].data
+    HarvestMerge.savedVars[type].data = {}
     --if not HarvestMerge.savedVars["nodes"].oldData then
     --    HarvestMerge.savedVars["nodes"].oldData = {}
     --end
@@ -665,6 +686,51 @@ function HarvestMerge.updateNodes(type)
                                 HarvestMerge.oldMapItemIDHarvest(map, node[1], node[2], profession, nodeName, node[4])
                             end
                         end
+
+                end
+            end
+        end
+
+    end
+end
+
+function HarvestMerge.updateEsoheadNodes(type)
+
+    if HarvestMerge.savedVars[type].data == nil then
+        return
+    end
+
+    local oldData = HarvestMerge.savedVars[type].data
+    HarvestMerge.savedVars[type].data = {}
+    -- if not HarvestMerge.savedVars[type] then
+    --     HarvestMerge.savedVars[type] = {}
+    -- end
+    --if not HarvestMerge.savedVars["nodes"].oldMapData then
+    --    HarvestMerge.savedVars["nodes"].oldMapData = {}
+    --end
+    local newMapName
+
+    for map, data in pairs(oldData) do
+        if HarvestMerge.hasNewMapName(map) then
+            newMapName = map
+        else
+            newMapName = HarvestMerge.GetNewMapName(map)
+        end
+        if newMapName then
+            for profession, nodes in pairs(data) do
+                for index, node in pairs(nodes) do
+
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
+
+                end
+            end
+        else -- << New Map Name NOT found
+            for profession, nodes in pairs(data) do
+                for index, node in pairs(nodes) do
+
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.oldMapItemIDHarvest(map, node[1], node[2], profession, node[4], node[5])
 
                 end
             end

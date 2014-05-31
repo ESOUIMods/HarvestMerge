@@ -2,107 +2,7 @@ HarvestMerge = {}
 HarvestMerge.chestID = 6
 HarvestMerge.fishID = 8
 
-local internalVersion = 1
-
------------------------------------------
---    Esohead Log and Check routines   --
------------------------------------------
-
-function HarvestMerge.Log(type, nodes, ...)
-    local data = {}
-    local dataStr = ""
-    local sv
-
-    if HarvestMerge.savedVars[type] == nil or HarvestMerge.savedVars[type].data == nil then
-        d("Attempted to log unknown type: " .. type)
-        return
-    else
-        sv = HarvestMerge.savedVars[type].data
-    end
-
-    for i = 1, #nodes do
-        local node = nodes[i];
-        if string.find(node, '\"') then
-            node = string.gsub(node, '\"', '\'')
-        end
-
-        if sv[node] == nil then
-            sv[node] = {}
-        end
-        sv = sv[node]
-    end
-
-    for i = 1, select("#", ...) do
-        local value = select(i, ...)
-        data[i] = value
-        dataStr = dataStr .. "[" .. tostring(value) .. "] "
-    end
-
-    if HarvestMerge.savedVars["internal"].debug == 1 then
-        d("Logged [" .. type .. "] data: " .. dataStr)
-    end
-
-    if #sv == 0 then
-        sv[1] = data
-    else
-        sv[#sv+1] = data
-    end
-end
-
--- Checks if we already have an entry for the object/npc within a certain x/y distance
-function HarvestMerge.LogCheck(type, nodes, x, y, scale, name)
-    local log
-    local sv
-
-    local distance
-    if scale == nil then
-        distance = HarvestMerge.minDefault
-    else
-        distance = scale
-    end
-
-    if HarvestMerge.savedVars[type] == nil or HarvestMerge.savedVars[type].data == nil then
-        return nil
-    else
-        sv = HarvestMerge.savedVars[type].data
-    end
-
-    for i = 1, #nodes do
-        local node = nodes[i];
-        if string.find(node, '\"') then
-            node = string.gsub(node, '\"', '\'')
-        end
-
-        if sv[node] == nil then
-            sv[node] = {}
-        end
-        sv = sv[node]
-    end
-
-    for i = 1, #sv do
-        local item = sv[i]
-
-        dx = item[1] - x
-        dy = item[2] - y
-        -- (x - center_x)2 + (y - center_y)2 = r2, where center is the player
-        dist = math.pow(dx, 2) + math.pow(dy, 2)
-        -- d(string.format("distance argument : %10.7f", distance) )
-        -- d(string.format("radius : %10.7f", dist) )
-        -- d(" 1) : " .. item[1] .. " 2) : " .. item[2] .. " 3) : " .. item[3] .. " 4) : " .. tostring(item[4]))
-        if dist < distance then
-            if name == nil then -- name is nil because it's not harvesting
-                log = item
-            else -- harvesting only
-                if item[4] == name then
-                    -- d("Name was the same!")
-                    log = item
-                end
-            end
-        end
-    end
-
-    return log
-end
+local internalVersion = 2
 
 -----------------------------------------
 --         HarvestMap Routines         --
@@ -111,9 +11,9 @@ end
 function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
         if type == "fish" then
-            HarvestMerge.saveData(type, newMapName, x, y, HarvestMerge.fishID, type, nil, HarvestMerge.minReticleover )
+            HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.fishID, type, nil, HarvestMerge.minReticleover, "valid" )
         elseif type == "chest" then
-            HarvestMerge.saveData(type, newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover )
+            HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
         else
             d("unsupported type : " .. type)
         end
@@ -121,11 +21,9 @@ end
 function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
     if type == HarvestMerge.chestID then
-            HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded +1
-            HarvestMerge.saveData("esochest", oldMapName, x, y, HarvestMerge.chestID, "chest", nil, HarvestMerge.minReticleover )
+        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.chestID, "chest", nil, HarvestMerge.minReticleover, "nonvalid" )
     elseif type == HarvestMerge.fishID then
-            HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded +1
-            HarvestMerge.saveData("esofish", oldMapName, x, y, HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover )
+        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover, "nonvalid" )
     else
         d("unsupported type : " .. type)
     end
@@ -139,16 +37,12 @@ function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeN
     end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if not HarvestMerge.IsValidContainerOnImport(nodeName) then
-        HarvestMerge.saveData("harvest", newMapName, x, y, professionFound, nodeName, nil, nil )
+    if not HarvestMerge.IsValidContainerName(nodeName) then
+        HarvestMerge.saveData("nodes", newMapName, x, y, professionFound, nodeName, nil, nil, "valid" )
     else
         HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped +1
-        HarvestMerge.saveData("mapinvalid", newMapName, x, y, professionFound, nodeName, nil, nil )
     end
 end
-
--- "harvest", "chest", "fish", "mapinvalid"
--- "esoharvest", "esochest", "esofish", "esoinvalid"
 
 function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeName)
     local professionFound
@@ -158,54 +52,52 @@ function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeN
     end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if not HarvestMerge.IsValidContainerOnImport(nodeName) then
-        HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded +1
-        HarvestMerge.saveData("esoharvest", oldMapName, x, y, professionFound, nodeName, nil, nil )
+    if not HarvestMerge.IsValidContainerName(nodeName) then
+        HarvestMerge.saveData("esonodes", oldMapName, x, y, professionFound, nodeName, nil, nil, "nonvalid" )
     else
         HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped +1
-        HarvestMerge.saveData("esoinvalid", oldMapName, x, y, professionFound, nodeName, nil, nil )
     end
 end
 
 function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName, itemID)
-    local professionFound
+    local professionFound = 0
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
+        professionFound = HarvestMerge.GetProfessionType(itemID, nodeName)
+    elseif professionFound <= 0 then
         professionFound = profession
     end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if not HarvestMerge.IsValidContainerOnImport(nodeName) then -- returns true or false
+    if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
         if HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName) then -- returns true or false no item Id number
-            HarvestMerge.saveData("harvest", newMapName, x, y, professionFound, nodeName, itemID, nil )
+            HarvestMerge.saveData("nodes", newMapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
         else
-            HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
-            HarvestMerge.saveData("mapinvalid", newMapName, x, y, professionFound, nodeName, itemID, nil )
+            HarvestMerge.saveData("mapinvalid", newMapName, x, y, professionFound, nodeName, itemID, nil, "false" )
         end
     else
         HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
-        HarvestMerge.saveData("mapinvalid", newMapName, x, y, professionFound, nodeName, itemID, nil )
     end
 end
 
 function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName, itemID)
-    local professionFound
+    local professionFound = 0
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
+        professionFound = HarvestMerge.GetProfessionType(itemID, nodeName)
+    elseif professionFound <= 0 then
         professionFound = profession
     end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if not HarvestMerge.IsValidContainerOnImport(nodeName) then -- returns true or false
+    if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
         if HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName) then -- returns true or false no item Id number
-            HarvestMerge.saveData("esoharvest", oldMapName, x, y, professionFound, nodeName, itemID, nil )
+            HarvestMerge.saveData("esonodes", oldMapName, x, y, professionFound, nodeName, itemID, nil, "nonvalid" )
         else
-            HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
-            HarvestMerge.saveData("esoinvalid", oldMapName, x, y, professionFound, nodeName, itemID, nil )
+            HarvestMerge.saveData("esoinvalid", oldMapName, x, y, professionFound, nodeName, itemID, nil, "nonfalse" )
         end
     else
         HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
-        HarvestMerge.saveData("esoinvalid", oldMapName, x, y, professionFound, nodeName, itemID, nil )
     end
 end
 
@@ -228,7 +120,22 @@ function HarvestMerge.GetMap()
     return textureName
 end
 
-function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, scale )
+function changeCounters(counter)
+    if counter == "false" then
+        HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
+    end
+    if counter == "valid" then
+        HarvestMerge.NumbersNodesAdded = HarvestMerge.NumbersNodesAdded + 1
+    end
+    if counter == "nonvalid" then
+        HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
+    end
+    if counter == "nonfalse" then
+        HarvestMerge.NumUnlocalizedFalseNodes = HarvestMerge.NumUnlocalizedFalseNodes + 1
+    end
+end
+
+function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, scale, counter )
 
     if not profession then
         return
@@ -239,7 +146,7 @@ function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, s
         return
     end
 
-    if HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale ) then
+    if HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale, counter ) then
         return
     end
 
@@ -258,12 +165,12 @@ function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, s
         HarvestMerge.savedVars[type].data[zone][profession] = {}
     end
 
-    if HarvestMerge.savedVars["internal"].debug == 1 then
+    if HarvestMerge.internal.debug == 1 then
         d("Save data!")
     end
 
     table.insert( HarvestMerge.savedVars[type].data[zone][profession], { x, y, { nodeName }, itemID } )
-    HarvestMerge.NumbersNodesAdded = HarvestMerge.NumbersNodesAdded + 1
+    changeCounters(counter)
 
 end
 
@@ -276,7 +183,7 @@ function HarvestMerge.contains(table, value)
     return nil
 end
 
-function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale )
+function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale, counter )
 
     -- If this check is not here the next routine will fail
     -- after the loading screen because for a brief moment
@@ -310,15 +217,15 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
                 if profession > 0 then
                     if not HarvestMerge.contains(entry[3], nodeName) then
                         table.insert(entry[3], nodeName)
-                        HarvestMerge.NumbersNodesAdded = HarvestMerge.NumbersNodesAdded + 1
+                        changeCounters(counter)
                     end
-                    if HarvestMerge.savedVars["internal"].debug == 1 then
+                    if HarvestMerge.internal.debug == 1 then
                         d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
                     end
                     return true
                 else
                     if entry[3][1] == nodeName then
-                        if HarvestMerge.savedVars["internal"].debug == 1 then
+                        if HarvestMerge.internal.debug == 1 then
                             d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
                         end
                         return true
@@ -327,7 +234,7 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
             end
         --end
         end
-    if HarvestMerge.savedVars["internal"].debug == 1 then
+    if HarvestMerge.internal.debug == 1 then
         d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " not found!")
     end
     return false
@@ -378,20 +285,8 @@ function HarvestMerge.importFromEsohead()
             for index, nodes in pairs(data) do
                 for _, node in pairs(nodes) do
                     HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                    professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
-
-                    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                    if not HarvestMerge.IsValidContainerOnImport(node[4]) then -- << Not a Container
-                        if HarvestMerge.CheckProfessionTypeOnImport(node[5], node[4]) then -- << Check Profession Type
-                            HarvestMerge.saveData("harvest", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                        else -- << Invalid Profession Type
-                            HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
-                            HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                        end
-                    else -- << Container
-                        HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
-                        HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                    end
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                 end
             end
         else -- << New Map Name NOT found
@@ -399,23 +294,8 @@ function HarvestMerge.importFromEsohead()
             for index, nodes in pairs(data) do
                 for v1, node in pairs(nodes) do
                     HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                    professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
-                    --d(node[1] .. node[2] .. node[3] .. node[4] .. node[5])
-
-                    -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                    if professionFound >= 1 then
-                        dupeNode = HarvestMerge.LogCheck("esoharvest",  {map, professionFound}, node[1], node[2], nil, node[4])
-                        if not dupeNode then
-                            HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                            HarvestMerge.Log("esoharvest", {map, professionFound}, node[1], node[2], node[3], node[4], node[5])
-                        end
-                    else -- << Invalid Profession Type
-                        dupeNode = HarvestMerge.LogCheck("esoinvalid",  {map, professionFound}, node[1], node[2], nil, node[4])
-                        if not dupeNode then
-                            HarvestMerge.NumUnlocalizedFalseNodes = HarvestMerge.NumUnlocalizedFalseNodes + 1
-                            HarvestMerge.Log("esoinvalid", {map, professionFound}, node[1], node[2], node[3], node[4], node[5])
-                        end
-                    end
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.oldMapItemIDHarvest(map, node[1], node[2], profession, node[4], node[5])
                 end
             end
         end
@@ -428,19 +308,15 @@ function HarvestMerge.importFromEsohead()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                HarvestMerge.saveData("chest", newMapName, node[1], node[2], HarvestMerge.chestID, "chest", nil, HarvestMerge.minReticleover )
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
             d(map .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                dupeNode = HarvestMerge.LogCheck("esochest", { map }, node[1], node[2], HarvestMerge.minReticleover, nil)
-                if not dupeNode then
-                    HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                    HarvestMerge.Log("esochest", { map }, node[1], node[2])
-                end
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
             end
         end
     end
@@ -452,19 +328,15 @@ function HarvestMerge.importFromEsohead()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                HarvestMerge.saveData("fish", newMapName, node[1], node[2], HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover )
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
             d(map .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                dupeNode = HarvestMerge.LogCheck("esofish", { map }, node[1], node[2], HarvestMerge.minReticleover, nil)
-                if not dupeNode then
-                    HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                    HarvestMerge.Log("esofish", { map }, node[1], node[2])
-                end
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
             end
         end
     end
@@ -519,20 +391,8 @@ function HarvestMerge.importFromEsoheadMerge()
             for index, nodes in pairs(data) do
                 for _, node in pairs(nodes) do
                     HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                    professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
-
-                    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                    if not HarvestMerge.IsValidContainerOnImport(node[4]) then -- << Not a Container
-                        if HarvestMerge.CheckProfessionTypeOnImport(node[5], node[4]) then -- << Check Profession Type
-                            HarvestMerge.saveData("harvest", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                        else -- << Invalid Profession Type
-                            HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
-                            HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                        end
-                    else -- << Container
-                        HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
-                        HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                    end
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                 end
             end
         else -- << New Map Name NOT found
@@ -540,23 +400,8 @@ function HarvestMerge.importFromEsoheadMerge()
             for index, nodes in pairs(data) do
                 for v1, node in pairs(nodes) do
                     HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                    professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
-                    --d(node[1] .. node[2] .. node[3] .. node[4] .. node[5])
-
-                    -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                    if professionFound >= 1 then
-                        dupeNode = HarvestMerge.LogCheck("esoharvest",  {map, professionFound}, node[1], node[2], nil, node[4])
-                        if not dupeNode then
-                            HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                            HarvestMerge.Log("esoharvest", {map, professionFound}, node[1], node[2], node[3], node[4], node[5])
-                        end
-                    else -- << Invalid Profession Type
-                        dupeNode = HarvestMerge.LogCheck("esoinvalid",  {map, professionFound}, node[1], node[2], nil, node[4])
-                        if not dupeNode then
-                            HarvestMerge.NumUnlocalizedFalseNodes = HarvestMerge.NumUnlocalizedFalseNodes + 1
-                            HarvestMerge.Log("esoinvalid", {map, professionFound}, node[1], node[2], node[3], node[4], node[5])
-                        end
-                    end
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.oldMapItemIDHarvest(map, node[1], node[2], profession, node[4], node[5])
                 end
             end
         end
@@ -569,19 +414,15 @@ function HarvestMerge.importFromEsoheadMerge()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                HarvestMerge.saveData("chest", newMapName, node[1], node[2], HarvestMerge.chestID, "chest", nil, HarvestMerge.minReticleover )
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
             d(map .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                dupeNode = HarvestMerge.LogCheck("esochest", { map }, node[1], node[2], HarvestMerge.minReticleover, nil)
-                if not dupeNode then
-                    HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                    HarvestMerge.Log("esochest", { map }, node[1], node[2])
-                end
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
             end
         end
     end
@@ -593,19 +434,15 @@ function HarvestMerge.importFromEsoheadMerge()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                HarvestMerge.saveData("fish", newMapName, node[1], node[2], HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover )
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
             d(map .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                dupeNode = HarvestMerge.LogCheck("esofish", { map }, node[1], node[2], HarvestMerge.minReticleover, nil)
-                if not dupeNode then
-                    HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                    HarvestMerge.Log("esofish", { map }, node[1], node[2])
-                end
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
             end
         end
     end
@@ -660,20 +497,8 @@ function HarvestMerge.importFromHarvester()
             for index, nodes in pairs(data) do
                 for _, node in pairs(nodes) do
                     HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                    professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
-
-                    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                    if not HarvestMerge.IsValidContainerOnImport(node[4]) then -- << Not a Container
-                        if HarvestMerge.CheckProfessionTypeOnImport(node[5], node[4]) then -- << Check Profession Type
-                            HarvestMerge.saveData("harvest", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                        else -- << Invalid Profession Type
-                            HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
-                            HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                        end
-                    else -- << Container
-                        HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
-                        HarvestMerge.saveData("mapinvalid", newMapName, node[1], node[2], professionFound, node[4], node[5], nil )
-                    end
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                 end
             end
         else -- << New Map Name NOT found
@@ -681,23 +506,8 @@ function HarvestMerge.importFromHarvester()
             for index, nodes in pairs(data) do
                 for v1, node in pairs(nodes) do
                     HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                    professionFound = HarvestMerge.GetProfessionType(node[5], node[4])
-                    --d(node[1] .. node[2] .. node[3] .. node[4] .. node[5])
-
-                    -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                    if professionFound >= 1 then
-                        dupeNode = HarvestMerge.LogCheck("esoharvest",  {map, professionFound}, node[1], node[2], nil, node[4])
-                        if not dupeNode then
-                            HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                            HarvestMerge.Log("esoharvest", {map, professionFound}, node[1], node[2], node[3], node[4], node[5])
-                        end
-                    else -- << Invalid Profession Type
-                        dupeNode = HarvestMerge.LogCheck("esoinvalid",  {map, professionFound}, node[1], node[2], nil, node[4])
-                        if not dupeNode then
-                            HarvestMerge.NumUnlocalizedFalseNodes = HarvestMerge.NumUnlocalizedFalseNodes + 1
-                            HarvestMerge.Log("esoinvalid", {map, professionFound}, node[1], node[2], node[3], node[4], node[5])
-                        end
-                    end
+                    -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                    HarvestMerge.oldMapItemIDHarvest(map, node[1], node[2], profession, node[4], node[5])
                 end
             end
         end
@@ -710,19 +520,15 @@ function HarvestMerge.importFromHarvester()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                HarvestMerge.saveData("chest", newMapName, node[1], node[2], HarvestMerge.chestID, "chest", nil, HarvestMerge.minReticleover )
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
             d(map .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                dupeNode = HarvestMerge.LogCheck("esochest", { map }, node[1], node[2], HarvestMerge.minReticleover, nil)
-                if not dupeNode then
-                    HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                    HarvestMerge.Log("esochest", { map }, node[1], node[2])
-                end
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
             end
         end
     end
@@ -734,19 +540,15 @@ function HarvestMerge.importFromHarvester()
         if newMapName then
             for _, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-                HarvestMerge.saveData("fish", newMapName, node[1], node[2], HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover )
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
             d(map .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                -- 1) type 2) nodes (MapName) 3) x 4) y 5) scale 6) name)
-                dupeNode = HarvestMerge.LogCheck("esofish", { map }, node[1], node[2], HarvestMerge.minReticleover, nil)
-                if not dupeNode then
-                    HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
-                    HarvestMerge.Log("esofish", { map }, node[1], node[2])
-                end
+                -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
+                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
             end
         end
     end
@@ -810,9 +612,10 @@ end
 -----------------------------------------
 
 HarvestMerge.validCategories = {
-    "chest",
-    "fish",
-    "harvest",
+    "nodes",
+    "mapinvalid",
+    "esonodes",
+    "esoinvalid",
 }
 
 function HarvestMerge.IsValidCategory(name)
@@ -842,10 +645,10 @@ SLASH_COMMANDS["/merger"] = function (cmd)
     if #commands == 2 and commands[1] == "debug" then
         if commands[2] == "on" then
             d("HarvestMerge debugger toggled on")
-            HarvestMerge.savedVars["internal"].debug = 1
+            HarvestMerge.internal.debug = 1
         elseif commands[2] == "off" then
             d("HarvestMerge debugger toggled off")
-            HarvestMerge.savedVars["internal"].debug = 0
+            HarvestMerge.internal.debug = 0
         end
 
     elseif #commands == 2 and commands[1] == "import" then
@@ -864,7 +667,7 @@ SLASH_COMMANDS["/merger"] = function (cmd)
         if  HarvestMerge.IsValidCategory(commands[2]) then
              HarvestMerge.updateNodes(commands[2])
         else
-            d("Please enter a valid HarvestMap category to update")
+            d("Please enter a valid HarvestMerge category to update")
             d("Valid categories are mapinvalid, esonodes, esoinvalid,")
             d("and nodes (Not recomended)")
             return
@@ -930,25 +733,50 @@ end
 
 function HarvestMerge.OnLoad(eventCode, addOnName)
 
+    HarvestMerge.defaults = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "internal", { 
+        debug = false,
+        internalVersion = 0, 
+        dataVersion = 0, 
+        language = ""
+    })
+
     HarvestMerge.savedVars = {
-        ["internal"]     = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "internal", { debug = HarvestMerge.debugDefault, language = "" }),
+        -- All Localized Nodes
+        ["nodes"]           = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "nodes", HarvestMerge.dataDefault),
+        -- All Invalid Localized Nodes
+        ["mapinvalid"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "mapinvalid", HarvestMerge.dataDefault),
+        -- All Unlocalized Nodes
+        ["esonodes"]        = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "esonodes", HarvestMerge.dataDefault),
+        -- All Invalid Unlocalized Nodes
+        ["esoinvalid"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "esoinvalid", HarvestMerge.dataDefault),
+        -- Map name collection for future versions
+
+        -- These nodes are not used after version 2
         --Localized HarvestMap Nodes
         ["harvest"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "harvest", HarvestMerge.dataDefault),
         ["chest"]        = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "chest", HarvestMerge.dataDefault),
         ["fish"]         = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "fish", HarvestMerge.dataDefault),
-        --Invalid Localized HarvestMap Nodes
-        ["mapinvalid"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "mapinvalid", HarvestMerge.dataDefault),
         --Unlocalized HarvestMap Nodes
         ["esoharvest"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "esoharvest", HarvestMerge.dataDefault),
         ["esochest"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "esochest", HarvestMerge.dataDefault),
         ["esofish"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "esofish", HarvestMerge.dataDefault),
-        --Invalid Unlocalized HarvestMap Nodes
-        ["esoinvalid"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 1, "esoinvalid", HarvestMerge.dataDefault),
     }
 
-    HarvestMerge.savedVars["internal"]["language"] = HarvestMerge.language
+    HarvestMerge.internal.language = HarvestMerge.language
 
-    if HarvestMerge.savedVars["internal"].debug == 1 then
+    -- Run once to pull out esohead format and move data to new containers
+    -- First release the internalVersion was "1" so only check if less then "2"
+    if HarvestMerge.internal.internalVersion < 2 then
+        HarvestMerge.updateHarvestNodes("harvest")
+        HarvestMerge.updateHarvestNodes("chest")
+        HarvestMerge.updateHarvestNodes("fish")
+        HarvestMerge.updateEsoheadNodes("esoharvest")
+        HarvestMerge.updateEsoheadNodes("esochest")
+        HarvestMerge.updateEsoheadNodes("esofish")
+        HarvestMerge.internal.internalVersion = internalVersion
+    end
+
+    if HarvestMerge.internal.debug == 1 then
         d("HarvestMerge addon initialized. Debugging is enabled.")
     else
         d("HarvestMerge addon initialized. Debugging is disabled.")
