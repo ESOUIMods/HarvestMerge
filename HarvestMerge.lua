@@ -15,7 +15,7 @@ function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
         elseif type == "chest" then
             HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
         else
-            d("unsupported type : " .. type)
+            d("HM : newMapName : unsupported type : " .. type)
         end
 end
 function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
@@ -25,7 +25,7 @@ function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
     elseif type == HarvestMerge.fishID then
         HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover, "nonvalid" )
     else
-        d("unsupported type : " .. type)
+        d("HM : oldMapName : unsupported type : " .. type)
     end
 end
 
@@ -328,7 +328,7 @@ function HarvestMerge.importFromEsohead()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest(HarvestMerge.chestID, map, node[1], node[2])
             end
         end
     end
@@ -348,7 +348,7 @@ function HarvestMerge.importFromEsohead()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest(HarvestMerge.fishID, map, node[1], node[2])
             end
         end
     end
@@ -434,7 +434,7 @@ function HarvestMerge.importFromEsoheadMerge()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest(HarvestMerge.chestID, map, node[1], node[2])
             end
         end
     end
@@ -454,7 +454,7 @@ function HarvestMerge.importFromEsoheadMerge()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest(HarvestMerge.fishID, map, node[1], node[2])
             end
         end
     end
@@ -540,7 +540,7 @@ function HarvestMerge.importFromHarvester()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest(HarvestMerge.chestID, map, node[1], node[2])
             end
         end
     end
@@ -560,7 +560,7 @@ function HarvestMerge.importFromHarvester()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest(HarvestMerge.fishID, map, node[1], node[2])
             end
         end
     end
@@ -612,10 +612,6 @@ function HarvestMerge.importFromHarvestMap()
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
-    d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
-    d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
-    d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
-    d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     d("Finished.")
 end
 
@@ -651,7 +647,7 @@ SLASH_COMMANDS["/merger"] = function (cmd)
     end
 
     if #commands == 0 then
-        return d("Please enter a valid Harvester command")
+        return d("Please enter a valid HarvestMerge command")
     end
 
     if #commands == 2 and commands[1] == "debug" then
