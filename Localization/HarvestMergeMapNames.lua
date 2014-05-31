@@ -605,9 +605,6 @@ HarvestMerge.mapSystem = {
     ["alikr/guardiansorbit_base"] = {"The Guardian's Orbit"},
 }
 
---supported localizations
-HarvestMerge.langs = { "en", "de", "fr", }
-
 function HarvestMerge.GetNewMapName(mapName)
     local result = nil
     for newMapName, translations in pairs(HarvestMerge.mapSystem) do
@@ -623,14 +620,12 @@ function HarvestMerge.GetNewMapName(mapName)
 end
 
 function HarvestMerge.hasNewMapName(mapName)
-    local found = false
     for newMapName, translations in pairs(HarvestMerge.mapSystem) do
         if newMapName == mapName then
-            found = true
-            return found
+            return true
         end
     end
-    return found
+    return false
 end
 
 function HarvestMerge.updateHarvestNodes(type)

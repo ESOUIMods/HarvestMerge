@@ -16,6 +16,7 @@ function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
             HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
         else
             d("HM : newMapName : unsupported type : " .. type)
+            -- HarvestMerge.saveData("rejected", newMapName, x, y, -1, type, nil, Harvest.minReticleover, "reject" )
         end
 end
 function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
@@ -25,8 +26,9 @@ function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
     elseif type == HarvestMerge.fishID then
         HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover, "nonvalid" )
     else
-        d("HM : oldMapName : unsupported type : " .. type)
-    end
+            d("HM : newMapName : unsupported type : " .. type)
+            -- HarvestMerge.saveData("rejected", oldMapName, x, y, -1, type, nil, Harvest.minReticleover, "reject" )
+        end
 end
 
 function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeName)
@@ -36,6 +38,7 @@ function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeN
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", newMapName, x, y, professionFound, type, nil, nil, "reject" )
         return
     end
 
@@ -54,6 +57,7 @@ function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeN
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", oldMapName, x, y, professionFound, type, nil, nil, "reject" )
         return
     end
 
@@ -74,6 +78,7 @@ function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", newMapName, x, y, professionFound, nodeName, itemID, nil, "reject" )
         return
     end
 
@@ -98,6 +103,7 @@ function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", oldMapName, x, y, professionFound, nodeName, itemID, nil, "reject" )
         return
     end
 
@@ -144,6 +150,9 @@ function HarvestMerge.changeCounters(counter)
     end
     if counter == "nonfalse" then
         HarvestMerge.NumUnlocalizedFalseNodes = HarvestMerge.NumUnlocalizedFalseNodes + 1
+    end
+    if counter == "reject" then
+        HarvestMerge.NumRejectedNodes = HarvestMerge.NumRejectedNodes + 1
     end
 end
 
@@ -264,6 +273,7 @@ function HarvestMerge.importFromEsohead()
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
+    HarvestMerge.NumRejectedNodes = 0
 
     if not EH then
         d("Please enable the Esohead addon to import data!")
@@ -359,6 +369,7 @@ function HarvestMerge.importFromEsohead()
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
     d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
+    -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
 
@@ -370,6 +381,7 @@ function HarvestMerge.importFromEsoheadMerge()
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
+    HarvestMerge.NumRejectedNodes = 0
 
     if not EHM then
         d("Please enable the EsoheadMerge addon to import data!")
@@ -465,6 +477,7 @@ function HarvestMerge.importFromEsoheadMerge()
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
     d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
+    -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
 
@@ -476,6 +489,7 @@ function HarvestMerge.importFromHarvester()
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
+    HarvestMerge.NumRejectedNodes = 0
 
     if not Harvester then
         d("Please enable the Harvester addon to import data!")
@@ -571,6 +585,7 @@ function HarvestMerge.importFromHarvester()
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
     d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
+    -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
 
@@ -582,6 +597,7 @@ function HarvestMerge.importFromHarvestMap()
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
+    HarvestMerge.NumRejectedNodes = 0
 
     if not Harvest then
         d("Please enable the HarvestMap addon to import data!")
@@ -612,6 +628,7 @@ function HarvestMerge.importFromHarvestMap()
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
+    -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
 
@@ -742,7 +759,7 @@ end
 function HarvestMerge.OnLoad(eventCode, addOnName)
 
     HarvestMerge.internal = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "internal", { 
-        debug = false,
+        debug = 0,
         verbose = false,
         internalVersion = 0, 
         dataVersion = 0, 
@@ -758,7 +775,8 @@ function HarvestMerge.OnLoad(eventCode, addOnName)
         ["esonodes"]        = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "esonodes", HarvestMerge.dataDefault),
         -- All Invalid Unlocalized Nodes
         ["esoinvalid"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "esoinvalid", HarvestMerge.dataDefault),
-        -- Map name collection for future versions
+        -- All rejected records for debugging
+        -- ["rejected"]      = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "rejected", HarvestMerge.dataDefault),
 
         -- These nodes are not used after version 2
         --Localized HarvestMap Nodes
@@ -801,7 +819,9 @@ function HarvestMerge.Initialize()
         data = {}
     }
 
-    -- Set Localization
+    --supported localizations
+    HarvestMerge.langs = { "en", "de", "fr", }
+
     HarvestMerge.language = (GetCVar("language.2") or "en")
 
     HarvestMerge.minDefault = 0.000025 -- 0.005^2
@@ -815,6 +835,7 @@ function HarvestMerge.Initialize()
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
+    HarvestMerge.NumRejectedNodes = 0
 
 end
 
