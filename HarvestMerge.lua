@@ -2,7 +2,7 @@ HarvestMerge = {}
 HarvestMerge.chestID = 6
 HarvestMerge.fishID = 8
 
-local internalVersion = 2
+HarvestMerge.internalVersion = 2
 
 -----------------------------------------
 --         HarvestMap Routines         --
@@ -35,6 +35,9 @@ function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeN
     if professionFound <= 0 then
         professionFound = profession
     end
+    if professionFound < 1 or professionFound > 8 then
+        return
+    end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
     if not HarvestMerge.IsValidContainerName(nodeName) then
@@ -49,6 +52,9 @@ function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeN
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
         professionFound = profession
+    end
+    if professionFound < 1 or professionFound > 8 then
+        return
     end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
@@ -66,6 +72,9 @@ function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName
         professionFound = HarvestMerge.GetProfessionType(itemID, nodeName)
     elseif professionFound <= 0 then
         professionFound = profession
+    end
+    if professionFound < 1 or professionFound > 8 then
+        return
     end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
@@ -87,6 +96,9 @@ function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName
         professionFound = HarvestMerge.GetProfessionType(itemID, nodeName)
     elseif professionFound <= 0 then
         professionFound = profession
+    end
+    if professionFound < 1 or professionFound > 8 then
+        return
     end
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
@@ -120,7 +132,7 @@ function HarvestMerge.GetMap()
     return textureName
 end
 
-function changeCounters(counter)
+function HarvestMerge.changeCounters(counter)
     if counter == "false" then
         HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
     end
@@ -170,7 +182,7 @@ function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, s
     end
 
     table.insert( HarvestMerge.savedVars[type].data[zone][profession], { x, y, { nodeName }, itemID } )
-    changeCounters(counter)
+    HarvestMerge.changeCounters(counter)
 
 end
 
@@ -217,7 +229,7 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
                 if profession > 0 then
                     if not HarvestMerge.contains(entry[3], nodeName) then
                         table.insert(entry[3], nodeName)
-                        changeCounters(counter)
+                        HarvestMerge.changeCounters(counter)
                     end
                     if HarvestMerge.internal.debug == 1 then
                         d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
@@ -344,9 +356,9 @@ function HarvestMerge.importFromEsohead()
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
-    d("Number of False Nodes skipped : " .. tostring(HarvestMerge.NumFalseNodes) )
+    d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
-    d("Number of Unlocalized False Nodes skipped : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
+    d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     d("Finished.")
 end
 
@@ -450,9 +462,9 @@ function HarvestMerge.importFromEsoheadMerge()
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
-    d("Number of False Nodes skipped : " .. tostring(HarvestMerge.NumFalseNodes) )
+    d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
-    d("Number of Unlocalized False Nodes skipped : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
+    d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     d("Finished.")
 end
 
@@ -556,9 +568,9 @@ function HarvestMerge.importFromHarvester()
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
-    d("Number of False Nodes skipped : " .. tostring(HarvestMerge.NumFalseNodes) )
+    d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
-    d("Number of Unlocalized False Nodes skipped : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
+    d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     d("Finished.")
 end
 
@@ -601,9 +613,9 @@ function HarvestMerge.importFromHarvestMap()
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
-    d("Number of False Nodes skipped : " .. tostring(HarvestMerge.NumFalseNodes) )
+    d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
-    d("Number of Unlocalized False Nodes skipped : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
+    d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     d("Finished.")
 end
 
@@ -733,8 +745,9 @@ end
 
 function HarvestMerge.OnLoad(eventCode, addOnName)
 
-    HarvestMerge.defaults = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "internal", { 
+    HarvestMerge.internal = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "internal", { 
         debug = false,
+        verbose = false,
         internalVersion = 0, 
         dataVersion = 0, 
         language = ""
@@ -773,7 +786,7 @@ function HarvestMerge.OnLoad(eventCode, addOnName)
         HarvestMerge.updateEsoheadNodes("esoharvest")
         HarvestMerge.updateEsoheadNodes("esochest")
         HarvestMerge.updateEsoheadNodes("esofish")
-        HarvestMerge.internal.internalVersion = internalVersion
+        HarvestMerge.internal.internalVersion = HarvestMerge.internalVersion
     end
 
     if HarvestMerge.internal.debug == 1 then
