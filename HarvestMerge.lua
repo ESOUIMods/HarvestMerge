@@ -3,6 +3,8 @@ HarvestMerge.chestID = 6
 HarvestMerge.fishID = 8
 
 HarvestMerge.internalVersion = 2
+HarvestMerge.dataVersion = 1
+
 
 -----------------------------------------
 --         HarvestMap Routines         --
@@ -16,7 +18,7 @@ function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
             HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
         else
             d("HM : newMapName : unsupported type : " .. type)
-            -- HarvestMerge.saveData("rejected", newMapName, x, y, -1, type, nil, Harvest.minReticleover, "reject" )
+            -- HarvestMerge.saveData("rejected", newMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
         end
 end
 function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
@@ -27,7 +29,7 @@ function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
         HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover, "nonvalid" )
     else
             d("HM : newMapName : unsupported type : " .. type)
-            -- HarvestMerge.saveData("rejected", oldMapName, x, y, -1, type, nil, Harvest.minReticleover, "reject" )
+            -- HarvestMerge.saveData("rejected", oldMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
         end
 end
 
@@ -158,6 +160,11 @@ end
 
 function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, scale, counter )
 
+    -- If the map is on the blacklist then don't log it
+    if HarvestMerge.blacklistMap(zone) then
+        return
+    end
+
     if not profession then
         return
     end
@@ -229,36 +236,40 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
     end
 
     for _, entry in pairs( HarvestMerge.savedVars[type].data[zone][profession] ) do
-        --if entry[3] == nodeName then
-            dx = entry[1] - x
-            dy = entry[2] - y
-            -- (x - center_x)2 + (y - center_y)2 = r2, where center is the player
-            dist = math.pow(dx, 2) + math.pow(dy, 2)
-            if dist < distance then
-                if profession > 0 then
-                    if not HarvestMerge.contains(entry[3], nodeName) then
-                        table.insert(entry[3], nodeName)
-                        HarvestMerge.changeCounters(counter)
-                    end
-                    if HarvestMerge.internal.debug == 1 then
-                        d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
-                    end
-                    return true
-                else
-                    if entry[3][1] == nodeName then
-                        if HarvestMerge.internal.debug == 1 then
-                            d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
-                        end
-                        return true
-                    end
-                end
+
+        dx = entry[1] - x
+        dy = entry[2] - y
+        -- (x - center_x)2 + (y - center_y)2 = r2, where center is the player
+        dist = math.pow(dx, 2) + math.pow(dy, 2)
+        if dist < distance then -- near player location
+            if not HarvestMerge.contains(entry[3], nodeName) then
+                table.insert(entry[3], nodeName)
             end
-        --end
+            if HarvestMerge.internal.debug == 1 then
+                d("Node close to its location inserted into : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. "!")
+            end
+            return true
         end
+    end
     if HarvestMerge.internal.debug == 1 then
         d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " not found!")
     end
     return false
+end
+
+-- formats a number with commas on thousands
+function HarvestMerge.NumberFormat(num)
+    local formatted = num
+    local k
+
+    while true do
+        formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+        if k == 0 then
+            break
+        end
+    end
+
+    return formatted
 end
 
 -----------------------------------------
@@ -717,39 +728,86 @@ SLASH_COMMANDS["/merger"] = function (cmd)
             end
         end
 
-    --[[
+
     elseif commands[1] == "datalog" then
-        d("---")
-        d("Complete list of gathered data:")
-        d("---")
+        if #commands ~= 2 and not HarvestMerge.IsValidCategory(commands[2]) then
+            d("please enter a valid type")
+        else
+            d("---")
+            d("Complete list of gathered data:")
+            d("---")
 
-        local counter = {
-            ["harvest"] = 0,
-            ["chest"] = 0,
-            ["fish"] = 0,
-        }
+            local counter = {
+                ["mining"] = 0,
+                ["cloth"] = 0,
+                ["rune"] = 0,
+                ["alch"] = 0,
+                ["wood"] = 0,
+                ["chest"] = 0,
+                ["solvent"] = 0,
+                ["fish"] = 0,
+            }
 
-        for type,sv in pairs(HarvestMerge.savedVars) do
-            if type ~= "internal" and (type == "chest" or type == "fish") then
-                for zone, t1 in pairs(HarvestMerge.savedVars[type].data) do
-                    counter[type] = counter[type] + #HarvestMerge.savedVars[type].data[zone]
-                end
-            elseif type ~= "internal" then
-                for zone, t1 in pairs(HarvestMerge.savedVars[type].data) do
-                    for data, t2 in pairs(HarvestMerge.savedVars[type].data[zone]) do
-                        counter[type] = counter[type] + #HarvestMerge.savedVars[type].data[zone][data]
+            for type,sv in pairs(HarvestMerge.savedVars) do
+                --[[
+                if type ~= "internal" and (type == "chest" or type == "fish") then
+                    for zone, t1 in pairs(HarvestMerge.savedVars[type].data) do
+                        counter[type] = counter[type] + #HarvestMerge.savedVars[type].data[zone]
                     end
+                ]]--
+                if type ~= "defaults" and type == commands[2] then
+                    for zone, t1 in pairs(HarvestMerge.savedVars[commands[2]].data) do
+                        for provisions, t2 in pairs(HarvestMerge.savedVars[commands[2]].data[zone]) do
+                            if provisions == 1 then
+                                counter["mining"] = counter["mining"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                            if provisions == 2 then
+                                counter["cloth"] = counter["cloth"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                            if provisions == 3 then
+                                counter["rune"] = counter["rune"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                            if provisions == 4 then
+                                counter["alch"] = counter["alch"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                            if provisions == 5 then
+                                counter["wood"] = counter["wood"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                            if provisions == HarvestMerge.chestID then
+                                counter["chest"] = counter["chest"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                            if provisions == 7 then
+                                counter["solvent"] = counter["solvent"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                            if provisions == HarvestMerge.fishID then
+                                counter["fish"] = counter["fish"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                            end
+                        end
+                    end
+                --[[
+                elseif type ~= "internal" then
+                    for zone, t1 in pairs(HarvestMerge.savedVars[type].data) do
+                        for data, t2 in pairs(HarvestMerge.savedVars[type].data[zone]) do
+                            counter[type] = counter[type] + #HarvestMerge.savedVars[type].data[zone][data]
+                        end
+                    end
+                ]]--
                 end
             end
+
+            d("Mining: "          .. HarvestMerge.NumberFormat(counter["mining"]))
+            d("Clothing: "          .. HarvestMerge.NumberFormat(counter["cloth"]))
+            d("Enchanting: "          .. HarvestMerge.NumberFormat(counter["rune"]))
+            d("Alchemy: "          .. HarvestMerge.NumberFormat(counter["alch"]))
+            d("Woodworking: "          .. HarvestMerge.NumberFormat(counter["wood"]))
+            d("Treasure Chests: "  .. HarvestMerge.NumberFormat(counter["chest"]))
+            d("Solvent: "          .. HarvestMerge.NumberFormat(counter["solvent"]))
+            d("Fishing Pools: "    .. HarvestMerge.NumberFormat(counter["fish"]))
+
+            d("---")
         end
-
-        d("Harvest: "          .. HarvestMerge.NumberFormat(counter["harvest"]))
-        d("Treasure Chests: "  .. HarvestMerge.NumberFormat(counter["chest"]))
-        d("Fishing Pools: "    .. HarvestMerge.NumberFormat(counter["fish"]))
-
-        d("---")
-    ]]--
     end
+
 end
 
 SLASH_COMMANDS["/rl"] = function()
@@ -801,6 +859,14 @@ function HarvestMerge.OnLoad(eventCode, addOnName)
         HarvestMerge.updateEsoheadNodes("esochest")
         HarvestMerge.updateEsoheadNodes("esofish")
         HarvestMerge.internal.internalVersion = HarvestMerge.internalVersion
+    end
+
+    if HarvestMerge.internal.dataVersion < HarvestMerge.dataVersion then
+        HarvestMerge.updateHarvestNodes("nodes")
+        HarvestMerge.updateHarvestNodes("mapinvalid")
+        HarvestMerge.updateHarvestNodes("esonodes")
+        HarvestMerge.updateHarvestNodes("esoinvalid")
+        HarvestMerge.internal.dataVersion = HarvestMerge.dataVersion
     end
 
     if HarvestMerge.internal.debug == 1 then

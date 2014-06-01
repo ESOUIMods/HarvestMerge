@@ -605,6 +605,19 @@ HarvestMerge.mapSystem = {
     ["alikr/guardiansorbit_base"] = {"The Guardian's Orbit"},
 }
 
+HarvestMerge.mapBlacklist = {
+    "tamriel/tamriel"
+}
+
+function HarvestMerge.blacklistMap(mapName)
+    for _, mapFound in pairs(HarvestMerge.mapBlacklist) do
+        if mapFound == mapName then
+            return true
+        end
+    end
+    return false
+end
+
 function HarvestMerge.GetNewMapName(mapName)
     local result = nil
     for newMapName, translations in pairs(HarvestMerge.mapSystem) do

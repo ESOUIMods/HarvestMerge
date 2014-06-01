@@ -1,9 +1,24 @@
+##0.2.0
+
+Bugfix
+- Duplicate node verification was too strict
+
+Feature
+- added "/harvest datalog NODETYPE" to return the number of nodes in the database
+For example "/harvest datalog nodes" will tell you how many nodes and what kind are being used by HarvestMap
+
+
+Note: It was reported that craglorn data was made unavailable after 2.4.7.  I need copies of both the HarvestMap.lua and HarvestMerge.lua files in order to resolve and test the issue correctly.  If you can please PM me with a link to a downloadable file from a website I don't have to register for, I would appreciate it.
+
+##0.1.9
+
+Bugfix
+- Fixed debug variable causing error when toggled on
+
 ##0.1.8
 
 Bugfix
 - Normalized importing routines and synced with other addons
-
-Note: It was reported that craglorn data was made unavailable after 2.4.7.  I need copies of both the HarvestMap.lua and HarvestMerge.lua files in order to resolve and test the issue correctly.  If you can please PM me with a link to a downloadable file from a website I don't have to register for, I would appreciate it.
 
 ##0.1.7
 
