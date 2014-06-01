@@ -24,7 +24,7 @@ mapinvalid - the invalid nodes for localized map names
 esonodes - valid nodes for non localized map names
 esoinvalid - invalid nodes for non localized map names
 
-NOTE: When I update the localization HarvestMap automatically moves data from mapinvalid, esonodes, and esoinvalid to nodes.
+NOTE: When I update the localization HarvestMerge automatically moves data from mapinvalid, esonodes, and esoinvalid to nodes.
 
 ```/rl```
 Aliases of the reloadui command
