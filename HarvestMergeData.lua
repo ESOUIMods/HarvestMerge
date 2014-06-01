@@ -785,7 +785,7 @@ function HarvestMerge.GetProfessionType(id, name)
     local tsId
     id = tonumber(id)
 
-    if HarvestMerge.defaults.verbose then
+    if HarvestMerge.internal.verbose then
         d("Attempting GetProfessionType with id : " .. id)
         d("Node Name : " .. name)
     end
@@ -802,7 +802,7 @@ function HarvestMerge.GetProfessionType(id, name)
     -- Set any container found to 0 so that it is not recorded.
     if HarvestMerge.IsValidContainerName(name) then
         tsId = 0
-        if HarvestMerge.defaults.verbose then
+        if HarvestMerge.internal.verbose then
             d("Container is not used in this version id assigned : " .. tsId)
         end
         return tsId
@@ -813,7 +813,7 @@ function HarvestMerge.GetProfessionType(id, name)
         for key2, value in pairs(tsData) do
             if value == id then
                 tsId = key1
-                if HarvestMerge.defaults.verbose then
+                if HarvestMerge.internal.verbose then
                     d("Esohead id assigned : " .. tsId)
                 end
                 return tsId
@@ -821,7 +821,7 @@ function HarvestMerge.GetProfessionType(id, name)
         end
     end
 
-    if HarvestMerge.defaults.verbose then
+    if HarvestMerge.internal.verbose then
         d("No Profession Type found with id : " .. id)
         d("In GetProfessionType with name : " .. name)
     end
