@@ -619,18 +619,18 @@ function HarvestMerge.importFromHarvestMap()
     for newMapName, data in pairs(Harvest.savedVars["nodes"].data) do
         for profession, nodes in pairs(data) do
             for index, node in pairs(nodes) do
+                HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 for contents, nodeName in ipairs(node[3]) do
-                    HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
 
-                        if (nodeName) == "chest" or (nodeName) == "fish" then
-                            HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
-                        else
-                            if node[4] == nil then
-                                HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName)
-                            else -- node[4] which is the ItemID should not be nil at this point
-                                HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
-                            end
-                        end
+                    if (nodeName) == "chest" or (nodeName) == "fish" then
+                        HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
+                    elseif node[4] == nil then
+                        HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName)
+                    elseif node[4] ~= nil then -- node[4] which is the ItemID should not be nil at this point
+                        HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
+                    else
+                        d("I didn't know what to do with the node")
+                    end
 
                 end
             end
@@ -662,6 +662,14 @@ function HarvestMerge.IsValidCategory(name)
     end
 
     return false
+end
+
+function HarvestMerge.getTotals(counter)
+    local totalNodes = 0
+    for counterName, counterValue in pairs(counter) do
+        totalNodes = totalNodes + counterValue
+    end
+    return totalNodes
 end
 
 SLASH_COMMANDS["/merger"] = function (cmd)
@@ -710,7 +718,7 @@ SLASH_COMMANDS["/merger"] = function (cmd)
         end
 
     elseif commands[1] == "reset" then
-        if #commands ~= 2 then 
+        if #commands ~= 2 then
             for type,sv in pairs(HarvestMerge.savedVars) do
                 if type ~= "internal" then
                     HarvestMerge.savedVars[type].data = {}
@@ -795,6 +803,7 @@ SLASH_COMMANDS["/merger"] = function (cmd)
                 end
             end
 
+            local totals = HarvestMerge.getTotals(counter)
             d("Mining: "          .. HarvestMerge.NumberFormat(counter["mining"]))
             d("Clothing: "          .. HarvestMerge.NumberFormat(counter["cloth"]))
             d("Enchanting: "          .. HarvestMerge.NumberFormat(counter["rune"]))
@@ -803,6 +812,7 @@ SLASH_COMMANDS["/merger"] = function (cmd)
             d("Treasure Chests: "  .. HarvestMerge.NumberFormat(counter["chest"]))
             d("Solvent: "          .. HarvestMerge.NumberFormat(counter["solvent"]))
             d("Fishing Pools: "    .. HarvestMerge.NumberFormat(counter["fish"]))
+            d("Total: "    .. HarvestMerge.NumberFormat(totals))
 
             d("---")
         end
@@ -816,11 +826,11 @@ end
 
 function HarvestMerge.OnLoad(eventCode, addOnName)
 
-    HarvestMerge.internal = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "internal", { 
+    HarvestMerge.internal = ZO_SavedVars:NewAccountWide("HarvestMerge_SavedVariables", 2, "internal", {
         debug = 0,
         verbose = false,
-        internalVersion = 0, 
-        dataVersion = 0, 
+        internalVersion = 0,
+        dataVersion = 0,
         language = ""
     })
 

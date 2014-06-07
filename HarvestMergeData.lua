@@ -1,3 +1,146 @@
+HarvestMerge.SolventNodes = { ["en"] = { "Pure Water", "Water Skin", }, ["de"] = { "Reines Wasser", "Wasserhaut", }, ["fr"] = { "Eau Pure", "Outre d'Eau", }, }
+HarvestMerge.PotencyRunes = { ["en"] = "Potency Rune", ["de"] = "Machtrune", ["fr"] = "Rune de Puissance", }
+HarvestMerge.EssenceRunes = { ["en"] = "Essence Rune", ["de"] = "Essenzrune", ["fr"] = "Rune D'essence", }
+HarvestMerge.AspectRunes = { ["en"] = "Aspect Rune", ["de"] = "Aspektrune", ["fr"] = "Rune d'Aspect", }
+
+HarvestMerge.NodeArray = {
+    -- : Mining
+    [1] = {
+        { itemID = 808, nodeName = { ["en"] = "Iron Ore", ["de"] = "Eisenerz", ["fr"] = "Minerai de Fer"}, itemName = {"Iron Ore"} },--V
+        { itemID = 4482, nodeName = { ["en"] = "Calcinium Ore", ["de"] = "Kalciniumerz", ["fr"] = "Minerai de Calcinium"}, itemName = {"Calcinium Ore"} },
+        { itemID = 5820, nodeName = { ["en"] = "High Iron Ore", ["de"] = "Feineisenerz", ["fr"] = "Minerai de Fer Noble"}, itemName = {"High Iron Ore"} },--V
+        { itemID = 23103, nodeName = { ["en"] = "Orichalcum Ore", ["de"] = "Oreichalkoserz", ["fr"] = "Minerai D'orichalque"}, itemName = {"Orichalcum Ore"} },--V
+        { itemID = 23104, nodeName = { ["en"] = "Dwarven Ore", ["de"] = "Dwemererz", ["fr"] = "Minerai Dwemer"}, itemName = {"Dwarven Ore"} },--V
+        { itemID = 23105, nodeName = { ["en"] = "Ebony Ore", ["de"] = "Ebenerz", ["fr"] = "Minerai d'Ebonite"}, itemName = {"Ebony Ore"} },
+        { itemID = 23133, nodeName = { ["en"] = "Galatite Ore", ["de"] = "Galatiterz", ["fr"] = "Minerai de Galatite"}, itemName = {"Galatite Ore"} },
+        { itemID = 23134, nodeName = { ["en"] = "Quicksilver Ore", ["de"] = "Quicksilver Ore", ["fr"] = "Quicksilver Ore"}, itemName = {"Quicksilver Ore"} },
+        { itemID = 23135, nodeName = { ["en"] = "Voidstone Ore", ["de"] = "Leerensteinerz", ["fr"] = "Minerai de Pierre de Vide",}, itemName = {"Voidstone Ore"} },
+    },
+    -- : Clothing
+    [2] = {
+        { itemID = 793, nodeName = {}, itemName = {"Rawhide Scraps"} },
+        { itemID = 800, nodeName = {}, itemName = {"Superb Hide Scraps"} },
+        { itemID = 812, nodeName = { ["en"] = "Jute", ["de"] = "Jute", ["fr"] = "Jute",}, itemName = {"Raw jute"} },--V
+        { itemID = 4448, nodeName = {}, itemName = {"Hide Scraps"} },
+        { itemID = 4464, nodeName = { ["en"] = "Flax", ["de"] = "Flachs", ["fr"] = "Lin"}, itemName = {"Raw Flax"} },--V
+        { itemID = 4478, nodeName = {}, itemName = {"Shadowhide Scraps"} },
+        { itemID = 6020, nodeName = {}, itemName = {"Thick Leather Scraps"} },
+        { itemID = 23095, nodeName = {}, itemName = {"Leather Scraps"} },
+        { itemID = 23097, nodeName = {}, itemName = {"Fell Hide Scraps"} },
+        { itemID = 23129, nodeName = { ["en"] = "Cotton", ["de"] = "Baumwolle", ["fr"] = "Coton"}, itemName = {"Raw Cotton"} },--V
+        { itemID = 23130, nodeName = { ["en"] = "Spidersilk", ["de"] = "Spinnenseide", ["fr"] = "Toile D'araignée",}, itemName = {"Raw Spidersilk"} },
+        { itemID = 23131, nodeName = { ["en"] = "Ebonthread", ["de"] = "Ebenseide", ["fr"] = "Fil d'Ebonite",}, itemName = {"Raw Ebonthread"} },
+        { itemID = 23142, nodeName = {}, itemName = {"Topgrain Hide Scraps"} },
+        { itemID = 23143, nodeName = {}, itemName = {"Iron Hide Scraps"} },
+        { itemID = 33217, nodeName = { ["en"] = "Kreshweed", ["de"] = "Kreshweed", ["fr"] = "Kreshweed",}, itemName = {"Raw Kreshweed"} },
+        { itemID = 33218, nodeName = { ["en"] = "Ironweed", ["de"] = "Eisenkraut", ["fr"] = "Herbe de fer",}, itemName = {"Raw ironweed"} },
+        { itemID = 33219, nodeName = { ["en"] = "Silverweed", ["de"] = "Silverweed", ["fr"] = "Silverweed",}, itemName = {"Raw Silverweed"} },
+        { itemID = 33220, nodeName = { ["en"] = "Void Bloom", ["de"] = "Leere Blüte", ["fr"] = "Tissu de Vide",}, itemName = {"Raw Void Bloom"} },
+    },
+    -- : Enchanting
+    [3] = {
+        { itemID = 45806, nodeName = HarvestMerge.PotencyRunes, itemName = {"Jejora"} },
+        { itemID = 45807, nodeName = HarvestMerge.PotencyRunes, itemName = {"Odra"} },
+        { itemID = 45808, nodeName = HarvestMerge.PotencyRunes, itemName = {"Pojora"} },
+        { itemID = 45809, nodeName = HarvestMerge.PotencyRunes, itemName = {"Edora"} },
+        { itemID = 45810, nodeName = HarvestMerge.PotencyRunes, itemName = {"Jaera"} },
+        { itemID = 45811, nodeName = HarvestMerge.PotencyRunes, itemName = {"Pora"} },
+        { itemID = 45812, nodeName = HarvestMerge.PotencyRunes, itemName = {"Denara"} },
+        { itemID = 45813, nodeName = HarvestMerge.PotencyRunes, itemName = {"Rera"} },
+        { itemID = 45814, nodeName = HarvestMerge.PotencyRunes, itemName = {"Derado"} },
+        { itemID = 45815, nodeName = HarvestMerge.PotencyRunes, itemName = {"Recura"} },
+        { itemID = 45816, nodeName = HarvestMerge.PotencyRunes, itemName = {"Cura"} },
+        { itemID = 45817, nodeName = HarvestMerge.PotencyRunes, itemName = {"Jode"} },
+        { itemID = 45818, nodeName = HarvestMerge.PotencyRunes, itemName = {"Notade"} },
+        { itemID = 45819, nodeName = HarvestMerge.PotencyRunes, itemName = {"Ode"} },
+        { itemID = 45820, nodeName = HarvestMerge.PotencyRunes, itemName = {"Tade"} },
+        { itemID = 45821, nodeName = HarvestMerge.PotencyRunes, itemName = {"Jayde"} },
+        { itemID = 45822, nodeName = HarvestMerge.PotencyRunes, itemName = {"Edode"} },
+        { itemID = 45823, nodeName = HarvestMerge.PotencyRunes, itemName = {"Pojode"} },
+        { itemID = 45824, nodeName = HarvestMerge.PotencyRunes, itemName = {"Rekude"} },
+        { itemID = 45825, nodeName = HarvestMerge.PotencyRunes, itemName = {"Hade"} },
+        { itemID = 45826, nodeName = HarvestMerge.PotencyRunes, itemName = {"Idode"} },
+        { itemID = 45827, nodeName = HarvestMerge.PotencyRunes, itemName = {"Pode"} },
+        { itemID = 45828, nodeName = HarvestMerge.PotencyRunes, itemName = {"Kedeko"} },
+        { itemID = 45829, nodeName = HarvestMerge.PotencyRunes, itemName = {"Rede"} },
+        { itemID = 45830, nodeName = HarvestMerge.PotencyRunes, itemName = {"Kude"} },
+        { itemID = 45831, nodeName = HarvestMerge.EssenceRunes, itemName = {"Oko"} },
+        { itemID = 45832, nodeName = HarvestMerge.EssenceRunes, itemName = {"Makko"} },
+        { itemID = 45833, nodeName = HarvestMerge.EssenceRunes, itemName = {"Deni"} },
+        { itemID = 45834, nodeName = HarvestMerge.EssenceRunes, itemName = {"Okoma"} },
+        { itemID = 45835, nodeName = HarvestMerge.EssenceRunes, itemName = {"Makkoma"} },
+        { itemID = 45836, nodeName = HarvestMerge.EssenceRunes, itemName = {"Denima"} },
+        { itemID = 45837, nodeName = HarvestMerge.EssenceRunes, itemName = {"Kuoko"} },
+        { itemID = 45838, nodeName = HarvestMerge.EssenceRunes, itemName = {"Rakeipa"} },
+        { itemID = 45839, nodeName = HarvestMerge.EssenceRunes, itemName = {"Dekeipa"} },
+        { itemID = 45840, nodeName = HarvestMerge.EssenceRunes, itemName = {"Meip"} },
+        { itemID = 45841, nodeName = HarvestMerge.EssenceRunes, itemName = {"Haoko"} },
+        { itemID = 45842, nodeName = HarvestMerge.EssenceRunes, itemName = {"Deteri"} },
+        { itemID = 45843, nodeName = HarvestMerge.EssenceRunes, itemName = {"Okori"} },
+        { itemID = 45844, nodeName = HarvestMerge.EssenceRunes, itemName = {"Jaedi"} },
+        { itemID = 45845, nodeName = HarvestMerge.EssenceRunes, itemName = {"Lire"} },
+        { itemID = 45846, nodeName = HarvestMerge.EssenceRunes, itemName = {"Oru"} },
+        { itemID = 45847, nodeName = HarvestMerge.EssenceRunes, itemName = {"Taderi"} },
+        { itemID = 45848, nodeName = HarvestMerge.EssenceRunes, itemName = {"Makderi"} },
+        { itemID = 45849, nodeName = HarvestMerge.EssenceRunes, itemName = {"Kaderi"} },
+        { itemID = 45850, nodeName = HarvestMerge.AspectRunes, itemName = {"Ta"} },
+        { itemID = 45851, nodeName = HarvestMerge.AspectRunes, itemName = {"Jejota"} },
+        { itemID = 45852, nodeName = HarvestMerge.AspectRunes, itemName = {"Denata"} },
+        { itemID = 45853, nodeName = HarvestMerge.AspectRunes, itemName = {"Rekuta"} },
+        { itemID = 45854, nodeName = HarvestMerge.AspectRunes, itemName = {"Kuta"} },
+        { itemID = 45855, nodeName = HarvestMerge.PotencyRunes, itemName = {"Jora"} },
+        { itemID = 45856, nodeName = HarvestMerge.PotencyRunes, itemName = {"Porade"} },
+        { itemID = 45857, nodeName = HarvestMerge.PotencyRunes, itemName = {"Jera"} },
+    },
+    -- : Alchemy
+    [4] = {
+        { itemID = 30148, nodeName = { ["en"] = "Entoloma", ["de"] = "Glöckling", ["fr"] = "Entoloma",}, itemName = {"Blue Entoloma"} },
+        { itemID = 30149, nodeName = { ["en"] = "Stinkhorn", ["de"] = "Stinkmorchel", ["fr"] = "Mutinus Elégans",}, itemName = {"Stinkhorn"} },
+        { itemID = 30151, nodeName = { ["en"] = "Emetic Russula", ["de"] = "Brechtäubling", ["fr"] = "Russule Emetique",}, itemName = {"Emetic Russula"} },
+        { itemID = 30152, nodeName = { ["en"] = "Violet Coprinus", ["de"] = "Violetter Tintling", ["fr"] = "Coprin Violet",}, itemName = {"Violet Copninus"} },
+        { itemID = 30153, nodeName = { ["en"] = "Namira's Rot", ["de"] = "Namiras Fäulnis", ["fr"] = "Truffe de Namira",}, itemName = {"Namira's Rot"} },
+        { itemID = 30154, nodeName = { ["en"] = "White Cap", ["de"] = "Weißkappe", ["fr"] = "Chapeau Blanc",}, itemName = {"White Cap"} },
+        { itemID = 30155, nodeName = { ["en"] = "Luminous Russula", ["de"] = "Leuchttäubling", ["fr"] = "Russule Phosphorescente",}, itemName = {"Luminous Russula"} },
+        { itemID = 30156, nodeName = { ["en"] = "Imp Stool", ["de"] = "Koboldschemel", ["fr"] = "Pied-de-Lutin",}, itemName = {"Imp Stool"} },
+        { itemID = 30157, nodeName = { ["en"] = "Blessed Thistle", ["de"] = "Benediktenkraut", ["fr"] = "Chardon Béni",}, itemName = {"Blessed Thistle"} },
+        { itemID = 30158, nodeName = { ["en"] = "Lady's Smock", ["de"] = "Wiesenschaumkraut", ["fr"] = "Cardamine des Prés",}, itemName = {"Lady's Smock"} },
+        { itemID = 30159, nodeName = { ["en"] = "Wormwood", ["de"] = "Wermut", ["fr"] = "Absinthe",}, itemName = {"Wormwood"} },
+        { itemID = 30160, nodeName = { ["en"] = "Bugloss", ["de"] = "Wolfsauge", ["fr"] = "Noctuelle",}, itemName = {"Bugloss"} },
+        { itemID = 30161, nodeName = { ["en"] = "Corn Flower", ["de"] = "Kornblume", ["fr"] = "Bleuet",}, itemName = {"Corn Flower"} },
+        { itemID = 30162, nodeName = { ["en"] = "Dragonthorn", ["de"] = "Drachendorn", ["fr"] = "Épine-de-Dragon",}, itemName = {"Dragonthorn"} },
+        { itemID = 30163, nodeName = { ["en"] = "Mountain Flower", ["de"] = "Bergblume", ["fr"] = "Lys des Cimes",}, itemName = {"Mountain Flower"} },
+        { itemID = 30164, nodeName = { ["en"] = "Columbine", ["de"] = "Akelei", ["fr"] = "Ancolie",}, itemName = {"Columbine"} },
+        { itemID = 30165, nodeName = { ["en"] = "Nirnroot", ["de"] = "Nirnwurz", ["fr"] = "Nirnrave",}, itemName = {"Nirnroot"} },
+        { itemID = 30166, nodeName = { ["en"] = "Water Hyacinth", ["de"] = "Wasserhyazinthe", ["fr"] = "Jacinthe D'eau",}, itemName = {"Water Hyacinth"} },
+    },
+    -- : Wood ; In Esohead Wood is (6)
+    [5] = {
+        { itemID = 521, nodeName = { ["en"] = "Oak", ["de"] = "Eiche", ["fr"] = "Chêne",}, itemName = {"Rough Oak"} },
+        { itemID = 802, nodeName = { ["en"] = "Maple", ["de"] = "Ahornholz", ["fr"] = "Érable",}, itemName = {"Rough Maple"} },
+        { itemID = 818, nodeName = { ["en"] = "Birch", ["de"] = "Birkenholz", ["fr"] = "Bouleau",}, itemName = {"Rough Birch"} },
+        { itemID = 4439, nodeName = { ["en"] = "Ashtree", ["de"] = "Eschenholz", ["fr"] = "Frêne",}, itemName = {"Rough Ash"} },
+        { itemID = 23117, nodeName = { ["en"] = "Beech", ["de"] = "Buche", ["fr"] = "Hêtre",}, itemName = {"Rough Beech"} },
+        { itemID = 23118, nodeName = { ["en"] = "Hickory", ["de"] = "Hickoryholz", ["fr"] = "Hickory",}, itemName = {"Rough Hickory"} },
+        { itemID = 23119, nodeName = { ["en"] = "Yew", ["de"] = "Eibenholz", ["fr"] = "If",}, itemName = {"Rough Yew"} },
+        { itemID = 23137, nodeName = { ["en"] = "Mahogany", ["de"] = "Mahagoniholz", ["fr"] = "Acajou",}, itemName = {"Rough Mahogany"} },
+        { itemID = 23138, nodeName = { ["en"] = "Nightwood", ["de"] = "Nachtholz", ["fr"] = "Bois de nuit",}, itemName = {"Rough Nightwood"} },
+    },
+    [6] = {
+    },
+    -- : Solvent
+    [7] = {
+        { itemID = 883, nodeName = HarvestMerge.SolventNodes, itemName = {"Natural Water"} }, --V
+        { itemID = 1187, nodeName = HarvestMerge.SolventNodes, itemName = {"Clear Water"} }, --V
+        { itemID = 4570, nodeName = HarvestMerge.SolventNodes, itemName = {"Pristine Water"} }, --V
+        { itemID = 23265, nodeName = HarvestMerge.SolventNodes, itemName = {"Cleansed Water"} }, --V
+        { itemID = 23266, nodeName = HarvestMerge.SolventNodes, itemName = {"Filtered Water"} }, --V
+        { itemID = 23267, nodeName = HarvestMerge.SolventNodes, itemName = {"Purified Water"} }, --V
+        { itemID = 23268, nodeName = HarvestMerge.SolventNodes, itemName = {"Cloud Mist"} }, --V
+    },
+    [8] = {
+    },
+}
+
 HarvestMerge.professions = {
     -- : Mining
     [1] = {
@@ -136,13 +279,7 @@ HarvestMerge.professions = {
         23137,
         23138,
     },
--- These additional elements in the array are here for consistency in how
--- the arrays are already handled.  It is also appended in this way for
--- compatibility with the data already collected by users.  Chests are already
--- handled separately.
---
 -- 6 = Chest, 7 = Solvent, 8 = Fish
--- 45036, -- This is a Chest you unlock
     [6] = {
     },
     [7] = {
@@ -157,16 +294,7 @@ HarvestMerge.professions = {
     [8] = {
     },
 }
--- Books is the exception such that there may be a way to record lore books
--- that are always in the same location and usable only once like Skyshards.
---
--- Esohead uses the same ItemID for multiple items.  Therefore maintaining
--- a list based on the item number would become useless bloat in a file.
--- All items looted in ESO are containers.  Such that Jute is a container
--- it just gives you Jute.  a Crate is a container that gives you food items.
--- Therefore the name of the item collected will dictate it's category
--- rather than the Item's ID number.
---
+-- Node Names
 -- (1) Mining
 HarvestMerge.mining = {
     ["en"] = {
@@ -206,7 +334,6 @@ HarvestMerge.mining = {
         "Minerai de Pierre de Vide",
     },
 }
-
 -- (2) Clothing
 HarvestMerge.clothing = {
     ["en"] = {
@@ -284,7 +411,7 @@ HarvestMerge.alchemy = {
         "Namira's Rot",
         "Nirnroot",
         "Stinkhorn",
-        "Violet Copninus",
+        "Violet Coprinus",
         "Water Hyacinth",
         "White Cap",
         "Wormwood",
@@ -366,13 +493,7 @@ HarvestMerge.woodworking = {
         "If",
     },
 }
-
--- 7 = Solvent: These need verification to see
--- if all of them have Solvents in then
--- 1187 Clear Water, Pure Water, Deshaan
--- 23265 Cleansed Water, Pure Water, TheRift
--- Bottles Give Beverages, but can give a Solvent like Clear Water
--- Wine Racks can give Solvent like Clear Water, needs more research
+-- 7 = Solvent
 HarvestMerge.solvent = {
     ["en"] = {
         -- "Bottle",
@@ -417,7 +538,6 @@ HarvestMerge.solvent = {
         -- "Casier ŕ bouteilles",
     },
 }
-
 -- 8 = Container
 HarvestMerge.container = {
     ["en"] = {
@@ -494,28 +614,6 @@ HarvestMerge.container = {
         "Urne",
         "Vase",
         "Garde-robe",
-    },
-}
-
--- : Books
-HarvestMerge.books = {
-    ["en"] = {
-        "Book",
-        "Book Stack",
-        "Books",
-        "Bookshelf",
-    },
-    ["de"] = {
-        "Buch",
-        "Buchstapel",
-        "Bücher",
-        "Bücherregal",
-    },
-    ["fr"] = {
-        "Livre",
-        "Pile de livres",
-        "Livres",
-        "Étagère",
     },
 }
 
@@ -669,6 +767,7 @@ function HarvestMerge.IsValidWoodworkingName(name)
     return false
 end
 
+-- (7)Woodworking
 function HarvestMerge.IsValidSolventName(name)
     for lang, langs in pairs(HarvestMerge.langs) do
         for k, v in pairs(HarvestMerge.solvent[langs]) do
