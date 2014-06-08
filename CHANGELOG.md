@@ -1,3 +1,12 @@
+##0.2.1
+
+Updates
+- Updated localization routines[1][2]
+- Updated auto update routines for when localization has changed
+
+[1] Upon further investigation HarvestMap versions 2.4.7, 2.4.8, and 2.4.9 would not have handled Cgarlorn data correctly due to lack of localization information from Esohead.com.  This has been resolved.  All versions of HarvestMap 2.5.0 or newer handle Craglorn data.  HarvestMap will automatically move Craglorn data to the pool of usable data for map pins.
+[2] Upon further investigation HarvestMerge version 0.1.4 had some Craglorn support.  HarvestMerge versions 0.1.5 or newer handle Craglorn data.  HarvestMerge will automatically move Craglorn data to the pool of usable data for importing into HarvestMap.
+
 ##0.2.0
 
 Bugfix
@@ -8,7 +17,7 @@ Feature
 For example "/harvest datalog nodes" will tell you how many nodes and what kind are being used by HarvestMap
 
 
-Note: It was reported that craglorn data was made unavailable after 2.4.7.  I need copies of both the HarvestMap.lua and HarvestMerge.lua files in order to resolve and test the issue correctly.  If you can please PM me with a link to a downloadable file from a website I don't have to register for, I would appreciate it.
+It was reported that Craglorn data was made unavailable after 2.4.7 of Harvestmap.  I could still use backups of HarvestMap.lua from 2.4.0 to 2.4.6 and 2.5.0 or higher.  All versions of HarvestMpa 2.5.0 or higher have proper Craglorn support.  HarvestMap will automatically move Craglorn data to the pool of usable data for map pins.
 
 ##0.1.9
 

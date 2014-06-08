@@ -3,7 +3,7 @@ HarvestMerge.chestID = 6
 HarvestMerge.fishID = 8
 
 HarvestMerge.internalVersion = 2
-HarvestMerge.dataVersion = 1
+HarvestMerge.dataVersion = 2
 
 
 -----------------------------------------
@@ -12,25 +12,26 @@ HarvestMerge.dataVersion = 1
 
 function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-        if type == "fish" then
-            HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.fishID, type, nil, HarvestMerge.minReticleover, "valid" )
-        elseif type == "chest" then
-            HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
-        else
-            d("HM : newMapName : unsupported type : " .. type)
-            -- HarvestMerge.saveData("rejected", newMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
-        end
+    if type == "fish" then
+        HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.fishID, type, nil, HarvestMerge.minReticleover, "valid" )
+    elseif type == "chest" then
+        HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
+    else
+        d("HM : newMapName : unsupported type : " .. type)
+        -- HarvestMerge.saveData("rejected", newMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
+    end
 end
+
 function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if type == HarvestMerge.chestID then
-        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.chestID, "chest", nil, HarvestMerge.minReticleover, "nonvalid" )
-    elseif type == HarvestMerge.fishID then
-        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, "fish", nil, HarvestMerge.minReticleover, "nonvalid" )
+    if type == "fish" then
+        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, type, nil, HarvestMerge.minReticleover, "nonvalid" )
+    elseif type == "chest" then
+        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "nonvalid" )
     else
-            d("HM : newMapName : unsupported type : " .. type)
-            -- HarvestMerge.saveData("rejected", oldMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
-        end
+        d("HM : newMapName : unsupported type : " .. type)
+        -- HarvestMerge.saveData("rejected", oldMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
+    end
 end
 
 function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeName)
@@ -349,7 +350,7 @@ function HarvestMerge.importFromEsohead()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest(HarvestMerge.chestID, map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
             end
         end
     end
@@ -369,7 +370,7 @@ function HarvestMerge.importFromEsohead()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest(HarvestMerge.fishID, map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
             end
         end
     end
@@ -457,7 +458,7 @@ function HarvestMerge.importFromEsoheadMerge()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest(HarvestMerge.chestID, map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
             end
         end
     end
@@ -477,7 +478,7 @@ function HarvestMerge.importFromEsoheadMerge()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest(HarvestMerge.fishID, map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
             end
         end
     end
@@ -565,7 +566,7 @@ function HarvestMerge.importFromHarvester()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest(HarvestMerge.chestID, map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
             end
         end
     end
@@ -585,7 +586,7 @@ function HarvestMerge.importFromHarvester()
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest(HarvestMerge.fishID, map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
             end
         end
     end
@@ -709,7 +710,7 @@ SLASH_COMMANDS["/merger"] = function (cmd)
 
     elseif #commands == 2 and commands[1] == "update" then
         if  HarvestMerge.IsValidCategory(commands[2]) then
-             HarvestMerge.updateNodes(commands[2])
+             HarvestMerge.updateHarvestNodes(commands[2])
         else
             d("Please enter a valid HarvestMerge category to update")
             d("Valid categories are mapinvalid, esonodes, esoinvalid,")
