@@ -2,9 +2,60 @@ HarvestMerge = {}
 HarvestMerge.chestID = 6
 HarvestMerge.fishID = 8
 
-HarvestMerge.internalVersion = 2
-HarvestMerge.dataVersion = 2
+HarvestMerge.internalVersion = 3
+HarvestMerge.dataVersion = 3
 
+
+-----------------------------------------
+--           Debug Logger              --
+-----------------------------------------
+
+local function EmitMessage(text)
+    if(CHAT_SYSTEM)
+    then
+        if(text == "")
+        then
+            text = "[Empty String]"
+        end
+
+        CHAT_SYSTEM:AddMessage(text)
+    end
+end
+
+local function EmitTable(t, indent, tableHistory)
+    indent          = indent or "."
+    tableHistory    = tableHistory or {}
+
+    for k, v in pairs(t)
+    do
+        local vType = type(v)
+
+        EmitMessage(indent.."("..vType.."): "..tostring(k).." = "..tostring(v))
+
+        if(vType == "table")
+        then
+            if(tableHistory[v])
+            then
+                EmitMessage(indent.."Avoiding cycle on table...")
+            else
+                tableHistory[v] = true
+                EmitTable(v, indent.."  ", tableHistory)
+            end
+        end
+    end
+end
+
+function HarvestMerge.Debug(...)
+    for i = 1, select("#", ...) do
+        local value = select(i, ...)
+        if(type(value) == "table")
+        then
+            EmitTable(value)
+        else
+            EmitMessage(tostring (value))
+        end
+    end
+end
 
 -----------------------------------------
 --         HarvestMap Routines         --
@@ -212,6 +263,15 @@ function HarvestMerge.contains(table, value)
     return nil
 end
 
+function HarvestMerge.duplicateName(table, value)
+    for key, v in pairs(table) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+
 function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale, counter )
 
     -- If this check is not here the next routine will fail
@@ -242,12 +302,20 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
         dy = entry[2] - y
         -- (x - center_x)2 + (y - center_y)2 = r2, where center is the player
         dist = math.pow(dx, 2) + math.pow(dy, 2)
+        local duplicate
         if dist < distance then -- near player location
-            if not HarvestMerge.contains(entry[3], nodeName) then
+            duplicate = HarvestMerge.duplicateName(entry[3], nodeName)
+            if not duplicate then
                 table.insert(entry[3], nodeName)
-            end
-            if HarvestMerge.internal.debug == 1 then
-                d("Node close to its location inserted into : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. "!")
+                if HarvestMerge.internal.debug then
+                    d("Node close to this location inserted into : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. "!")
+                end
+            elseif duplicate then
+                if HarvestMerge.internal.debug then
+                    d("Node at this location : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. "!")
+                end
+            else
+                d("Didn't know what to do with the node")
             end
             return true
         end

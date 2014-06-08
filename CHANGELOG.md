@@ -1,3 +1,8 @@
+##0.2.2
+
+Update
+- Updated import routines and duplicate node detection to be inline with HarvestMap for greater accuracy
+
 ##0.2.1
 
 Updates
