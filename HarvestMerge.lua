@@ -69,6 +69,7 @@ function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
         HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
     else
         d("HM : newMapName : unsupported type : " .. type)
+        -- HarvestMerge.saveData("rejected", newMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
     end
 end
 
@@ -79,39 +80,19 @@ function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
     elseif type == "chest" then
         HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "nonvalid" )
     else
-        d("HM : oldMapName : unsupported type : " .. type)
+        d("HM : newMapName : unsupported type : " .. type)
+        -- HarvestMerge.saveData("rejected", oldMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
     end
 end
 
 function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeName)
-    local itemIDFound
-    local nameFound
-    if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        if nodeName ~= nil then 
-            itemIDFound = HarvestMerge.GetItemIDFromItemName(nodeName)
-        end
-
-        nameFound = HarvestMerge.GetItemNameFromItemID(itemID)
-        if nodeName == nil and nameFound ~= nil then
-            nodeName = nameFound
-        elseif nodeName ~= nil and nameFound ~= nil then
-            if nodeName ~= nameFound then
-                nodeName = nameFound
-            end
-        end
-    end
-
-    local itemID
-    if itemIDFound ~= nil then
-        itemID = itemIDFound
-    end
-
     local professionFound
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", newMapName, x, y, professionFound, type, nil, nil, "reject" )
         return
     end
 
@@ -124,34 +105,13 @@ function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeN
 end
 
 function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeName)
-    local itemIDFound
-    local nameFound
-    if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        if nodeName ~= nil then 
-            itemIDFound = HarvestMerge.GetItemIDFromItemName(nodeName)
-        end
-
-        nameFound = HarvestMerge.GetItemNameFromItemID(itemID)
-        if nodeName == nil and nameFound ~= nil then
-            nodeName = nameFound
-        elseif nodeName ~= nil and nameFound ~= nil then
-            if nodeName ~= nameFound then
-                nodeName = nameFound
-            end
-        end
-    end
-
-    local itemID
-    if itemIDFound ~= nil then
-        itemID = itemIDFound
-    end
-
     local professionFound
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", oldMapName, x, y, professionFound, type, nil, nil, "reject" )
         return
     end
 
@@ -164,23 +124,6 @@ function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeN
 end
 
 function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName, itemID)
-    local itemIDFound
-    local nameFound
-    if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        if nodeName ~= nil then 
-            itemIDFound = HarvestMerge.GetItemIDFromItemName(nodeName)
-        end
-
-        nameFound = HarvestMerge.GetItemNameFromItemID(itemID)
-        if nodeName == nil and nameFound ~= nil then
-            nodeName = nameFound
-        elseif nodeName ~= nil and nameFound ~= nil then
-            if nodeName ~= nameFound then
-                nodeName = nameFound
-            end
-        end
-    end
-
     local professionFound = 0
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
@@ -189,6 +132,7 @@ function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", newMapName, x, y, professionFound, nodeName, itemID, nil, "reject" )
         return
     end
 
@@ -205,23 +149,6 @@ function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName
 end
 
 function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName, itemID)
-    local itemIDFound
-    local nameFound
-    if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        if nodeName ~= nil then 
-            itemIDFound = HarvestMerge.GetItemIDFromItemName(nodeName)
-        end
-
-        nameFound = HarvestMerge.GetItemNameFromItemID(itemID)
-        if nodeName == nil and nameFound ~= nil then
-            nodeName = nameFound
-        elseif nodeName ~= nil and nameFound ~= nil then
-            if nodeName ~= nameFound then
-                nodeName = nameFound
-            end
-        end
-    end
-
     local professionFound = 0
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
@@ -230,6 +157,7 @@ function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName
         professionFound = profession
     end
     if professionFound < 1 or professionFound > 8 then
+        -- HarvestMerge.saveData("rejected", oldMapName, x, y, professionFound, nodeName, itemID, nil, "reject" )
         return
     end
 
@@ -269,13 +197,13 @@ function HarvestMerge.changeCounters(counter)
         HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
     end
     if counter == "valid" then
-        HarvestMerge.NumNodesAdded = HarvestMerge.NumNodesAdded + 1
+        HarvestMerge.NumbersNodesAdded = HarvestMerge.NumbersNodesAdded + 1
+    end
+    if counter == "nonvalid" then
+        HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
     end
     if counter == "nonfalse" then
         HarvestMerge.NumUnlocalizedFalseNodes = HarvestMerge.NumUnlocalizedFalseNodes + 1
-    end
-    if counter == "nonvalid" then
-        HarvestMerge.NumUnlocalizedNodesAdded = HarvestMerge.NumUnlocalizedNodesAdded + 1
     end
     if counter == "reject" then
         HarvestMerge.NumRejectedNodes = HarvestMerge.NumRejectedNodes + 1
@@ -335,6 +263,15 @@ function HarvestMerge.contains(table, value)
     return nil
 end
 
+function HarvestMerge.returnNameFound(table, value)
+    for key, name in pairs(table) do
+        if name == value then
+            return name
+        end
+    end
+    return nil
+end
+
 function HarvestMerge.duplicateName(table, value)
     for key, v in pairs(table) do
         if v == value then
@@ -345,13 +282,6 @@ function HarvestMerge.duplicateName(table, value)
 end
 
 function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale, counter )
-
-    -- If this check is not here the next routine will fail
-    -- after the loading screen because for a brief moment
-    -- the information is not available.
-    if HarvestMerge.savedVars[type] == nil then
-        return
-    end
 
     if not HarvestMerge.savedVars[type].data[zone] then
         return false
@@ -368,32 +298,30 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
         distance = scale
     end
 
+    local dx, dy
     for _, entry in pairs( HarvestMerge.savedVars[type].data[zone][profession] ) do
-
         dx = entry[1] - x
         dy = entry[2] - y
         -- (x - center_x)2 + (y - center_y)2 = r2, where center is the player
         dist = math.pow(dx, 2) + math.pow(dy, 2)
-        local duplicate
+        -- dist2 = dx * dx + dy * dy
+        -- HarvestMerge.Debug(dist .. " : " .. dist2)
         if dist < distance then -- near player location
-            duplicate = HarvestMerge.duplicateName(entry[3], nodeName)
-            if not duplicate then
+            if not HarvestMerge.duplicateName(entry[3], nodeName) then
+                local nodeFound = HarvestMerge.returnNameFound(entry[3], nodeName)
+                if nodeFound ~= nil and HarvestMerge.defaults.debug then
+                    d("Insterted into Node: " .. nodeFound)
+                end
                 table.insert(entry[3], nodeName)
-                if HarvestMerge.internal.debug then
-                    d("Node close to this location inserted into : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. "!")
-                end
-            elseif duplicate then
-                if HarvestMerge.internal.debug then
-                    d("Node at this location : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. "!")
-                end
-            else
-                d("Didn't know what to do with the node")
+            end
+            if HarvestMerge.defaults.debug then
+                d("Node:" .. nodeName .. " on: " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
             end
             return true
         end
     end
-    if HarvestMerge.internal.debug == 1 then
-        d("Node : " .. nodeName .. " on : " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " not found!")
+    if HarvestMerge.defaults.debug then
+        d("Node:" .. nodeName .. " on: " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " not found!")
     end
     return false
 end
@@ -418,13 +346,13 @@ end
 -----------------------------------------
 
 function HarvestMerge.importFromEsohead()
-    HarvestMerge.NumNodesAdded = 0
+    HarvestMerge.NumbersNodesAdded = 0
     HarvestMerge.NumFalseNodes = 0
     HarvestMerge.NumContainerSkipped = 0
     HarvestMerge.NumbersNodesFiltered = 0
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
-    HarvestMerge.NumUnlocalizedNodesAdded = 0
+    HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
 
     if not EH then
@@ -516,23 +444,23 @@ function HarvestMerge.importFromEsohead()
     end
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
-    d("Number of nodes added : " .. tostring(HarvestMerge.NumNodesAdded) )
+    d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
-    d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedNodesAdded) )
+    d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
     d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
 
 function HarvestMerge.importFromEsoheadMerge()
-    HarvestMerge.NumNodesAdded = 0
+    HarvestMerge.NumbersNodesAdded = 0
     HarvestMerge.NumFalseNodes = 0
     HarvestMerge.NumContainerSkipped = 0
     HarvestMerge.NumbersNodesFiltered = 0
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
-    HarvestMerge.NumUnlocalizedNodesAdded = 0
+    HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
 
     if not EHM then
@@ -624,23 +552,23 @@ function HarvestMerge.importFromEsoheadMerge()
     end
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
-    d("Number of nodes added : " .. tostring(HarvestMerge.NumNodesAdded) )
+    d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
-    d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedNodesAdded) )
+    d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
     d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
 
 function HarvestMerge.importFromHarvester()
-    HarvestMerge.NumNodesAdded = 0
+    HarvestMerge.NumbersNodesAdded = 0
     HarvestMerge.NumFalseNodes = 0
     HarvestMerge.NumContainerSkipped = 0
     HarvestMerge.NumbersNodesFiltered = 0
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
-    HarvestMerge.NumUnlocalizedNodesAdded = 0
+    HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
 
     if not Harvester then
@@ -732,23 +660,23 @@ function HarvestMerge.importFromHarvester()
     end
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
-    d("Number of nodes added : " .. tostring(HarvestMerge.NumNodesAdded) )
+    d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
-    d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedNodesAdded) )
+    d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
     d("Number of Unlocalized False Nodes saved : " .. tostring(HarvestMerge.NumUnlocalizedFalseNodes) )
     -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
 
 function HarvestMerge.importFromHarvestMap()
-    HarvestMerge.NumNodesAdded = 0
+    HarvestMerge.NumbersNodesAdded = 0
     HarvestMerge.NumFalseNodes = 0
     HarvestMerge.NumContainerSkipped = 0
     HarvestMerge.NumbersNodesFiltered = 0
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
-    HarvestMerge.NumUnlocalizedNodesAdded = 0
+    HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
 
     if not Harvest then
@@ -779,7 +707,7 @@ function HarvestMerge.importFromHarvestMap()
     end
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
-    d("Number of nodes added : " .. tostring(HarvestMerge.NumNodesAdded) )
+    d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
     -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
     d("Finished.")
 end
@@ -1010,10 +938,7 @@ function HarvestMerge.OnLoad(eventCode, addOnName)
         HarvestMerge.updateEsoheadNodes("esochest")
         HarvestMerge.updateEsoheadNodes("esofish")
         HarvestMerge.internal.internalVersion = HarvestMerge.internalVersion
-    elseif HarvestMerge.internal.internalVersion ~= HarvestMerge.internalVersion then
-        HarvestMerge.internal.internalVersion = HarvestMerge.internalVersion
     end
-        
 
     if HarvestMerge.internal.dataVersion < HarvestMerge.dataVersion then
         HarvestMerge.updateHarvestNodes("nodes")
@@ -1048,13 +973,13 @@ function HarvestMerge.Initialize()
     HarvestMerge.minDist = 0.000025 -- 0.005^2
     HarvestMerge.minReticleover = 0.000049 -- 0.007^2
 
-    HarvestMerge.NumNodesAdded = 0
+    HarvestMerge.NumbersNodesAdded = 0
     HarvestMerge.NumFalseNodes = 0
     HarvestMerge.NumContainerSkipped = 0
     HarvestMerge.NumbersNodesFiltered = 0
     HarvestMerge.NumNodesProcessed = 0
     HarvestMerge.NumUnlocalizedFalseNodes = 0
-    HarvestMerge.NumUnlocalizedNodesAdded = 0
+    HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
 
 end
