@@ -1,3 +1,11 @@
+##0.2.3
+
+Bugfix
+- updated version detection for HarvestMap
+
+Update
+- Simplified duplicate node detection routine
+
 ##0.2.2
 
 Update

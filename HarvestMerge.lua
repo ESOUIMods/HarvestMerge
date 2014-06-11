@@ -3,7 +3,7 @@ HarvestMerge.chestID = 6
 HarvestMerge.fishID = 8
 
 HarvestMerge.internalVersion = 3
-HarvestMerge.dataVersion = 3
+HarvestMerge.dataVersion = 4
 
 
 -----------------------------------------
@@ -946,6 +946,10 @@ function HarvestMerge.OnLoad(eventCode, addOnName)
         HarvestMerge.updateHarvestNodes("esonodes")
         HarvestMerge.updateHarvestNodes("esoinvalid")
         HarvestMerge.internal.dataVersion = HarvestMerge.dataVersion
+    end
+
+    if HarvestMerge.internal.internalVersion ~= HarvestMerge.internalVersion then
+        HarvestMerge.internal.internalVersion = HarvestMerge.internalVersion
     end
 
     if HarvestMerge.internal.debug == 1 then
