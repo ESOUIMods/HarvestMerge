@@ -309,18 +309,18 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
         if dist < distance then -- near player location
             if not HarvestMerge.duplicateName(entry[3], nodeName) then
                 local nodeFound = HarvestMerge.returnNameFound(entry[3], nodeName)
-                if nodeFound ~= nil and HarvestMerge.defaults.debug then
+                if nodeFound ~= nil and HarvestMerge.internal.debug == 1 then
                     d("Insterted into Node: " .. nodeFound)
                 end
                 table.insert(entry[3], nodeName)
             end
-            if HarvestMerge.defaults.debug then
+            if HarvestMerge.internal.debug == 1 then
                 d("Node:" .. nodeName .. " on: " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
             end
             return true
         end
     end
-    if HarvestMerge.defaults.debug then
+    if HarvestMerge.internal.debug == 1 then
         d("Node:" .. nodeName .. " on: " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " not found!")
     end
     return false
