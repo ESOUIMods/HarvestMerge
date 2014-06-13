@@ -141,8 +141,17 @@ function HarvestMerge.translateNodeName(nodeName, itemID)
 end
 
 function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeName)
+    local itemID
+    if nodeName ~= nil then
+        itemID = HarvestMerge.GetItemIDFromItemName(nodeName) 
+    end
+    
+    if not Harvest.GetTradeskillByMaterial(itemID) then
+        return
+    end
+
     if profession <= 8 then
-        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, nil)
+        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, itemID)
         -- HarvestMerge.Debug("Result ----")
         -- HarvestMerge.Debug("itemIDFound")
         -- HarvestMerge.Debug(itemID)
@@ -176,8 +185,17 @@ function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeN
 end
 
 function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeName)
+    local itemID
+    if nodeName ~= nil then
+        itemID = HarvestMerge.GetItemIDFromItemName(nodeName) 
+    end
+    
+    if not Harvest.GetTradeskillByMaterial(itemID) then
+        return
+    end
+
     if profession <= 8 then
-        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, nil)
+        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, itemID)
         -- HarvestMerge.Debug("Result ----")
         -- HarvestMerge.Debug("itemIDFound")
         -- HarvestMerge.Debug(itemID)
@@ -478,7 +496,7 @@ function HarvestMerge.importFromEsohead()
         return
     end
 
-    d("import data from Esohead")
+    d("Starting import from Esohead")
     local profession
     local newMapName
     -- if not HarvestMerge.oldData then
@@ -514,7 +532,7 @@ function HarvestMerge.importFromEsohead()
             end
         else -- << New Map Name NOT found
             oldMapName = map
-            HarvestMerge.DebugoldMapName .. " could not be localized.  Saving to oldData!")
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
@@ -539,11 +557,12 @@ function HarvestMerge.importFromEsohead()
                 HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
-            d(map .. " could not be localized.  Saving to oldData!")
+            oldMapName = map
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("chest", oldMapName, node[1], node[2])
             end
         end
     end
@@ -559,11 +578,12 @@ function HarvestMerge.importFromEsohead()
                 HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
-            d(map .. " could not be localized.  Saving to oldData!")
+            oldMapName = map
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("fish", oldMapName, node[1], node[2])
             end
         end
     end
@@ -593,7 +613,7 @@ function HarvestMerge.importFromEsoheadMerge()
         return
     end
 
-    d("import data from EsoheadMerge")
+    d("Starting import from EsoheadMerge")
     local profession
     local newMapName
     -- if not HarvestMerge.oldData then
@@ -629,7 +649,7 @@ function HarvestMerge.importFromEsoheadMerge()
             end
         else -- << New Map Name NOT found
             oldMapName = map
-            HarvestMerge.DebugoldMapName .. " could not be localized.  Saving to oldData!")
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
@@ -654,11 +674,12 @@ function HarvestMerge.importFromEsoheadMerge()
                 HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
-            d(map .. " could not be localized.  Saving to oldData!")
+            oldMapName = map
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("chest", oldMapName, node[1], node[2])
             end
         end
     end
@@ -674,11 +695,12 @@ function HarvestMerge.importFromEsoheadMerge()
                 HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
-            d(map .. " could not be localized.  Saving to oldData!")
+            oldMapName = map
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("fish", oldMapName, node[1], node[2])
             end
         end
     end
@@ -708,7 +730,7 @@ function HarvestMerge.importFromHarvester()
         return
     end
 
-    d("import data from Harvester")
+    d("Starting import from Harvester")
     local profession
     local newMapName
     -- if not HarvestMerge.oldData then
@@ -744,7 +766,7 @@ function HarvestMerge.importFromHarvester()
             end
         else -- << New Map Name NOT found
             oldMapName = map
-            HarvestMerge.DebugoldMapName .. " could not be localized.  Saving to oldData!")
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
@@ -769,11 +791,12 @@ function HarvestMerge.importFromHarvester()
                 HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
-            d(map .. " could not be localized.  Saving to oldData!")
+            oldMapName = map
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("chest", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("chest", oldMapName, node[1], node[2])
             end
         end
     end
@@ -789,11 +812,12 @@ function HarvestMerge.importFromHarvester()
                 HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
             end
         else -- << New Map Name NOT found
-            d(map .. " could not be localized.  Saving to oldData!")
+            oldMapName = map
+            HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for v1, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                HarvestMerge.oldMapNameFishChest("fish", map, node[1], node[2])
+                HarvestMerge.oldMapNameFishChest("fish", oldMapName, node[1], node[2])
             end
         end
     end
@@ -823,7 +847,7 @@ function HarvestMerge.importFromHarvestMap()
         return
     end
 
-    d("import data from HarvestMap")
+    d("Starting import from HarvestMap")
     for newMapName, data in pairs(Harvest.savedVars["nodes"].data) do
         for profession, nodes in pairs(data) do
             for index, node in pairs(nodes) do
