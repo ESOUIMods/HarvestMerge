@@ -662,6 +662,7 @@ function HarvestMerge.updateHarvestNodes(type)
     local newMapName
     local oldMapName
 
+    HarvestMerge.Debug("Starting update of " .. (type))
     for map, data in pairs(oldData) do
         newMapName = HarvestMerge.GetNewMapName(map)
         if newMapName then
@@ -671,12 +672,14 @@ function HarvestMerge.updateHarvestNodes(type)
 
                         if (nodeName) == "chest" or (nodeName) == "fish" then
                             HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
-                        else
-                            if node[4] == nil then
-                                HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName)
-                            else -- node[4] which is the ItemID should not be nil at this point
+                        elseif node[4] == nil then
+                            HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName)
+                        elseif node[4] ~= nil then -- node[4] which is the itemID should not be nil at this point
+                            if HarvestMerge.GetTradeskillByMaterial(node[4]) then
                                 HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
                             end
+                        else
+                            HarvestMerge.Debug("I didn't know what to do with the node")
                         end
 
                     end
@@ -690,12 +693,14 @@ function HarvestMerge.updateHarvestNodes(type)
 
                         if (nodeName) == "chest" or (nodeName) == "fish" then
                             HarvestMerge.oldMapNameFishChest(nodeName, oldMapName, node[1], node[2])
-                        else
-                            if node[4] == nil then
-                                HarvestMerge.oldMapNilItemIDHarvest(oldMapName, node[1], node[2], profession, nodeName)
-                            else -- node[4] which is the ItemID should not be nil at this point
+                        elseif node[4] == nil then
+                            HarvestMerge.oldMapNilItemIDHarvest(oldMapName, node[1], node[2], profession, nodeName)
+                        elseif node[4] ~= nil then -- node[4] which is the itemID should not be nil at this point
+                            if HarvestMerge.GetTradeskillByMaterial(node[4]) then
                                 HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, nodeName, node[4])
                             end
+                        else
+                            HarvestMerge.Debug("I didn't know what to do with the node")
                         end
 
                     end
@@ -704,6 +709,7 @@ function HarvestMerge.updateHarvestNodes(type)
         end
 
     end
+    HarvestMerge.Debug("Update finished!")
 end
 
 function HarvestMerge.updateEsoheadNodes(type)
@@ -731,7 +737,9 @@ function HarvestMerge.updateEsoheadNodes(type)
                     for index, node in pairs(nodes) do
 
                         -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                        HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
+                        if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                            HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
+                        end
 
                     end
                 end
@@ -741,7 +749,9 @@ function HarvestMerge.updateEsoheadNodes(type)
                     for index, node in pairs(nodes) do
 
                         -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                        HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, node[4], node[5])
+                        if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                            HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, node[4], node[5])
+                        end
 
                     end
                 end

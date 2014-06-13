@@ -1,41 +1,32 @@
-HarvestMerge.SolventNodes = { ["en"] = { "Pure Water", "Water Skin", }, ["de"] = { "Reines Wasser", "Wasserhaut", }, ["fr"] = { "Eau Pure", "Outre d'Eau", }, }
-HarvestMerge.PotencyRunes = { ["en"] = "Potency Rune", ["de"] = "Machtrune", ["fr"] = "Rune de Puissance", }
-HarvestMerge.EssenceRunes = { ["en"] = "Essence Rune", ["de"] = "Essenzrune", ["fr"] = "Rune D'essence", }
-HarvestMerge.AspectRunes = { ["en"] = "Aspect Rune", ["de"] = "Aspektrune", ["fr"] = "Rune d'Aspect", }
+HarvestMerge.SolventNodes = { ["en"] = { [1] = "Pure Water", [2] = "Water Skin", }, ["de"] = { [1] = "Reines Wasser", [2] = "Wasserhaut", }, ["fr"] = { [1] = "Eau Pure", [2] = "Outre d'Eau", }, }
+HarvestMerge.PotencyRunes = { ["en"] = {"Potency Rune"}, ["de"] = {"Machtrune"}, ["fr"] = {"Rune de Puissance"}, }
+HarvestMerge.EssenceRunes = { ["en"] = {"Essence Rune"}, ["de"] = {"Essenzrune"}, ["fr"] = {"Rune D'essence"}, }
+HarvestMerge.AspectRunes = { ["en"] = {"Aspect Rune"}, ["de"] = {"Aspektrune"}, ["fr"] = {"Rune d'Aspect"}, }
 
 HarvestMerge.NodeArray = {
     -- : Mining
     [1] = {
-        { itemID = 808, nodeName = { ["en"] = "Iron Ore", ["de"] = "Eisenerz", ["fr"] = "Minerai de Fer"}, itemName = {"Iron Ore"} },--V
-        { itemID = 4482, nodeName = { ["en"] = "Calcinium Ore", ["de"] = "Kalciniumerz", ["fr"] = "Minerai de Calcinium"}, itemName = {"Calcinium Ore"} },
-        { itemID = 5820, nodeName = { ["en"] = "High Iron Ore", ["de"] = "Feineisenerz", ["fr"] = "Minerai de Fer Noble"}, itemName = {"High Iron Ore"} },--V
-        { itemID = 23103, nodeName = { ["en"] = "Orichalcum Ore", ["de"] = "Oreichalkoserz", ["fr"] = "Minerai D'orichalque"}, itemName = {"Orichalcum Ore"} },--V
-        { itemID = 23104, nodeName = { ["en"] = "Dwarven Ore", ["de"] = "Dwemererz", ["fr"] = "Minerai Dwemer"}, itemName = {"Dwarven Ore"} },--V
-        { itemID = 23105, nodeName = { ["en"] = "Ebony Ore", ["de"] = "Ebenerz", ["fr"] = "Minerai d'Ebonite"}, itemName = {"Ebony Ore"} },
-        { itemID = 23133, nodeName = { ["en"] = "Galatite Ore", ["de"] = "Galatiterz", ["fr"] = "Minerai de Galatite"}, itemName = {"Galatite Ore"} },
-        { itemID = 23134, nodeName = { ["en"] = "Quicksilver Ore", ["de"] = "Quicksilver Ore", ["fr"] = "Quicksilver Ore"}, itemName = {"Quicksilver Ore"} },
-        { itemID = 23135, nodeName = { ["en"] = "Voidstone Ore", ["de"] = "Leerensteinerz", ["fr"] = "Minerai de Pierre de Vide",}, itemName = {"Voidstone Ore"} },
+        { itemID = 808, nodeName = { ["en"] = {"Iron Ore"}, ["de"] = {"Eisenerz"}, ["fr"] = {"Minerai de Fer"} }, itemName = {"Iron Ore"} },--V
+        { itemID = 4482, nodeName = { ["en"] = {"Calcinium Ore"}, ["de"] = {"Kalciniumerz"}, ["fr"] = {"Minerai de Calcinium"} }, itemName = {"Calcinium Ore"} },
+        { itemID = 5820, nodeName = { ["en"] = {"High Iron Ore"}, ["de"] = {"Feineisenerz"}, ["fr"] = {"Minerai de Fer Noble"} }, itemName = {"High Iron Ore"} },--V
+        { itemID = 23103, nodeName = { ["en"] = {"Orichalcum Ore"}, ["de"] = {"Oreichalkoserz"}, ["fr"] = {"Minerai D'orichalque"} }, itemName = {"Orichalcum Ore"} },--V
+        { itemID = 23104, nodeName = { ["en"] = {"Dwarven Ore"}, ["de"] = {"Dwemererz"}, ["fr"] = {"Minerai Dwemer"} }, itemName = {"Dwarven Ore"} },--V
+        { itemID = 23105, nodeName = { ["en"] = {"Ebony Ore"}, ["de"] = {"Ebenerz"}, ["fr"] = {"Minerai d'Ebonite"} }, itemName = {"Ebony Ore"} },
+        { itemID = 23133, nodeName = { ["en"] = {"Galatite Ore"}, ["de"] = {"Galatiterz"}, ["fr"] = {"Minerai de Galatite"} }, itemName = {"Galatite Ore"} },
+        { itemID = 23134, nodeName = { ["en"] = {"Quicksilver Ore"}, ["de"] = {"Quicksilver Ore"}, ["fr"] = {"Quicksilver Ore"} }, itemName = {"Quicksilver Ore"} },
+        { itemID = 23135, nodeName = { ["en"] = {"Voidstone Ore"}, ["de"] = {"Leerensteinerz"}, ["fr"] = {"Minerai de Pierre de Vide"} }, itemName = {"Voidstone Ore"} },
     },
     -- : Clothing
     [2] = {
-        { itemID = 793, nodeName = {}, itemName = {"Rawhide Scraps"} },
-        { itemID = 800, nodeName = {}, itemName = {"Superb Hide Scraps"} },
-        { itemID = 812, nodeName = { ["en"] = "Jute", ["de"] = "Jute", ["fr"] = "Jute",}, itemName = {"Raw jute"} },--V
-        { itemID = 4448, nodeName = {}, itemName = {"Hide Scraps"} },
-        { itemID = 4464, nodeName = { ["en"] = "Flax", ["de"] = "Flachs", ["fr"] = "Lin"}, itemName = {"Raw Flax"} },--V
-        { itemID = 4478, nodeName = {}, itemName = {"Shadowhide Scraps"} },
-        { itemID = 6020, nodeName = {}, itemName = {"Thick Leather Scraps"} },
-        { itemID = 23095, nodeName = {}, itemName = {"Leather Scraps"} },
-        { itemID = 23097, nodeName = {}, itemName = {"Fell Hide Scraps"} },
-        { itemID = 23129, nodeName = { ["en"] = "Cotton", ["de"] = "Baumwolle", ["fr"] = "Coton"}, itemName = {"Raw Cotton"} },--V
-        { itemID = 23130, nodeName = { ["en"] = "Spidersilk", ["de"] = "Spinnenseide", ["fr"] = "Toile D'araignée",}, itemName = {"Raw Spidersilk"} },
-        { itemID = 23131, nodeName = { ["en"] = "Ebonthread", ["de"] = "Ebenseide", ["fr"] = "Fil d'Ebonite",}, itemName = {"Raw Ebonthread"} },
-        { itemID = 23142, nodeName = {}, itemName = {"Topgrain Hide Scraps"} },
-        { itemID = 23143, nodeName = {}, itemName = {"Iron Hide Scraps"} },
-        { itemID = 33217, nodeName = { ["en"] = "Kreshweed", ["de"] = "Kreshweed", ["fr"] = "Kreshweed",}, itemName = {"Raw Kreshweed"} },
-        { itemID = 33218, nodeName = { ["en"] = "Ironweed", ["de"] = "Eisenkraut", ["fr"] = "Herbe de fer",}, itemName = {"Raw ironweed"} },
-        { itemID = 33219, nodeName = { ["en"] = "Silverweed", ["de"] = "Silverweed", ["fr"] = "Silverweed",}, itemName = {"Raw Silverweed"} },
-        { itemID = 33220, nodeName = { ["en"] = "Void Bloom", ["de"] = "Leere Blüte", ["fr"] = "Tissu de Vide",}, itemName = {"Raw Void Bloom"} },
+        { itemID = 812, nodeName = { ["en"] = {"Jute"}, ["de"] = {"Jute"}, ["fr"] = {"Jute"} }, itemName = {"Raw jute"} },--V
+        { itemID = 4464, nodeName = { ["en"] = {"Flax"}, ["de"] = {"Flachs"}, ["fr"] = {"Lin"} }, itemName = {"Raw Flax"} },--V
+        { itemID = 23129, nodeName = { ["en"] = {"Cotton"}, ["de"] = {"Baumwolle"}, ["fr"] = {"Coton"} }, itemName = {"Raw Cotton"} },--V
+        { itemID = 23130, nodeName = { ["en"] = {"Spidersilk"}, ["de"] = {"Spinnenseide"}, ["fr"] = {"Toile D'araignée"} }, itemName = {"Raw Spidersilk"} },
+        { itemID = 23131, nodeName = { ["en"] = {"Ebonthread"}, ["de"] = {"Ebenseide"}, ["fr"] = {"Fil d'Ebonite"} }, itemName = {"Raw Ebonthread"} },
+        { itemID = 33217, nodeName = { ["en"] = {"Kreshweed"}, ["de"] = {"Kreshweed"}, ["fr"] = {"Kreshweed"} }, itemName = {"Raw Kreshweed"} },
+        { itemID = 33218, nodeName = { ["en"] = {"Ironweed"}, ["de"] = {"Eisenkraut"}, ["fr"] = {"Herbe de fer"} }, itemName = {"Raw ironweed"} },
+        { itemID = 33219, nodeName = { ["en"] = {"Silverweed"}, ["de"] = {"Silverweed"}, ["fr"] = {"Silverweed"} }, itemName = {"Raw Silverweed"} },
+        { itemID = 33220, nodeName = { ["en"] = {"Void Bloom"}, ["de"] = {"Leere Blüte"}, ["fr"] = {"Tissu de Vide"} }, itemName = {"Raw Void Bloom"} },
     },
     -- : Enchanting
     [3] = {
@@ -94,36 +85,36 @@ HarvestMerge.NodeArray = {
     },
     -- : Alchemy
     [4] = {
-        { itemID = 30148, nodeName = { ["en"] = "Entoloma", ["de"] = "Glöckling", ["fr"] = "Entoloma",}, itemName = {"Blue Entoloma"} },
-        { itemID = 30149, nodeName = { ["en"] = "Stinkhorn", ["de"] = "Stinkmorchel", ["fr"] = "Mutinus Elégans",}, itemName = {"Stinkhorn"} },
-        { itemID = 30151, nodeName = { ["en"] = "Emetic Russula", ["de"] = "Brechtäubling", ["fr"] = "Russule Emetique",}, itemName = {"Emetic Russula"} },
-        { itemID = 30152, nodeName = { ["en"] = {"Violet Coprinus"}, ["de"] = "Violetter Tintling", ["fr"] = {"Violet Coprinus"},}, itemName = {"Violet Coprinus"} },
-        { itemID = 30153, nodeName = { ["en"] = "Namira's Rot", ["de"] = "Namiras Fäulnis", ["fr"] = "Truffe de Namira",}, itemName = {"Namira's Rot"} },
-        { itemID = 30154, nodeName = { ["en"] = "White Cap", ["de"] = "Weißkappe", ["fr"] = "Chapeau Blanc",}, itemName = {"White Cap"} },
-        { itemID = 30155, nodeName = { ["en"] = "Luminous Russula", ["de"] = "Leuchttäubling", ["fr"] = "Russule Phosphorescente",}, itemName = {"Luminous Russula"} },
-        { itemID = 30156, nodeName = { ["en"] = "Imp Stool", ["de"] = "Koboldschemel", ["fr"] = "Pied-de-Lutin",}, itemName = {"Imp Stool"} },
-        { itemID = 30157, nodeName = { ["en"] = "Blessed Thistle", ["de"] = "Benediktenkraut", ["fr"] = "Chardon Béni",}, itemName = {"Blessed Thistle"} },
-        { itemID = 30158, nodeName = { ["en"] = "Lady's Smock", ["de"] = "Wiesenschaumkraut", ["fr"] = "Cardamine des Prés",}, itemName = {"Lady's Smock"} },
-        { itemID = 30159, nodeName = { ["en"] = "Wormwood", ["de"] = "Wermut", ["fr"] = "Absinthe",}, itemName = {"Wormwood"} },
-        { itemID = 30160, nodeName = { ["en"] = "Bugloss", ["de"] = "Wolfsauge", ["fr"] = "Noctuelle",}, itemName = {"Bugloss"} },
-        { itemID = 30161, nodeName = { ["en"] = "Corn Flower", ["de"] = "Kornblume", ["fr"] = "Bleuet",}, itemName = {"Corn Flower"} },
-        { itemID = 30162, nodeName = { ["en"] = "Dragonthorn", ["de"] = "Drachendorn", ["fr"] = "Épine-de-Dragon",}, itemName = {"Dragonthorn"} },
-        { itemID = 30163, nodeName = { ["en"] = "Mountain Flower", ["de"] = "Bergblume", ["fr"] = "Lys des Cimes",}, itemName = {"Mountain Flower"} },
-        { itemID = 30164, nodeName = { ["en"] = "Columbine", ["de"] = "Akelei", ["fr"] = "Ancolie",}, itemName = {"Columbine"} },
-        { itemID = 30165, nodeName = { ["en"] = "Nirnroot", ["de"] = "Nirnwurz", ["fr"] = "Nirnrave",}, itemName = {"Nirnroot"} },
-        { itemID = 30166, nodeName = { ["en"] = "Water Hyacinth", ["de"] = "Wasserhyazinthe", ["fr"] = "Jacinthe D'eau",}, itemName = {"Water Hyacinth"} },
+        { itemID = 30148, nodeName = { ["en"] = {"Entoloma"}, ["de"] = {"Glöckling"}, ["fr"] = {"Entoloma"} }, itemName = {"Blue Entoloma"} },
+        { itemID = 30149, nodeName = { ["en"] = {"Stinkhorn"}, ["de"] = {"Stinkmorchel"}, ["fr"] = {"Mutinus Elégans"} }, itemName = {"Stinkhorn"} },
+        { itemID = 30151, nodeName = { ["en"] = {"Emetic Russula"}, ["de"] = {"Brechtäubling"}, ["fr"] = {"Russule Emetique"} }, itemName = {"Emetic Russula"} },
+        { itemID = 30152, nodeName = { ["en"] = {[1] = "Violet Coprinus", [2] = "Violet Copninus"}, ["de"] = {"Violetter Tintling"}, ["fr"] = {[1] = "Violet Coprinus", [2] = "Violet Copninus"} }, itemName = {"Violet Coprinus"} },
+        { itemID = 30153, nodeName = { ["en"] = {"Namira's Rot"}, ["de"] = {"Namiras Fäulnis"}, ["fr"] = {"Truffe de Namira"} }, itemName = {"Namira's Rot"} },
+        { itemID = 30154, nodeName = { ["en"] = {"White Cap"}, ["de"] = {"Weißkappe"}, ["fr"] = {"Chapeau Blanc"} }, itemName = {"White Cap"} },
+        { itemID = 30155, nodeName = { ["en"] = {"Luminous Russula"}, ["de"] = {"Leuchttäubling"}, ["fr"] = {"Russule Phosphorescente"} }, itemName = {"Luminous Russula"} },
+        { itemID = 30156, nodeName = { ["en"] = {"Imp Stool"}, ["de"] = {"Koboldschemel"}, ["fr"] = {"Pied-de-Lutin"} }, itemName = {"Imp Stool"} },
+        { itemID = 30157, nodeName = { ["en"] = {"Blessed Thistle"}, ["de"] = {"Benediktenkraut"}, ["fr"] = {"Chardon Béni"} }, itemName = {"Blessed Thistle"} },
+        { itemID = 30158, nodeName = { ["en"] = {"Lady's Smock"}, ["de"] = {"Wiesenschaumkraut"}, ["fr"] = {"Cardamine des Prés"} }, itemName = {"Lady's Smock"} },
+        { itemID = 30159, nodeName = { ["en"] = {"Wormwood"}, ["de"] = {"Wermut"}, ["fr"] = {"Absinthe"} }, itemName = {"Wormwood"} },
+        { itemID = 30160, nodeName = { ["en"] = {"Bugloss"}, ["de"] = {"Wolfsauge"}, ["fr"] = {"Noctuelle"} }, itemName = {"Bugloss"} },
+        { itemID = 30161, nodeName = { ["en"] = {"Corn Flower"}, ["de"] = {"Kornblume"}, ["fr"] = {"Bleuet"} }, itemName = {"Corn Flower"} },
+        { itemID = 30162, nodeName = { ["en"] = {"Dragonthorn"}, ["de"] = {"Drachendorn"}, ["fr"] = {"Épine-de-Dragon"} }, itemName = {"Dragonthorn"} },
+        { itemID = 30163, nodeName = { ["en"] = {"Mountain Flower"}, ["de"] = {"Bergblume"}, ["fr"] = {"Lys des Cimes"} }, itemName = {"Mountain Flower"} },
+        { itemID = 30164, nodeName = { ["en"] = {"Columbine"}, ["de"] = {"Akelei"}, ["fr"] = {"Ancolie"} }, itemName = {"Columbine"} },
+        { itemID = 30165, nodeName = { ["en"] = {"Nirnroot"}, ["de"] = {"Nirnwurz"}, ["fr"] = {"Nirnrave"} }, itemName = {"Nirnroot"} },
+        { itemID = 30166, nodeName = { ["en"] = {"Water Hyacinth"}, ["de"] = {"Wasserhyazinthe"}, ["fr"] = {"Jacinthe D'eau"} }, itemName = {"Water Hyacinth"} },
     },
     -- : Wood ; In Esohead Wood is (6)
     [5] = {
-        { itemID = 521, nodeName = { ["en"] = "Oak", ["de"] = "Eiche", ["fr"] = "Chêne",}, itemName = {"Rough Oak"} },
-        { itemID = 802, nodeName = { ["en"] = "Maple", ["de"] = "Ahornholz", ["fr"] = "Érable",}, itemName = {"Rough Maple"} },
-        { itemID = 818, nodeName = { ["en"] = "Birch", ["de"] = "Birkenholz", ["fr"] = "Bouleau",}, itemName = {"Rough Birch"} },
-        { itemID = 4439, nodeName = { ["en"] = "Ashtree", ["de"] = "Eschenholz", ["fr"] = "Frêne",}, itemName = {"Rough Ash"} },
-        { itemID = 23117, nodeName = { ["en"] = "Beech", ["de"] = "Buche", ["fr"] = "Hêtre",}, itemName = {"Rough Beech"} },
-        { itemID = 23118, nodeName = { ["en"] = "Hickory", ["de"] = "Hickoryholz", ["fr"] = "Hickory",}, itemName = {"Rough Hickory"} },
-        { itemID = 23119, nodeName = { ["en"] = "Yew", ["de"] = "Eibenholz", ["fr"] = "If",}, itemName = {"Rough Yew"} },
-        { itemID = 23137, nodeName = { ["en"] = "Mahogany", ["de"] = "Mahagoniholz", ["fr"] = "Acajou",}, itemName = {"Rough Mahogany"} },
-        { itemID = 23138, nodeName = { ["en"] = "Nightwood", ["de"] = "Nachtholz", ["fr"] = "Bois de nuit",}, itemName = {"Rough Nightwood"} },
+        { itemID = 521, nodeName = { ["en"] = {"Oak"}, ["de"] = {"Eiche"}, ["fr"] = {"Chêne"} }, itemName = {"Rough Oak"} },
+        { itemID = 802, nodeName = { ["en"] = {"Maple"}, ["de"] = {"Ahornholz"}, ["fr"] = {"Érable"} }, itemName = {"Rough Maple"} },
+        { itemID = 818, nodeName = { ["en"] = {"Birch"}, ["de"] = {"Birkenholz"}, ["fr"] = {"Bouleau"} }, itemName = {"Rough Birch"} },
+        { itemID = 4439, nodeName = { ["en"] = {"Ashtree"}, ["de"] = {"Eschenholz"}, ["fr"] = {"Frêne"} }, itemName = {"Rough Ash"} },
+        { itemID = 23117, nodeName = { ["en"] = {"Beech"}, ["de"] = {"Buche"}, ["fr"] = {"Hêtre"} }, itemName = {"Rough Beech"} },
+        { itemID = 23118, nodeName = { ["en"] = {"Hickory"}, ["de"] = {"Hickoryholz"}, ["fr"] = {"Hickory"} }, itemName = {"Rough Hickory"} },
+        { itemID = 23119, nodeName = { ["en"] = {"Yew"}, ["de"] = {"Eibenholz"}, ["fr"] = {"If"} }, itemName = {"Rough Yew"} },
+        { itemID = 23137, nodeName = { ["en"] = {"Mahogany"}, ["de"] = {"Mahagoniholz"}, ["fr"] = {"Acajou"} }, itemName = {"Rough Mahogany"} },
+        { itemID = 23138, nodeName = { ["en"] = {"Nightwood"}, ["de"] = {"Nachtholz"}, ["fr"] = {"Bois de nuit"} }, itemName = {"Rough Nightwood"} },
     },
     [6] = {
     },
@@ -157,20 +148,11 @@ HarvestMerge.professions = {
     },
     -- : Clothing
     [2] = {
-        793,
-        800,
         812,
-        4448,
         4464,
-        4478,
-        6020,
-        23095,
-        23097,
         23129,
         23130,
         23131,
-        23142,
-        23143,
         33217,
         33218,
         33219,
@@ -1034,7 +1016,7 @@ function HarvestMerge.IsValidContainerName(name)
     return false
 end
 
--- Arguments Required ItemID, NodeName
+-- Arguments Required itemID, nodeName
 -- Returns -1 when Object interacted with is invalid
 -- Valid types: (1)Mining, (2)Clothing, (3)Enchanting
 -- (4)Alchemy, (5)Wood, (6)Chests, (7)Solvents
@@ -1071,7 +1053,7 @@ function HarvestMerge.CheckProfessionTypeOnImport(id, name)
     return isOk
 end
 
--- Arguments Required: NodeName
+-- Arguments Required: nodeName
 -- Returns -1 when Object interacted with is invalid
 -- Valid types: (1)Mining, (2)Clothing, (3)Enchanting
 -- (4)Alchemy, (5)Wood, (7)Solvents
@@ -1117,7 +1099,7 @@ function HarvestMerge.GetProfessionTypeOnUpdate(name)
     return -1
 end
 
--- Arguments Required ItemID, NodeName
+-- Arguments Required itemID, nodeName
 -- Returns -1 when Object interacted with is invalid
 -- Valid types: (1)Mining, (2)Clothing, (3)Enchanting
 -- (4)Alchemy, (5)Wood, (6)Chests, (7)Solvents
@@ -1149,7 +1131,7 @@ function HarvestMerge.GetProfessionType(id, name)
         return tsId
     end
 
-    -- if no valid Node Name by Name is found use ItemID
+    -- if no valid Node Name by Name is found use itemID
     for key1, tsData in pairs(HarvestMerge.professions) do
         for key2, value in pairs(tsData) do
             if value == id then
@@ -1169,6 +1151,83 @@ function HarvestMerge.GetProfessionType(id, name)
 
     return -1
 end
+
+function HarvestMerge.GetItemNameFromItemID(id)
+    local name
+    if id == nil then
+        HarvestMerge.Debug("Returned Nil because id was Nil!")
+        return nil
+    end
+
+    for tsId, tsData in pairs(HarvestMerge.NodeArray) do
+        for profession, tsNode in pairs(tsData) do
+            for lang, langs in pairs(HarvestMerge.langs) do
+                if tsNode.nodeName[langs] ~= nil then
+                    -- HarvestMerge.Debug(tsNode.nodeName[langs])
+                    -- HarvestMerge.Debug("Saved Count: " .. HarvestMerge.getItemIDFromItemNameIndex)
+                    for index, nodeName in pairs(tsNode.nodeName[langs]) do
+                        -- HarvestMerge.Debug(nodeName)
+                        -- HarvestMerge.Debug(index)
+                        if tsNode.itemID == id then
+                            if profession == 4 and id == 30152 then
+                                HarvestMerge.getItemIDFromItemNameIndex = 1
+                                name = tsNode.nodeName[HarvestMerge.language][HarvestMerge.getItemIDFromItemNameIndex]
+                            else
+                                name = tsNode.nodeName[HarvestMerge.language][HarvestMerge.getItemIDFromItemNameIndex]
+                            end
+                            return name
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return nil
+end
+
+function HarvestMerge.GetItemIDFromItemName(name)
+    local itemID
+    if name == nil then
+        HarvestMerge.Debug("Returned Nil because name was Nil!")
+        return nil
+    end
+
+    for tsId, tsData in pairs(HarvestMerge.NodeArray) do
+        for profession, tsNode in pairs(tsData) do
+            for lang, langs in pairs(HarvestMerge.langs) do
+                if tsNode.nodeName[langs] ~= nil then
+                    -- HarvestMerge.Debug(tsNode.nodeName[langs])
+                    for index, nodeName in pairs(tsNode.nodeName[langs]) do
+                        -- HarvestMerge.Debug(nodeName)
+                        -- HarvestMerge.Debug(index)
+                        if nodeName == name then
+                            HarvestMerge.getItemIDFromItemNameIndex = index
+                            itemID = tsNode.itemID
+                            return itemID
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return nil
+end
+
+function HarvestMerge.GetTradeskillByMaterial(id)
+    id = tonumber(id)
+    for tsId, tsData in pairs(HarvestMerge.NodeArray) do
+        for profession, tsNode in pairs(tsData) do
+            if tsNode.itemID ~= nil then
+                if tsNode.itemID == id then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+
 
 -- local alliance = GetUnitAlliance("player")
 -- valid alliance values are:
