@@ -675,7 +675,7 @@ function HarvestMerge.updateHarvestNodes(type)
                         elseif node[4] == nil then
                             HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName)
                         elseif node[4] ~= nil then -- node[4] which is the itemID should not be nil at this point
-                            if HarvestMerge.GetTradeskillByMaterial(node[4]) then
+                            if HarvestMerge.checkForValidNodeID(node[4]) then
                                 HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
                             end
                         else
@@ -696,7 +696,7 @@ function HarvestMerge.updateHarvestNodes(type)
                         elseif node[4] == nil then
                             HarvestMerge.oldMapNilItemIDHarvest(oldMapName, node[1], node[2], profession, nodeName)
                         elseif node[4] ~= nil then -- node[4] which is the itemID should not be nil at this point
-                            if HarvestMerge.GetTradeskillByMaterial(node[4]) then
+                            if HarvestMerge.checkForValidNodeID(node[4]) then
                                 HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, nodeName, node[4])
                             end
                         else
@@ -737,7 +737,7 @@ function HarvestMerge.updateEsoheadNodes(type)
                     for index, node in pairs(nodes) do
 
                         -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                        if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                        if HarvestMerge.checkForValidNodeID(node[5]) then
                             HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                         end
 
@@ -749,7 +749,7 @@ function HarvestMerge.updateEsoheadNodes(type)
                     for index, node in pairs(nodes) do
 
                         -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                        if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                        if HarvestMerge.checkForValidNodeID(node[5]) then
                             HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, node[4], node[5])
                         end
 

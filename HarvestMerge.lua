@@ -85,166 +85,15 @@ function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
     end
 end
 
-function HarvestMerge.translateNodeName(nodeName, itemID)
-    HarvestMerge.getItemIDFromItemNameIndex = 1
-    local nameFound = nodeName
-    local itemIDFound = itemID
-    -- HarvestMerge.Debug("----")
-    -- HarvestMerge.Debug("Id Given")
-    -- HarvestMerge.Debug(itemID)
-    -- HarvestMerge.Debug("nodeName")
-    -- HarvestMerge.Debug(nodeName)
-    -- HarvestMerge.Debug("----")
-    if HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        return nodeName, itemID
-    end -- It is a container nothing to process
-
-    -- Your screwed if this is the case
-    if nodeName == nil and itemID == nil then
-        return nodeName, itemID
+function HarvestMerge.correctEsoheadNodeName(nodeName, itemID)
+    nameFound = HarvestMerge.translateNodeName(nodeName)
+    if not HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName) then
+        nameFound = HarvestMerge.GetItemNameFromItemID(itemID)
     end
-
-    -- HarvestMerge.Debug("Original Id")
-    -- HarvestMerge.Debug(itemIDFound)
-    -- HarvestMerge.Debug("Original nodeName")
-    -- HarvestMerge.Debug(nameFound)
-    if nodeName ~= nil and itemID == nil then
-        itemIDFound = HarvestMerge.GetItemIDFromItemName(nameFound)
-        nameFound = HarvestMerge.GetItemNameFromItemID(itemIDFound)
-        -- HarvestMerge.Debug("----")
-        -- HarvestMerge.Debug("NilID changed to")
-        -- HarvestMerge.Debug(itemIDFound)
-        -- HarvestMerge.Debug("NilID nodeName changed to")
-        -- HarvestMerge.Debug(nameFound)
-        -- HarvestMerge.Debug("----")
-    else
-        -- HarvestMerge.Debug("----")
-        -- HarvestMerge.Debug("NeitherId Given")
-        -- HarvestMerge.Debug(itemIDFound)
-        nameFound = HarvestMerge.GetItemNameFromItemID(itemIDFound)
-        -- HarvestMerge.Debug("NeitherId changed to")
-        -- HarvestMerge.Debug(nameFound)
-        -- HarvestMerge.Debug("----")
-    end
-    
-    --if not HarvestMerge.CheckProfessionTypeOnImport(itemIDFound, nameFound) then
-        -- HarvestMerge.Debug("----")
-        -- HarvestMerge.Debug("the itemID, nodeName is still incorect")
-        -- HarvestMerge.Debug("itemIDFound")
-        -- HarvestMerge.Debug(itemIDFound)
-        -- HarvestMerge.Debug("nameFound")
-        -- HarvestMerge.Debug(nameFound)
-        -- HarvestMerge.Debug("----")
-    --end
-
-    return  nameFound, itemIDFound
-end
-
-function HarvestMerge.newMapNilItemIDHarvest(newMapName, x, y, profession, nodeName)
-    local itemID
-    if nodeName ~= nil then
-        itemID = HarvestMerge.GetItemIDFromItemName(nodeName) 
-    end
-    
-    if not Harvest.GetTradeskillByMaterial(itemID) then
-        return
-    end
-
-    if profession <= 8 then
-        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, itemID)
-        -- HarvestMerge.Debug("Result ----")
-        -- HarvestMerge.Debug("itemIDFound")
-        -- HarvestMerge.Debug(itemID)
-        -- HarvestMerge.Debug("nameFound")
-        -- HarvestMerge.Debug(nodeName)
-        -- HarvestMerge.Debug("Result ----")
-
-        -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale 9) counter
-        if nodeName == nil then 
-            HarvestMerge.saveData("unlocalnode", newMapName, x, y, profession, nodeName, itemID, nil, "reject" )
-            return
-        end
-    end
-
-    local professionFound
-    professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
-    if professionFound <= 0 then
-        professionFound = profession
-    end
-    if professionFound < 1 or professionFound > 8 then
-        HarvestMerge.saveData("rejected", newMapName, x, y, professionFound, nodeName, itemID, nil, "reject" )
-        return
-    end
-
-    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if not HarvestMerge.IsValidContainerName(nodeName) then
-        HarvestMerge.saveData("nodes", newMapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
-    else
-        HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped +1
-    end
-end
-
-function HarvestMerge.oldMapNilItemIDHarvest(oldMapName, x, y, profession, nodeName)
-    local itemID
-    if nodeName ~= nil then
-        itemID = HarvestMerge.GetItemIDFromItemName(nodeName) 
-    end
-    
-    if not Harvest.GetTradeskillByMaterial(itemID) then
-        return
-    end
-
-    if profession <= 8 then
-        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, itemID)
-        -- HarvestMerge.Debug("Result ----")
-        -- HarvestMerge.Debug("itemIDFound")
-        -- HarvestMerge.Debug(itemID)
-        -- HarvestMerge.Debug("nameFound")
-        -- HarvestMerge.Debug(nodeName)
-        -- HarvestMerge.Debug("Result ----")
-
-        -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale 9) counter
-        if nodeName == nil then 
-            HarvestMerge.saveData("unlocalnode", oldMapName, x, y, profession, nodeName, itemID, nil, "reject" )
-            return
-        end
-    end
-
-    local professionFound
-    professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
-    if professionFound <= 0 then
-        professionFound = profession
-    end
-    if professionFound < 1 or professionFound > 8 then
-        HarvestMerge.saveData("rejected", oldMapName, x, y, professionFound, nodeName, itemID, nil, "reject" )
-        return
-    end
-
-    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if not HarvestMerge.IsValidContainerName(nodeName) then
-        HarvestMerge.saveData("esonodes", oldMapName, x, y, professionFound, nodeName, itemID, nil, "nonvalid" )
-    else
-        HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped +1
-    end
-end
+    return nameFound
+end        
 
 function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName, itemID)
-    if profession <= 8 then
-        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, itemID)
-        -- HarvestMerge.Debug("Result ----")
-        -- HarvestMerge.Debug("itemIDFound")
-        -- HarvestMerge.Debug(itemID)
-        -- HarvestMerge.Debug("nameFound")
-        -- HarvestMerge.Debug(nodeName)
-        -- HarvestMerge.Debug("Result ----")
-
-        -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale 9) counter
-        if nodeName == nil then 
-            HarvestMerge.saveData("unlocalnode", newMapName, x, y, profession, nodeName, itemID, nil, "reject" )
-            return
-        end
-    end
-
     local professionFound = 0
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
@@ -259,33 +108,13 @@ function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
     if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        if HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName) then -- returns true or false no item Id number
-            HarvestMerge.saveData("nodes", newMapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
-        else
-            HarvestMerge.saveData("mapinvalid", newMapName, x, y, professionFound, nodeName, itemID, nil, "false" )
-        end
+        HarvestMerge.saveData("nodes", newMapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
     else
         HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
     end
 end
 
 function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName, itemID)
-    if profession <= 8 then
-        nodeName, itemID = HarvestMerge.translateNodeName(nodeName, itemID)
-        -- HarvestMerge.Debug("Result ----")
-        -- HarvestMerge.Debug("itemIDFound")
-        -- HarvestMerge.Debug(itemID)
-        -- HarvestMerge.Debug("nameFound")
-        -- HarvestMerge.Debug(nodeName)
-        -- HarvestMerge.Debug("Result ----")
-
-        -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale 9) counter
-        if nodeName == nil then 
-            HarvestMerge.saveData("unlocalnode", oldMapName, x, y, profession, nodeName, itemID, nil, "reject" )
-            return
-        end
-    end
-
     local professionFound = 0
     professionFound = HarvestMerge.GetProfessionTypeOnUpdate(nodeName) -- Get Profession by name only
     if professionFound <= 0 then
@@ -300,15 +129,12 @@ function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
     if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        if HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName) then -- returns true or false no item Id number
-            HarvestMerge.saveData("esonodes", oldMapName, x, y, professionFound, nodeName, itemID, nil, "nonvalid" )
-        else
-            HarvestMerge.saveData("esoinvalid", oldMapName, x, y, professionFound, nodeName, itemID, nil, "nonfalse" )
-        end
+        HarvestMerge.saveData("nodes", oldMapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
     else
         HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
     end
 end
+
 function HarvestMerge.GetMap()
     local textureName = GetMapTileTexture()
     textureName = string.lower(textureName)
@@ -333,16 +159,19 @@ function HarvestMerge.changeCounters(counter)
         HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
     end
     if counter == "valid" then
-        HarvestMerge.NumbersNodesAdded = HarvestMerge.NumbersNodesAdded + 1
-    end
-    if counter == "nonvalid" then
-        HarvestMerge.NumbersUnlocalizedNodesAdded = HarvestMerge.NumbersUnlocalizedNodesAdded + 1
+        HarvestMerge.NumNodesAdded = HarvestMerge.NumNodesAdded + 1
     end
     if counter == "nonfalse" then
         HarvestMerge.NumUnlocalizedFalseNodes = HarvestMerge.NumUnlocalizedFalseNodes + 1
     end
+    if counter == "nonvalid" then
+        HarvestMerge.NumUnlocalizedNodesAdded = HarvestMerge.NumUnlocalizedNodesAdded + 1
+    end
     if counter == "reject" then
         HarvestMerge.NumRejectedNodes = HarvestMerge.NumRejectedNodes + 1
+    end
+    if counter == "insert" then
+        HarvestMerge.NumInsertedNodes = HarvestMerge.NumInsertedNodes + 1
     end
 end
 
@@ -444,11 +273,11 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
         -- HarvestMerge.Debug(dist .. " : " .. dist2)
         if dist < distance then -- near player location
             if not HarvestMerge.duplicateName(entry[3], nodeName) then
-                local nodeFound = HarvestMerge.returnNameFound(entry[3], nodeName)
-                if nodeFound ~= nil and HarvestMerge.internal.debug == 1 then
-                    d("Insterted into Node: " .. nodeFound)
+                if HarvestMerge.internal.debug == 1 then
+                    HarvestMerge.Debug(nodeName .. " : insterted into existing Node")
                 end
                 table.insert(entry[3], nodeName)
+                HarvestMerge.changeCounters("insert")
             end
             if HarvestMerge.internal.debug == 1 then
                 d("Node:" .. nodeName .. " on: " .. zone .. " x:" .. x .." , y:" .. y .. " for profession " .. profession .. " already found!")
@@ -490,6 +319,7 @@ function HarvestMerge.importFromEsohead()
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
+    HarvestMerge.NumInsertedNodes = 0
 
     if not EH then
         d("Please enable the Esohead addon to import data!")
@@ -522,10 +352,13 @@ function HarvestMerge.importFromEsohead()
         if newMapName then
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
+                    -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                    -- HarvestMerge.correctEsoheadNodeName(nodeName, itemID)
+                    node[4] = HarvestMerge.correctEsoheadNodeName(node[4], node[5])
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
-                    if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                    -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
+                    if HarvestMerge.checkForValidNodeID(node[5]) then
                         HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                        -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                         HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
@@ -535,10 +368,13 @@ function HarvestMerge.importFromEsohead()
             HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
+                    -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                    -- HarvestMerge.correctEsoheadNodeName(nodeName, itemID)
+                    node[4] = HarvestMerge.correctEsoheadNodeName(node[4], node[5])
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
-                    if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                    -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
+                    if HarvestMerge.checkForValidNodeID(node[5]) then
                         HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                        -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                         HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
@@ -590,6 +426,7 @@ function HarvestMerge.importFromEsohead()
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
+    HarvestMerge.Debug("Number of nodes inserted : " .. tostring(HarvestMerge.NumInsertedNodes) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
@@ -607,6 +444,7 @@ function HarvestMerge.importFromEsoheadMerge()
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
+    HarvestMerge.NumInsertedNodes = 0
 
     if not EHM then
         d("Please enable the EsoheadMerge addon to import data!")
@@ -639,10 +477,13 @@ function HarvestMerge.importFromEsoheadMerge()
         if newMapName then
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
+                    -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                    -- HarvestMerge.correctEsoheadNodeName(nodeName, itemID)
+                    node[4] = HarvestMerge.correctEsoheadNodeName(node[4], node[5])
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
-                    if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                    -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
+                    if HarvestMerge.checkForValidNodeID(node[5]) then
                         HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                        -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                         HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
@@ -652,10 +493,13 @@ function HarvestMerge.importFromEsoheadMerge()
             HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
+                    -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                    -- HarvestMerge.correctEsoheadNodeName(nodeName, itemID)
+                    node[4] = HarvestMerge.correctEsoheadNodeName(node[4], node[5])
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
-                    if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                    -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
+                    if HarvestMerge.checkForValidNodeID(node[5]) then
                         HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                        -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                         HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
@@ -707,6 +551,7 @@ function HarvestMerge.importFromEsoheadMerge()
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
+    HarvestMerge.Debug("Number of nodes inserted : " .. tostring(HarvestMerge.NumInsertedNodes) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
@@ -724,6 +569,7 @@ function HarvestMerge.importFromHarvester()
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
+    HarvestMerge.NumInsertedNodes = 0
 
     if not Harvester then
         d("Please enable the Harvester addon to import data!")
@@ -756,10 +602,13 @@ function HarvestMerge.importFromHarvester()
         if newMapName then
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
+                    -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                    -- HarvestMerge.correctEsoheadNodeName(nodeName, itemID)
+                    node[4] = HarvestMerge.correctEsoheadNodeName(node[4], node[5])
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
-                    if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                    -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
+                    if HarvestMerge.checkForValidNodeID(node[5]) then
                         HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                        -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                         HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
@@ -769,10 +618,13 @@ function HarvestMerge.importFromHarvester()
             HarvestMerge.Debug(oldMapName .. " could not be localized.  Saving to oldData!")
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
+                    -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                    -- HarvestMerge.correctEsoheadNodeName(nodeName, itemID)
+                    node[4] = HarvestMerge.correctEsoheadNodeName(node[4], node[5])
                     -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[4] .. " : " .. node[5])
-                    if HarvestMerge.GetTradeskillByMaterial(node[5]) then
+                    -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
+                    if HarvestMerge.checkForValidNodeID(node[5]) then
                         HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                        -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                         HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
@@ -824,6 +676,7 @@ function HarvestMerge.importFromHarvester()
 
     d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
     d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
+    HarvestMerge.Debug("Number of nodes inserted : " .. tostring(HarvestMerge.NumInsertedNodes) )
     d("Number of Containers skipped : " .. tostring(HarvestMerge.NumContainerSkipped) )
     d("Number of False Nodes saved : " .. tostring(HarvestMerge.NumFalseNodes) )
     d("Number of Unlocalized nodes saved : " .. tostring(HarvestMerge.NumbersUnlocalizedNodesAdded) )
@@ -841,6 +694,7 @@ function HarvestMerge.importFromHarvestMap()
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
+    HarvestMerge.NumInsertedNodes = 0
 
     if not Harvest then
         d("Please enable the HarvestMap addon to import data!")
@@ -853,17 +707,17 @@ function HarvestMerge.importFromHarvestMap()
             for index, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 for contents, nodeName in ipairs(node[3]) do
+                    if (nodeName) ~= "chest" or (nodeName) ~= "fish" then
+                        node[4] = HarvestMerge.GetItemIDFromItemName(nodeName)
+                    end
 
                     if (nodeName) == "chest" or (nodeName) == "fish" then
                         HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
-                    elseif node[4] == nil then
-                        HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName)
-                    elseif node[4] ~= nil then -- node[4] which is the itemID should not be nil at this point
-                        if HarvestMerge.GetTradeskillByMaterial(node[4]) then
-                            HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
-                        end
                     else
-                        HarvestMerge.Debug("I didn't know what to do with the node")
+                        nodeName = HarvestMerge.translateNodeName(nodeName)
+                        if HarvestMerge.checkForValidNodeID(node[4]) then
+                            HarvestMerge.newMapNilItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
+                        end
                     end
 
                 end
@@ -871,10 +725,11 @@ function HarvestMerge.importFromHarvestMap()
         end
     end
 
-    d("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
-    d("Number of nodes added : " .. tostring(HarvestMerge.NumbersNodesAdded) )
-    -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
-    d("Finished.")
+    HarvestMerge.Debug("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
+    HarvestMerge.Debug("Number of nodes added : " .. tostring(HarvestMerge.NumNodesAdded) )
+    HarvestMerge.Debug("Number of nodes inserted : " .. tostring(HarvestMerge.NumInsertedNodes) )
+    -- HarvestMerge.Debug("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
+    HarvestMerge.Debug("Finished.")
 end
 
 -----------------------------------------
@@ -1152,6 +1007,7 @@ function HarvestMerge.Initialize()
     HarvestMerge.NumUnlocalizedFalseNodes = 0
     HarvestMerge.NumbersUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
+    HarvestMerge.NumInsertedNodes = 0
 
 end
 

@@ -1152,6 +1152,64 @@ function HarvestMerge.GetProfessionType(id, name)
     return -1
 end
 
+-- Always set HarvestMerge.getItemIDFromItemNameIndex when determining the node name
+function HarvestMerge.translateNodeName(name)
+    for tsId, tsData in pairs(HarvestMerge.NodeArray) do
+        for profession, tsNode in pairs(tsData) do
+            for lang, langs in pairs(HarvestMerge.langs) do
+                if tsNode.nodeName[langs] ~= nil then
+                    -- HarvestMerge.Debug(tsNode.nodeName[langs])
+                    for index, nodeName in pairs(tsNode.nodeName[langs]) do
+                        -- HarvestMerge.Debug(nodeName)
+                        -- HarvestMerge.Debug(index)
+                        if nodeName == name then
+                            if profession == 4 and tsNode.itemID == 30152 then
+                                HarvestMerge.getItemIDFromItemNameIndex = 1
+                                name = tsNode.nodeName[HarvestMerge.language][HarvestMerge.getItemIDFromItemNameIndex]
+                            else
+                                HarvestMerge.getItemIDFromItemNameIndex = index
+                                name = tsNode.nodeName[HarvestMerge.language][HarvestMerge.getItemIDFromItemNameIndex]
+                            end
+                            return name
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return nil
+end
+
+-- Always set HarvestMerge.getItemIDFromItemNameIndex when determining the node name
+function HarvestMerge.GetItemIDFromItemName(name)
+    local itemID
+    if name == nil then
+        HarvestMerge.Debug("Returned Nil because name was Nil!")
+        return nil
+    end
+
+    for tsId, tsData in pairs(HarvestMerge.NodeArray) do
+        for profession, tsNode in pairs(tsData) do
+            for lang, langs in pairs(HarvestMerge.langs) do
+                if tsNode.nodeName[langs] ~= nil then
+                    -- HarvestMerge.Debug(tsNode.nodeName[langs])
+                    for index, nodeName in pairs(tsNode.nodeName[langs]) do
+                        -- HarvestMerge.Debug(nodeName)
+                        -- HarvestMerge.Debug(index)
+                        if nodeName == name then
+                            HarvestMerge.getItemIDFromItemNameIndex = index
+                            itemID = tsNode.itemID
+                            return itemID
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return nil
+end
+
+-- HarvestMerge.getItemIDFromItemNameIndex when determining the node name
 function HarvestMerge.GetItemNameFromItemID(id)
     local name
     if id == nil then
@@ -1185,35 +1243,7 @@ function HarvestMerge.GetItemNameFromItemID(id)
     return nil
 end
 
-function HarvestMerge.GetItemIDFromItemName(name)
-    local itemID
-    if name == nil then
-        HarvestMerge.Debug("Returned Nil because name was Nil!")
-        return nil
-    end
-
-    for tsId, tsData in pairs(HarvestMerge.NodeArray) do
-        for profession, tsNode in pairs(tsData) do
-            for lang, langs in pairs(HarvestMerge.langs) do
-                if tsNode.nodeName[langs] ~= nil then
-                    -- HarvestMerge.Debug(tsNode.nodeName[langs])
-                    for index, nodeName in pairs(tsNode.nodeName[langs]) do
-                        -- HarvestMerge.Debug(nodeName)
-                        -- HarvestMerge.Debug(index)
-                        if nodeName == name then
-                            HarvestMerge.getItemIDFromItemNameIndex = index
-                            itemID = tsNode.itemID
-                            return itemID
-                        end
-                    end
-                end
-            end
-        end
-    end
-    return nil
-end
-
-function HarvestMerge.GetTradeskillByMaterial(id)
+function HarvestMerge.checkForValidNodeID(id)
     id = tonumber(id)
     for tsId, tsData in pairs(HarvestMerge.NodeArray) do
         for profession, tsNode in pairs(tsData) do
@@ -1226,8 +1256,6 @@ function HarvestMerge.GetTradeskillByMaterial(id)
     end
     return false
 end
-
-
 
 -- local alliance = GetUnitAlliance("player")
 -- valid alliance values are:
