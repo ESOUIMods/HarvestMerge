@@ -1163,7 +1163,7 @@ function HarvestMerge.translateNodeName(name)
                         -- HarvestMerge.Debug(nodeName)
                         -- HarvestMerge.Debug(index)
                         if nodeName == name then
-                            if profession == 4 and tsNode.itemID == 30152 then
+                            if tsNode.itemID == 30152 then
                                 HarvestMerge.getItemIDFromItemNameIndex = 1
                                 name = tsNode.nodeName[HarvestMerge.language][HarvestMerge.getItemIDFromItemNameIndex]
                             else
@@ -1180,41 +1180,55 @@ function HarvestMerge.translateNodeName(name)
     return nil
 end
 
--- Always set HarvestMerge.getItemIDFromItemNameIndex when determining the node name
-function HarvestMerge.GetItemIDFromItemName(name)
-    local itemID
+-- The is called before using HarvestMerge.GetItemNameFromItemID to
+-- assign whether or not it was Pure Water or a Water Skin
+function HarvestMerge.setItemIndex(name)
     if name == nil then
-        HarvestMerge.Debug("Returned Nil because name was Nil!")
+        HarvestMerge.Debug("Returned Nil because name was Nil! For GetItemIDFromItemName")
         return nil
     end
 
     for tsId, tsData in pairs(HarvestMerge.NodeArray) do
+        -- profession turns out to be the count of which row you are on in the profession section
         for profession, tsNode in pairs(tsData) do
+            --HarvestMerge.Debug("profession : " .. profession)
+            --HarvestMerge.Debug(tsNode)
             for lang, langs in pairs(HarvestMerge.langs) do
+                --HarvestMerge.Debug("lang index : " .. lang)
+                --HarvestMerge.Debug("lang value : " .. langs)
                 if tsNode.nodeName[langs] ~= nil then
-                    -- HarvestMerge.Debug(tsNode.nodeName[langs])
                     for index, nodeName in pairs(tsNode.nodeName[langs]) do
-                        -- HarvestMerge.Debug(nodeName)
-                        -- HarvestMerge.Debug(index)
+                        --HarvestMerge.Debug("index : " .. index)
+                        --HarvestMerge.Debug("nodeName : " .. nodeName)
                         if nodeName == name then
-                            HarvestMerge.getItemIDFromItemNameIndex = index
-                            itemID = tsNode.itemID
-                            return itemID
+                            if tsNode.itemID == 30152 then
+                                HarvestMerge.getItemIDFromItemNameIndex = 1
+                            else
+                                HarvestMerge.getItemIDFromItemNameIndex = index
+                            end
+                            return
                         end
                     end
                 end
             end
         end
     end
-    return nil
+    HarvestMerge.Debug("Node name not found, setting HarvestMerge.getItemIDFromItemNameIndex to 1")
+    HarvestMerge.getItemIDFromItemNameIndex = 1
 end
 
--- HarvestMerge.getItemIDFromItemNameIndex when determining the node name
+-- HarvestMerge.getItemIDFromItemNameIndex should be set before calling this,
+-- so that the name is assigned properly from the table when there
+-- is more then one Node Name like Pure Water and Water Skin
 function HarvestMerge.GetItemNameFromItemID(id)
     local name
     if id == nil then
-        HarvestMerge.Debug("Returned Nil because id was Nil!")
+        HarvestMerge.Debug("Returned Nil because id was Nil! For GetItemNameFromItemID")
         return nil
+    end
+
+    if HarvestMerge.getItemIDFromItemNameIndex < 1 then
+        HarvestMerge.getItemIDFromItemNameIndex = 1
     end
 
     for tsId, tsData in pairs(HarvestMerge.NodeArray) do
@@ -1227,7 +1241,7 @@ function HarvestMerge.GetItemNameFromItemID(id)
                         -- HarvestMerge.Debug(nodeName)
                         -- HarvestMerge.Debug(index)
                         if tsNode.itemID == id then
-                            if profession == 4 and id == 30152 then
+                            if id == 30152 then
                                 HarvestMerge.getItemIDFromItemNameIndex = 1
                                 name = tsNode.nodeName[HarvestMerge.language][HarvestMerge.getItemIDFromItemNameIndex]
                             else

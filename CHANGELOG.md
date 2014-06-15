@@ -1,3 +1,15 @@
+##0.2.4
+
+Updates
+- Added Node Name translation.[1]
+
+Bugfix
+- Updated how HarvestMerge handles importing different nodes in the same location.[2]
+
+[1] This prevents the tooltip from having the node name in each language and translating two from German or French to English.
+[2] For example High Iron Ore, Orichalcum Ore and Calcinium Ore spawning in the same spot.  The tooltip should properly reflect the nodes that have spawned it its location.
+
+
 ##0.2.3
 
 Bugfix
