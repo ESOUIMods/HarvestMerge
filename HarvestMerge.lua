@@ -128,7 +128,11 @@ function HarvestMerge.saveHarvestNode(mapName, x, y, profession, nodeName, itemI
 
     -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
     if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
-        HarvestMerge.saveData("nodes", mapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
+        if not HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName)
+            HarvestMerge.saveData("nodes", mapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
+        else
+            HarvestMerge.NumFalseNodes = HarvestMerge.NumFalseNodes + 1
+        end
     else
         HarvestMerge.NumContainerSkipped = HarvestMerge.NumContainerSkipped + 1
     end
@@ -700,17 +704,12 @@ function HarvestMerge.importFromHarvestMap()
             for index, node in pairs(nodes) do
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 for contents, nodeName in ipairs(node[3]) do
-                    -- [1], [2] = X/Y, [3] = Node Names, [4] = itemID
-                    if (nodeName) ~= "chest" and (nodeName) ~= "fish" then
-                        nodeName, node[4] = HarvestMerge.correctItemIDandNodeName(nodeName, node[4])
-                    end
 
+                    -- [1], [2] = X/Y, [3] = Node Names, [4] = itemID
                     if (nodeName) == "chest" or (nodeName) == "fish" then
                         HarvestMerge.saveFishChestNode(nodeName, newMapName, node[1], node[2])
                     else
-                        if HarvestMerge.checkForValidNodeID(node[4]) then
-                            HarvestMerge.saveHarvestNode(newMapName, node[1], node[2], profession, nodeName, node[4])
-                        end
+                        HarvestMerge.saveHarvestNode(newMapName, node[1], node[2], profession, nodeName, node[4])
                     end
 
                 end
