@@ -111,19 +111,19 @@ function HarvestMerge.correctItemIDandNodeName(nodeName, itemID)
 end
 
 function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName, itemID)
-
     if itemID ~= nil then
         if not HarvestMerge.checkForValidNodeID(itemID) then
             return
         end
     end
-
     nodeName, itemID = HarvestMerge.correctItemIDandNodeName(nodeName, itemID)
 
     if nodeName == nil and itemID ~= nil then
         HarvestMerge.saveData("unlocalnode", newMapName, x, y, profession, "NilNodeName", itemID, nil, "reject" )
+        return
     elseif nodeName ~= nil and itemID == nil then
         HarvestMerge.saveData("unlocalnode", newMapName, x, y, profession, nodeName, 0, nil, "reject" )
+        return
     end
 
     local professionFound = 0
@@ -152,19 +152,19 @@ function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName
 end
 
 function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName, itemID)
-
     if itemID ~= nil then
         if not HarvestMerge.checkForValidNodeID(itemID) then
             return
         end
     end
-
     nodeName, itemID = HarvestMerge.correctItemIDandNodeName(nodeName, itemID)
 
     if nodeName == nil and itemID ~= nil then
         HarvestMerge.saveData("unlocalnode", oldMapName, x, y, profession, "NilNodeName", itemID, nil, "reject" )
+        return
     elseif nodeName ~= nil and itemID == nil then
         HarvestMerge.saveData("unlocalnode", oldMapName, x, y, profession, nodeName, 0, nil, "reject" )
+        return
     end
 
     local professionFound = 0
