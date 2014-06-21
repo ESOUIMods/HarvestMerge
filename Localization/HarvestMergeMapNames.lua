@@ -181,7 +181,7 @@ HarvestMerge.mapSystem = {
     ["bangkorai/ephesus_base"] = {"Ephesus"},
     ["rivenspire/erokii_base"] = {"Erokii Ruins"},
     ["bangkorai/evermore_base"] = {"Evermore","Immerfort^N,in","Abondance^F",},
-    ["guildmaps/eyevea_base"] = {"Eyevea"},
+    ["eyevea/eyevea_base"] = {"Eyevea"},
     ["auridon/ezduiin_base"] = {"Ezduiin Undercroft"},
     ["greenshade/shroudedhollowcenter_base"] = {"Fading Tree"},
     ["therift/ebonmeretower_base"] = {"Faldar's Tooth"},
@@ -669,12 +669,11 @@ function HarvestMerge.updateHarvestNodes(type)
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
                     for contents, nodeName in ipairs(node[3]) do
-
                         -- [1], [2] = X/Y, [3] = Node Names, [4] = itemID
                         if (nodeName) == "chest" or (nodeName) == "fish" then
-                            HarvestMerge.saveFishChestNode(nodeName, newMapName, node[1], node[2])
+                            HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
                         else
-                            HarvestMerge.saveHarvestNode(newMapName, node[1], node[2], profession, nodeName, node[4])
+                            HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
                         end
 
                     end
@@ -685,12 +684,11 @@ function HarvestMerge.updateHarvestNodes(type)
             for profession, nodes in pairs(data) do
                 for index, node in pairs(nodes) do
                     for contents, nodeName in ipairs(node[3]) do
-
                         -- [1], [2] = X/Y, [3] = Node Names, [4] = itemID
                         if (nodeName) == "chest" or (nodeName) == "fish" then
-                            HarvestMerge.saveFishChestNode(nodeName, oldMapName, node[1], node[2])
+                            HarvestMerge.oldMapNameFishChest(nodeName, oldMapName, node[1], node[2])
                         else
-                            HarvestMerge.saveHarvestNode(oldMapName, node[1], node[2], profession, nodeName, node[4])
+                            HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, nodeName, node[4])
                         end
 
                     end
@@ -727,8 +725,9 @@ function HarvestMerge.updateEsoheadNodes(type)
                 for profession, nodes in pairs(data) do
                     for index, node in pairs(nodes) do
                         -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                        -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[5])
                         -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
-                        HarvestMerge.saveHarvestNode(newMapName, node[1], node[2], profession, node[4], node[5])
+                        HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
             else -- << New Map Name NOT found
@@ -736,8 +735,9 @@ function HarvestMerge.updateEsoheadNodes(type)
                 for profession, nodes in pairs(data) do
                     for index, node in pairs(nodes) do
                         -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
+                        -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[5])
                         -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
-                        HarvestMerge.saveHarvestNode(oldMapName, node[1], node[2], profession, node[4], node[5])
+                        HarvestMerge.oldMapItemIDHarvest(oldMapName, node[1], node[2], profession, node[4], node[5])
                     end
                 end
             end
@@ -749,13 +749,13 @@ function HarvestMerge.updateEsoheadNodes(type)
             if newMapName then
                 for _, node in pairs(nodes) do
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                    HarvestMerge.saveFishChestNode("chest", newMapName, node[1], node[2])
+                    HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
                 end
             else -- << New Map Name NOT found
                 oldMapName = map
                 for v1, node in pairs(nodes) do
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                    HarvestMerge.saveFishChestNode("chest", oldMapName, node[1], node[2])
+                    HarvestMerge.oldMapNameFishChest("chest", oldMapName, node[1], node[2])
                 end
             end
         end
@@ -765,13 +765,13 @@ function HarvestMerge.updateEsoheadNodes(type)
             if newMapName then
                 for _, node in pairs(nodes) do
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                    HarvestMerge.saveFishChestNode("fish", newMapName, node[1], node[2])
+                    HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
                 end
             else -- << New Map Name NOT found
                 oldMapName = map
                 for v1, node in pairs(nodes) do
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
-                    HarvestMerge.saveFishChestNode("fish", oldMapName, node[1], node[2])
+                    HarvestMerge.oldMapNameFishChest("fish", oldMapName, node[1], node[2])
                 end
             end
         end

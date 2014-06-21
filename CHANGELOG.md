@@ -1,3 +1,13 @@
+##0.2.7
+
+Update
+- Minor update to Eyevea map name.
+
+##0.2.6
+
+Bugfix
+- Fixed bug that cause an exception when importing with debug mode on
+
 ##0.2.5
 
 Bugfix
