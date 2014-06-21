@@ -90,13 +90,18 @@ function HarvestMerge.correctItemIDandNodeName(nodeName, itemID)
     if HarvestMerge.IsValidContainerName(nodeName) then
         return nodeName, itemID
     end
-
-    HarvestMerge.setItemIndex(nodeName)
+    
+    if nodeName ~= nil then
+        HarvestMerge.setItemIndex(nodeName)
+    end
 
     if nodeName == nil and itemID ~= nil then
         nodeName = HarvestMerge.GetItemNameFromItemID(itemID)
+        HarvestMerge.setItemIndex(nodeName)
         nodeUpdated = true
-    elseif nodeName ~= nil and itemID == nil then
+    end
+    
+    if nodeName ~= nil and itemID == nil then
         itemID = HarvestMerge.GetItemIDFromItemName(nodeName)
     end
 
