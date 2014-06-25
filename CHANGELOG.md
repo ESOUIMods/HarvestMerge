@@ -2,6 +2,7 @@
 
 Update
 - Minor update to Eyevea map name.
+- Synchronized import functions with HarvestMap
 
 ##0.2.6
 
