@@ -1,3 +1,14 @@
+##0.2.9
+
+Updates
+- Changed version number
+
+##0.2.8
+
+Updates
+- Changed version number
+- Added disclaimer to Readme as requested by Zenimax
+
 ##0.2.7
 
 Update

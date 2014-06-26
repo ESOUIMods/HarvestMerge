@@ -1,7 +1,7 @@
 ## Title: HarvestMerge
 ## Author: Sharlikran
-## Version: 0.2.7
-## APIVersion: 100004
+## Version: 0.2.9
+## APIVersion: 100007
 ## SavedVariables: HarvestMerge_SavedVariables
 
 HarvestMerge.lua
