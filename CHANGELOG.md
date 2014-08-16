@@ -1,3 +1,8 @@
+##0.3.0
+
+Updates
+- Node data are now saved using the AceSerializer-3.0 library
+
 ##0.2.9
 
 Updates

@@ -3,8 +3,9 @@ HarvestMerge.chestID = 6
 HarvestMerge.fishID = 8
 
 HarvestMerge.internalVersion = 5
-HarvestMerge.dataVersion = 5
+HarvestMerge.dataVersion = 6
 
+local AS = LibStub("AceSerializer-3.0")
 
 -----------------------------------------
 --           Debug Logger              --
@@ -61,27 +62,27 @@ end
 --         HarvestMap Routines         --
 -----------------------------------------
 
-function HarvestMerge.newMapNameFishChest(type, newMapName, x, y)
-    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if type == "fish" then
-        HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.fishID, type, nil, HarvestMerge.minReticleover, "valid" )
-    elseif type == "chest" then
-        HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "valid" )
+function HarvestMerge.newMapNameFishChest(nodeType, newMapName, x, y)
+    -- 1) nodeType 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
+    if nodeType == "fish" then
+        HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.fishID, nodeType, nil, HarvestMerge.minReticleover, "valid" )
+    elseif nodeType == "chest" then
+        HarvestMerge.saveData("nodes", newMapName, x, y, HarvestMerge.chestID, nodeType, nil, HarvestMerge.minReticleover, "valid" )
     else
-        d("HM : newMapName : unsupported type : " .. type)
-        HarvestMerge.saveData("rejected", newMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
+        d("HM : newMapName : unsupported type : " .. nodeType)
+        HarvestMerge.saveData("rejected", newMapName, x, y, -1, nodeType, nil, HarvestMerge.minReticleover, "reject" )
     end
 end
 
-function HarvestMerge.oldMapNameFishChest(type, oldMapName, x, y)
-    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
-    if type == "fish" then
-        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, type, nil, HarvestMerge.minReticleover, "nonvalid" )
-    elseif type == "chest" then
-        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.chestID, type, nil, HarvestMerge.minReticleover, "nonvalid" )
+function HarvestMerge.oldMapNameFishChest(nodeType, oldMapName, x, y)
+    -- 1) nodeType 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
+    if nodeType == "fish" then
+        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.fishID, nodeType, nil, HarvestMerge.minReticleover, "nonvalid" )
+    elseif nodeType == "chest" then
+        HarvestMerge.saveData("esonodes", oldMapName, x, y, HarvestMerge.chestID, nodeType, nil, HarvestMerge.minReticleover, "nonvalid" )
     else
-        d("HM : newMapName : unsupported type : " .. type)
-        HarvestMerge.saveData("rejected", oldMapName, x, y, -1, type, nil, HarvestMerge.minReticleover, "reject" )
+        d("HM : newMapName : unsupported type : " .. nodeType)
+        HarvestMerge.saveData("rejected", oldMapName, x, y, -1, nodeType, nil, HarvestMerge.minReticleover, "reject" )
     end
 end
 
@@ -143,7 +144,7 @@ function HarvestMerge.newMapItemIDHarvest(newMapName, x, y, profession, nodeName
         return
     end
 
-    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
+    -- 1) nodeType 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
     if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
         if HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName) then
             HarvestMerge.saveData("nodes", newMapName, x, y, professionFound, nodeName, itemID, nil, "valid" )
@@ -184,7 +185,7 @@ function HarvestMerge.oldMapItemIDHarvest(oldMapName, x, y, profession, nodeName
         return
     end
 
-    -- 1) type 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
+    -- 1) nodeType 2) map name 3) x 4) y 5) profession 6) nodeName 7) itemID 8) scale
     if not HarvestMerge.IsValidContainerName(nodeName) then -- returns true or false
         if HarvestMerge.CheckProfessionTypeOnImport(itemID, nodeName) then 
             HarvestMerge.saveData("esonodes", oldMapName, x, y, professionFound, nodeName, itemID, nil, "nonvalid" )
@@ -218,7 +219,22 @@ function HarvestMerge.changeCounters(counter)
     end
 end
 
-function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, scale, counter )
+function HarvestMerge.Serialize(data)
+    return AS:Serialize(data)
+end
+
+function HarvestMerge.Deserialize(data)
+    local success, result = AS:Deserialize(data)
+
+    if success then
+        return result
+    else
+        d(result)
+    end
+
+end
+
+function HarvestMerge.saveData(nodeType, zone, x, y, profession, nodeName, itemID, scale, counter )
 
     -- If the map is on the blacklist then don't log it
     if HarvestMerge.blacklistMap(zone) then
@@ -229,35 +245,35 @@ function HarvestMerge.saveData(type, zone, x, y, profession, nodeName, itemID, s
         return
     end
 
-    if HarvestMerge.savedVars[type] == nil or HarvestMerge.savedVars[type].data == nil then
-        d("Attempted to log unknown type: " .. type)
+    if HarvestMerge.savedVars[nodeType] == nil or HarvestMerge.savedVars[nodeType].data == nil then
+        d("Attempted to log unknown type: " .. nodeType)
         return
     end
 
-    if HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale, counter ) then
+    if HarvestMerge.alreadyFound(nodeType, zone, x, y, profession, nodeName, scale, counter ) then
         return
     end
 
     -- If this check is not here the next routine will fail
     -- after the loading screen because for a brief moment
     -- the information is not available.
-    if HarvestMerge.savedVars[type] == nil then
+    if HarvestMerge.savedVars[nodeType] == nil then
         return
     end
 
-    if not HarvestMerge.savedVars[type].data[zone] then
-        HarvestMerge.savedVars[type].data[zone] = {}
+    if not HarvestMerge.savedVars[nodeType].data[zone] then
+        HarvestMerge.savedVars[nodeType].data[zone] = {}
     end
 
-    if not HarvestMerge.savedVars[type].data[zone][profession] then
-        HarvestMerge.savedVars[type].data[zone][profession] = {}
+    if not HarvestMerge.savedVars[nodeType].data[zone][profession] then
+        HarvestMerge.savedVars[nodeType].data[zone][profession] = {}
     end
 
     if HarvestMerge.internal.debug == 1 then
         d("Save data!")
     end
 
-    table.insert( HarvestMerge.savedVars[type].data[zone][profession], { x, y, { nodeName }, itemID } )
+    table.insert( HarvestMerge.savedVars[nodeType].data[zone][profession], HarvestMerge.Serialize({ x, y, { nodeName }, itemID }) )
     HarvestMerge.changeCounters(counter)
 
 end
@@ -289,13 +305,13 @@ function HarvestMerge.duplicateName(table, value)
     return false
 end
 
-function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale, counter )
+function HarvestMerge.alreadyFound(nodeType, zone, x, y, profession, nodeName, scale, counter )
 
-    if not HarvestMerge.savedVars[type].data[zone] then
+    if not HarvestMerge.savedVars[nodeType].data[zone] then
         return false
     end
 
-    if not HarvestMerge.savedVars[type].data[zone][profession] then
+    if not HarvestMerge.savedVars[nodeType].data[zone][profession] then
         return false
     end
 
@@ -306,10 +322,10 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
         distance = scale
     end
 
-    local dx, dy
-    for _, entry in pairs( HarvestMerge.savedVars[type].data[zone][profession] ) do
-        dx = entry[1] - x
-        dy = entry[2] - y
+    for i, item in ipairs( HarvestMerge.savedVars[nodeType].data[zone][profession] ) do
+        local entry = type(item) == "string" and HarvestMerge.Deserialize(item) or item
+        local dx = entry[1] - x
+        local dy = entry[2] - y
         -- (x - center_x)2 + (y - center_y)2 = r2, where center is the player
         dist = math.pow(dx, 2) + math.pow(dy, 2)
         -- dist2 = dx * dx + dy * dy
@@ -320,6 +336,7 @@ function HarvestMerge.alreadyFound(type, zone, x, y, profession, nodeName, scale
                     HarvestMerge.Debug(nodeName .. " : insterted into existing Node")
                 end
                 table.insert(entry[3], nodeName)
+                HarvestMerge.savedVars[nodeType].data[zone][profession][i] = HarvestMerge.Serialize(entry)
                 HarvestMerge.changeCounters("insert")
             end
             if HarvestMerge.internal.debug == 1 then
@@ -723,7 +740,8 @@ function HarvestMerge.importFromHarvestMap()
     d("Starting import from HarvestMap")
     for newMapName, data in pairs(Harvest.savedVars["nodes"].data) do
         for profession, nodes in pairs(data) do
-            for index, node in pairs(nodes) do
+            for index, item in pairs(nodes) do
+                local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                 HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
                 for contents, nodeName in ipairs(node[3]) do
 
@@ -785,64 +803,70 @@ SLASH_COMMANDS["/merger"] = function (cmd)
         end
     end
 
-    if #commands == 0 then
-        return d("Please enter a valid HarvestMerge command")
-    end
-
-    if #commands == 2 and commands[1] == "debug" then
-        if commands[2] == "on" then
-            d("HarvestMerge debugger toggled on")
-            HarvestMerge.internal.debug = 1
-        elseif commands[2] == "off" then
-            d("HarvestMerge debugger toggled off")
-            HarvestMerge.internal.debug = 0
+    if commands[1] == "debug" then
+        if commands[2] then
+            if commands[2] == "on" then
+                d("HarvestMerge debugger toggled on")
+                HarvestMerge.internal.debug = 1
+                return
+            elseif commands[2] == "off" then
+                d("HarvestMerge debugger toggled off")
+                HarvestMerge.internal.debug = 0
+                return
+            end
         end
 
-    elseif #commands == 2 and commands[1] == "import" then
-
-        if commands[2] == "esohead" then
-            HarvestMerge.importFromEsohead()
-        elseif commands[2] == "esomerge" then
-            HarvestMerge.importFromEsoheadMerge()
-        elseif commands[2] == "harvester" then
-            HarvestMerge.importFromHarvester()
-        elseif commands[2] == "harvestmap" then
-            HarvestMerge.importFromHarvestMap()
-        end
-
-    elseif #commands == 2 and commands[1] == "update" then
-        if  HarvestMerge.IsValidCategory(commands[2]) then
-             HarvestMerge.updateHarvestNodes(commands[2])
-        else
-            d("Please enter a valid HarvestMerge category to update")
-            d("Valid categories are mapinvalid, esonodes, esoinvalid,")
-            d("and nodes (Not recomended)")
+    elseif commands[1] == "import" then
+        if commands[2] then
+            if commands[2] == "esohead" then
+                return HarvestMerge.importFromEsohead()
+            elseif commands[2] == "esomerge" then
+                return HarvestMerge.importFromEsoheadMerge()
+            elseif commands[2] == "harvester" then
+                return HarvestMerge.importFromHarvester()
+            elseif commands[2] == "harvestmap" then
+                return HarvestMerge.importFromHarvestMap()
+            end
+            d("Please enter a valid addon to import")
+            d("Valid addons are esohead, esomerge, harvester and")
+            d("harvestmap.")
             return
         end
 
+    elseif commands[1] == "update" then
+        if commands[2] then
+            if HarvestMerge.IsValidCategory(commands[2]) then
+                return HarvestMerge.updateHarvestNodes(commands[2])
+            end
+        end 
+        d("Please enter a valid HarvestMerge category to update")
+        d("Valid categories are mapinvalid, esonodes, esoinvalid")
+        d("and nodes.")
+        return
+
     elseif commands[1] == "reset" then
-        if #commands ~= 2 then
-            for type,sv in pairs(HarvestMerge.savedVars) do
-                if type ~= "internal" then
-                    HarvestMerge.savedVars[type].data = {}
+        if not commands[2] then
+            for nodeType, nodeData in pairs(HarvestMerge.savedVars) do
+                if nodeType ~= "internal" then
+                    nodeData.data = {}
                 end
             end
             d("HarvestMerge saved data has been completely reset")
         else
-            if commands[2] ~= "internal" then
-                if HarvestMerge.IsValidCategory(commands[2]) then
-                    HarvestMerge.savedVars[commands[2]].data = {}
-                    d("HarvestMerge saved data : " .. commands[2] .. " has been reset")
-                else
-                    return d("Please enter a valid HarvestMerge category to reset")
-                end
+            if HarvestMerge.IsValidCategory(commands[2]) then
+                HarvestMerge.savedVars[commands[2]].data = {}
+                d("HarvestMerge saved data : " .. commands[2] .. " has been reset")
+            else
+                d("Please enter a valid HarvestMerge category to reset")
             end
         end
-
+        return
 
     elseif commands[1] == "datalog" then
-        if #commands ~= 2 and not HarvestMerge.IsValidCategory(commands[2]) then
-            d("please enter a valid type")
+        if not commands[2] or not HarvestMerge.IsValidCategory(commands[2]) then
+            d("Please enter a valid category.")
+            d("Valid categories are mapinvalid, esonodes, esoinvalid")
+            d("and nodes.")
         else
             d("---")
             d("Complete list of gathered data:")
@@ -859,50 +883,36 @@ SLASH_COMMANDS["/merger"] = function (cmd)
                 ["fish"] = 0,
             }
 
-            for type,sv in pairs(HarvestMerge.savedVars) do
-                --[[
-                if type ~= "internal" and (type == "chest" or type == "fish") then
-                    for zone, t1 in pairs(HarvestMerge.savedVars[type].data) do
-                        counter[type] = counter[type] + #HarvestMerge.savedVars[type].data[zone]
-                    end
-                ]]--
-                if type ~= "defaults" and type == commands[2] then
-                    for zone, t1 in pairs(HarvestMerge.savedVars[commands[2]].data) do
-                        for provisions, t2 in pairs(HarvestMerge.savedVars[commands[2]].data[zone]) do
+            for nodeType, nodeData in pairs(HarvestMerge.savedVars) do
+                if nodeType == commands[2] then
+                    for zone, zoneData in pairs(nodeData.data) do
+                        for provisions, data in pairs(zoneData) do
                             if provisions == 1 then
-                                counter["mining"] = counter["mining"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["mining"] = counter["mining"] + #data
                             end
                             if provisions == 2 then
-                                counter["cloth"] = counter["cloth"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["cloth"] = counter["cloth"] + #data
                             end
                             if provisions == 3 then
-                                counter["rune"] = counter["rune"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["rune"] = counter["rune"] + #data
                             end
                             if provisions == 4 then
-                                counter["alch"] = counter["alch"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["alch"] = counter["alch"] + #data
                             end
                             if provisions == 5 then
-                                counter["wood"] = counter["wood"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["wood"] = counter["wood"] + #data
                             end
                             if provisions == HarvestMerge.chestID then
-                                counter["chest"] = counter["chest"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["chest"] = counter["chest"] + #data
                             end
                             if provisions == 7 then
-                                counter["solvent"] = counter["solvent"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["solvent"] = counter["solvent"] + #data
                             end
                             if provisions == HarvestMerge.fishID then
-                                counter["fish"] = counter["fish"] + #HarvestMerge.savedVars[commands[2]].data[zone][provisions]
+                                counter["fish"] = counter["fish"] + #data
                             end
                         end
                     end
-                --[[
-                elseif type ~= "internal" then
-                    for zone, t1 in pairs(HarvestMerge.savedVars[type].data) do
-                        for data, t2 in pairs(HarvestMerge.savedVars[type].data[zone]) do
-                            counter[type] = counter[type] + #HarvestMerge.savedVars[type].data[zone][data]
-                        end
-                    end
-                ]]--
                 end
             end
 
@@ -919,8 +929,15 @@ SLASH_COMMANDS["/merger"] = function (cmd)
 
             d("---")
         end
+        return
     end
 
+    d("Please enter a valid HarvestMerge command")
+    d("  /merger import <addon>")
+    d("  /merger update <category>")
+    d("  /merger reset <category>")
+    d("  /merger datalog <category>")
+    d("  /merger debug <on/off>")
 end
 
 SLASH_COMMANDS["/rl"] = function()
