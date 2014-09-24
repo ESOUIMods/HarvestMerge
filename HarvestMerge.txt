@@ -1,8 +1,11 @@
 ## Title: HarvestMerge
 ## Author: Sharlikran
-## Version: 0.2.9
-## APIVersion: 100007
+## Version: 0.3.0
+## APIVersion: 100009
 ## SavedVariables: HarvestMerge_SavedVariables
+
+Libs/LibStub/LibStub.lua
+Libs/AceSerializer-3.0/AceSerializer-3.0.lua
 
 HarvestMerge.lua
 

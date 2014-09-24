@@ -44,7 +44,7 @@ HarvestMerge.mapSystem = {
     ["bangkorai/bangkorai_base"] = {"Bangkorai", "Bangkorai^N,in", "Bangkoraï^F"},
     ["greenshade/barrowtrench_base"] = {"Barrow Trench"},
     ["stormhaven/bearclawmine_base"] = {"Bearclaw Mine", "Bärenprankenmine^fd,in"},
-    ["craglorn/belkarth_base"] = {"Belkarth"},
+    ["craglorn/belkarth_base"] = {"Belkarth", "Belkarth^N,in", "Belkarth^M"},
     ["alikr/bergama_base"] = {"Bergama", "Bergama^N,in", "Bergame^F"},
     ["glenumbra/betnihk_base"] = {"Betnikh", "Betnikh^N,in", "Betnikh^F"},
     ["auridon/bewan_base"] = {"Bewan","Bewan^N,in","Bewan^F"},
@@ -55,8 +55,8 @@ HarvestMerge.mapSystem = {
     ["bangkorai/blackhearthavenarea2_base"] = {"Blackheart Haven"},
     ["bangkorai/blackhearthavenarea3_base"] = {"Blackheart Haven"},
     ["bangkorai/blackhearthavenarea4_base"] = {"Blackheart Haven"},
-    ["stonefalls/bleakrock_base"] = {"Bleakrock Isle"},
-    ["bleakrock/bleakrockvillage_base"] = {"Bleakrock Village", "Ödfels^N,in", "\214dfels^N,auf", "\239\191\189dfels^N,auf", "\215\164fels^N,auf", "village de Morneroc^md"},
+    ["stonefalls/bleakrock_base"] = {"Bleakrock Isle", "Ödfels^N,auf", "\214dfels^N,auf", "\239\191\189dfels^N,auf", "\215\164fels^N,auf", "île de Morneroc^fd"},
+    ["bleakrock/bleakrockvillage_base"] = {"Bleakrock Village", "Ödfels^N,in", "\214dfels^N,in", "\239\191\189dfels^N,in", "\215\164fels^N,in", "village de Morneroc^md"},
     ["therift/blessedcrucible1_base"] = {"Blessed Crucible"},
     ["therift/blessedcrucible2_base"] = {"Blessed Crucible"},
     ["therift/blessedcrucible3_base"] = {"Blessed Crucible"},
@@ -77,7 +77,7 @@ HarvestMerge.mapSystem = {
     ["rivenspire/breaghafinupper_base"] = {"Breagha-Fin"},
     ["cyrodiil/breakneckcave_base"] = {"Breakneck Cave","Genickbruchhöhle^fd,in","caverne de l'À-pic^fd"},
     ["malabaltor/brokencoast_base"] = {"Broken Coast"},
-    ["shadowfen/brokentuskcave_base"] = {"Broken Tusk"},
+    ["shadowfen/brokentuskcave_base"] = {"Broken Tusk","Bruchhauer^pd,an"},
     ["deshaan/bthanual_base"] = {"Bthanual", "Bthanual^N,in","Bthanual^F"},
     ["glenumbra/bthzark_base"] = {"Bthzark", "Bthzark^N,in", "Bthzark^M"},
     ["auridon/buraniim_base"] = {"Buraniim", "Buraniim^N,in"},
@@ -102,7 +102,7 @@ HarvestMerge.mapSystem = {
     ["guildmaps/cheesemongershollow_base"] = {"Cheesemonger's Hollow", "Käsekrämerkerbe^fd,in"},
     ["shadowfen/chidmoskaruins_base"] = {"Chid-Moska Ruins", "Ruinen von Chid-Moska^pd,in"},
     ["craglorn/chiselshriek_base"] = {"Chiselshriek Mine"},
-    ["guildmaps/circusofcheerfulslaughter_base"] = {"Circus of Cheerful Slaughter"},
+    ["guildmaps/circusofcheerfulslaughter_base"] = {"Circus of Cheerful Slaughter", "Zirkus des FrĂ¶hlichen Abschlachtens^md,in", "Zirkus des Fröhlichen Abschlachtens^md,in"},
     ["craglorn/shadacitydistrict_base"] = {"City District"},
     ["greenshade/cityofashboss_base"] = {"City of Ash"},
     ["greenshade/cityofashmain_base"] = {"City of Ash"},
@@ -116,7 +116,7 @@ HarvestMerge.mapSystem = {
     ["eastmarch/cragwallow_base"] = {"Cragwallow","Felssuhle^N,in","Bourberoc^M"},
     ["rivenspire/crestshademine_base"] = {"Crestshade Mine"},
     ["malabaltor/crimsoncove_base"] = {"Crimson Cove", "Blutgrotten^pd,in"},
-    ["glenumbra/crosswychmine_base"] = {"Crosswych Mine"},
+    ["glenumbra/crosswychmine_base"] = {"Crosswych Mine","Mine von Kreuzgrat^fd,in"},
     ["glenumbra/crosswych_base"] = {"Crosswych", "Kreuzgrat^N,in","Croissalant^M"},
     ["stonefalls/crowswood_base"] = {"Crow's Wood", "Krähenwald^N,in", "bois du corbeau^md"},
     ["rivenspire/cryptofhearts_base"] = {"Crypt of Hearts", "Krypta der Herzen^fd,in"},
@@ -134,7 +134,7 @@ HarvestMerge.mapSystem = {
     ["stonefalls/davonswatch_base"] = {"Davon's Watch", "Davons Wacht^Fg,in", "Guet de Davon^md"},
     ["reapersmarch/dawnmeade_base"] = {"Dawnmead"},
     ["malabaltor/deadmansdrop_base"] = {"Dead Man's Drop"},
-    ["deshaan/deepcragden_base"] = {"Deepcrag Den","Tiefklippengrube^fd,bei","mine de Roc-fosse^fd"},
+    ["deshaan/deepcragden_base"] = {"Deepcrag Den","Tiefklippengrube^fd,bei","Tiefklippengrube^fd,in","mine de Roc-fosse^fd"},
     ["auridon/delsclaim_base"] = {"Del's Claim", "Dels Grube^Fg,in", "concession de Del^fd"},
     ["reapersmarch/planeofjodedenoflorkhaj_base"] = {"Den of Lorkhaj"},
     ["deshaan/deshaan_base"] = {"Deshaan", "Deshaan^N,in", "Deshaan^F"},
@@ -148,15 +148,15 @@ HarvestMerge.mapSystem = {
     ["rivenspire/doomcragground_base"] = {"Doomcrag"},
     ["rivenspire/doomcragmiddle_base"] = {"Doomcrag"},
     ["rivenspire/doomcragtop_base"] = {"Doomcrag"},
-    ["glenumbra/dourstonevault_base"] = {"Dourstone Vault"},
+    ["glenumbra/dourstonevault_base"] = {"Dourstone Vault", "MurrsteingewĂ¶lbe^nd", "Murrsteingewölbe^nd" },
     ["greenshade/drownedcoast_base"] = {"Drowned Coast"},
     ["reapersmarch/dune_base"] = {"Dune", "Düne^N,in", "Dune^F"},
     ["cyrodiil/eastelsweyrgate_base"] = {"Eastern Elsweyr Gate"},
     ["eastmarch/eastmarch_base"] = {"Eastmarch", "Ostmarsch^N,in", "Estemarche^F"},
     ["glenumbra/eboncrypt_base"] = {"Ebon Crypt","Ebenerzgruft^fd,an","crypte d'ébène^fd"},
     ["ebonheart/ebonheartpact_base"] = {"Ebonheart Pact"},
-    ["cyrodiil/ava_ebonheart"] = {"Ebonheart"},
-    ["stonefalls/ebonheart_base"] = {"Ebonheart"},
+--    ["cyrodiil/ava_ebonheart"] = {"Ebonheart"},
+    ["stonefalls/ebonheart_base"] = {"Ebonheart", "Ebenherz^N,in"},
     ["cyrodiil/echocave_base"] = {"Echo Cave","Echohöhle^fd,in","caverne aux échos^fd"},
     ["rivenspire/edraldundercroftdomed_base"] = {"Edrald Undercroft"},
     ["rivenspire/edraldundercroft_base"] = {"Edrald Undercroft"},
@@ -187,7 +187,7 @@ HarvestMerge.mapSystem = {
     ["therift/ebonmeretower_base"] = {"Faldar's Tooth"},
     ["greenshade/falinesticave_base"] = {"Falinesti Cave"},
     ["therift/fallowstonevault_base"] = {"Fallowstone Vault"},
-    ["stormhaven/farangelsdelve_base"] = {"Farangel's Delve"},
+    ["stormhaven/farangelsdelve_base"] = {"Farangel's Delve","Farangels Verweilen^Ng,in"},
     ["reapersmarch/fardirsfolly_base"] = {"Fardir's Folly"},
     ["auridon/firsthold_base"] = {"Firsthold", "Ersthalt^N,in", "Prime-Tenure^M"},
     ["rivenspire/flyleafcatacombs_base"] = {"Flyleaf Catacombs", "Deckblattkatakomben^pd,in"},
@@ -199,7 +199,7 @@ HarvestMerge.mapSystem = {
     ["eastmarch/fortmorvunskar_base"] = {"Fort Morvunskar","Feste Morvunskar^fd,in","fort Morvunskar^M"},
     ["reapersmarch/fortsphinxmoth_base"] = {"Fort Sphinxmoth"},
     ["guildmaps/fortvirakruin_base"] = {"Fort Virak Ruin"},
-    ["coldharbor/foundryofwoe_base"] = {"Foundry of Woe"},
+    ["coldharbor/foundryofwoe_base"] = {"Foundry of Woe","GieĂźerei des Leids^fd,in","Gießerei des Leids^fd,in"},
     ["craglorn/frostmonarchlair_base"] = {"Frost Monarch Lair"},
     ["eastmarch/frostwatertundra_base"] = {"Frostwater Tundra"},
     ["stonefalls/fungalgrottosecretroom_base"] = {"Fungal Grotto"},
@@ -256,10 +256,10 @@ HarvestMerge.mapSystem = {
     ["stonefalls/housedrescrypts_base"] = {"House Dres Crypts"},
     ["stonefalls/davonswatchcrypt_base"] = {"House Indoril Crypt"},
     ["stonefalls/hozzinsfolley_base"] = {"Hozzin's Folly", "Hozzins Torheit^Fg,in", "Folie d'Hozzin^fd"},
-    ["eastmarch/icehammersvault_base"] = {"Icehammer's Vault","Eishammers Gruft^Fg,vor","chambre de Glacemartel^fd"},
+    ["eastmarch/icehammersvault_base"] = {"Icehammer's Vault","Eishammers Gruft^Fg,vor","Eishammers Gruft^Fg,in","chambre de Glacemartel^fd"},
     ["eastmarch/icewindpeaks_base"] = {"Icewind Peaks"},
     ["glenumbra/ilessantower_base"] = {"Ilessan Tower","ilessanischer Turm^md,bei","tour d'Ilessan^fd"},
-    ["stonefalls/iliathtempletunnels_base"] = {"Iliath Temple Mines"},
+    ["stonefalls/iliathtempletunnels_base"] = {"Iliath Temple Mines","Minen des Iliath-Tempels^pd,in"},
     ["greenshade/ilmyris_base"] = {"Ilmyris"},
     ["greenshade/imperialundergroundpart1_base"] = {"Imperial Underground"},
     ["greenshade/imperialundergroundpart2_base"] = {"Imperial Underground"},
@@ -329,7 +329,7 @@ HarvestMerge.mapSystem = {
     ["grahtwood/rajhinsvaultsmallroom_base"] = {"Nairume's Prison"},
     ["grahtwood/rajhinsvault_base"] = {"Nairume's Prison"},
     ["greenshade/narilnagaia_base"] = {"Naril Nagaia"},
-    ["deshaan/narsisruins_base"] = {"Narsis Ruins"},
+    ["deshaan/narsisruins_base"] = {"Narsis Ruins", "Ruinen von Narsis^pd,in"},
     ["deshaan/narsis_base"] = {"Narsis", "Narsis^N,in", "Narsis^F"},
     ["bangkorai/nchuduabtharthreshold_base"] = {"Nchu Duabthar Threshold"},
     ["grahtwood/nesalas_base"] = {"Ne Salas","Ne Salas^N,in","Ne Salas^M"},
@@ -341,7 +341,7 @@ HarvestMerge.mapSystem = {
     ["therift/nimalten_base"] = {"Nimalten"},
     ["cyrodiil/nisincave_base"] = {"Nisin Cave","Nisinhöhle^fd,in","caverne de Nisin^fd"},
     ["cyrodiil/northhighrockgate_base"] = {"Northern High Rock Gate"},
-    ["cyrodiil/northmorrowgate_base"] = {"Northern Morrowind Gate"},
+    ["cyrodiil/northmorrowgate_base"] = {"Northern Morrowind Gate","Nordtor nach Morrowind^nd"},
     ["reapersmarch/northernwoods_base"] = {"Northern Woods"},
     ["rivenspire/northpoint_base"] = {"Northpoint", "Nordspitz^N,in"},
     ["therift/northwindmine_base"] = {"Northwind Mine"},
@@ -360,12 +360,12 @@ HarvestMerge.mapSystem = {
     ["grahtwood/ossuaryoftelacar_base"] = {"Ossuary of Telacar","Beinhaus von Telacar^nd,in","ossuaire de Télacar^md"},
     ["malabaltor/ouze_base"] = {"Ouze"},
     ["stormhaven/pariahcatacombs_base"] = {"Pariah Catacombs", "Katakomben der Ausgestoßenen^fd,in"},
-    ["auridon/phaercatacombs_base"] = {"Phaer Catacombs"},
+    ["auridon/phaercatacombs_base"] = {"Phaer Catacombs","Katakomben von Phaer^pd,in"},
     ["therift/pinepeakcaverns_base"] = {"Pinepeak Caverns"},
     ["glenumbra/porthunding_base"] = {"Port Hunding", "Hundingshafen^N,in", "Port Hunding^M"},
-    ["stormhaven/portdunwatch_base"] = {"Portdun Watch"},
-    ["cyrodiil/potholecavern_base"] = {"Pothole Caverns"},
-    ["deshaan/quarantineserk_base"] = {"Quarantine Serk Catacombs"},
+    ["stormhaven/portdunwatch_base"] = {"Portdun Watch","Falbhafenwacht^fd,in"},
+    ["cyrodiil/potholecavern_base"] = {"Pothole Caverns","Strudellochkavernen^pd,in"},
+    ["deshaan/quarantineserk_base"] = {"Quarantine Serk Catacombs","Katakomben von Serkamora^pd,in"},
     ["auridon/southruins_base"] = {"Quendeluun South Ruins"},
     ["cyrodiil/quickwatercave_base"] = {"Quickwater Cave","Schnellwasserhöhle^fd,in","caverne de l'Eau-vive^fd"},
     ["cyrodiil/quickwaterdepths_base"] = {"Quickwater Depths"},
@@ -440,7 +440,7 @@ HarvestMerge.mapSystem = {
     ["rivenspire/shroudedpass_base"] = {"Shrouded Pass"},
     ["greenshade/silatar_base"] = {"Silatar"},
     ["glenumbra/silumm_base"] = {"Silumm","Silumm^N,in","Silumm^F"},
-    ["shadowfen/stormholdayleidruin_base"] = {"Silyanorn Ruins"},
+    ["shadowfen/stormholdayleidruin_base"] = {"Silyanorn Ruins","Ruinen von Silyanorn^pd,in"},
     ["auridon/skywatch_base"] = {"Skywatch", "Himmelswacht^N,in", "Gardeciel^M"},
     ["therift/smokefrostpeaks_base"] = {"Smokefrost Peaks"},
     ["therift/snaplegcave_base"] = {"Snapleg Cave"},
@@ -456,7 +456,7 @@ HarvestMerge.mapSystem = {
     ["glenumbra/stonetoothfortress_base"] = {"Stonetooth Fortress"},
     ["therift/stonypass_base"] = {"Stony Basin"},
     ["craglorn/stormlair_base"] = {"Storm Lair"},
-    ["eastmarch/stormcragcrypt_base"] = {"Stormcrag Crypt","Sturmhang-Krypta^fd,vor","crypte de Cime-foudre^fd"},
+    ["eastmarch/stormcragcrypt_base"] = {"Stormcrag Crypt","Sturmhang-Krypta^fd,vor","Sturmhang-Krypta^fd,in","crypte de Cime-foudre^fd"},
     ["stormhaven/stormhaven_base"] = {"Stormhaven", "Sturmhafen^N,in", "Havre-tempête^F"},
     ["shadowfen/stormhold_base"] = {"Stormhold", "Sturmfeste^N,in"},
     ["malabaltor/stormwardenundercroft_base"] = {"Stormwarden Undercroft"},
@@ -502,7 +502,7 @@ HarvestMerge.mapSystem = {
     ["therift/thelionsden_base"] = {"The Lion's Den"},
     ["grahtwood/longcoast_base"] = {"The Long Coast"},
     ["coldharbor/themanorofrevelry_base"] = {"The Manor of Revelry", "das Herrenhaus der Lustbarkeiten^nd,in","manoir des réjouissances^md"},
-    ["grahtwood/themiddens_base"] = {"The Middens"},
+    ["grahtwood/themiddens_base"] = {"The Middens","Halden^pd,in"},
     ["coldharbor/themooring_base"] = {"The Mooring"},
     ["grahtwood/orrery_base"] = {"The Orrery"},
     ["auridon/therefugeofdread_base"] = {"The Refuge of Dread"},
@@ -513,7 +513,7 @@ HarvestMerge.mapSystem = {
     ["greenshade/theunderroot_base"] = {"The Underroot"},
     ["auridon/thevaultofexile_base"] = {"The Vault of Exile"},
     ["coldharbor/vaultofhamanforgefire_base"] = {"The Vault of Haman Forgefire"},
-    ["auridon/veiledkeepbase"] = {"The Veiled Keep"},
+    ["auridon/veiledkeepbase"] = {"The Veiled Keep","Schleierburg^fd,in"},
     ["coldharbor/thevilelaboratory_base"] = {"The Vile Laboratory", "abscheuliche Laboratorium^ndc,in","Laboratoire infâme^md"},
     ["reapersmarch/thevilemansefirstfloor_base"] = {"The Vile Manse"},
     ["reapersmarch/thevilemansesecondfloor_base"] = {"The Vile Manse"},
@@ -532,11 +532,11 @@ HarvestMerge.mapSystem = {
     ["reapersmarch/jodeplane_base"] = {"The Wild Hunt"},
     ["auridon/thewormsretreat_base"] = {"The Worm's Retreat"},
     ["glenumbra/themondmine_base"] = {"Themond Mine"},
-    ["reapersmarch/thibautscairn_base"] = {"Thibaut's Cairn"},
+    ["reapersmarch/thibautscairn_base"] = {"Thibaut's Cairn","Thibauts Steingrab^Ng,in"},
     ["alikr/tigonus_base"] = {"Tigonus"},
     ["cyrodiil/toadstoolhollowlower_base"] = {"Toadstool Hollow"},
     ["cyrodiil/toadstoolhollow_base"] = {"Toadstool Hollow"},
-    ["grahtwood/tombofanahbi_base"] = {"Tomb of Anahbi"},
+    ["grahtwood/tombofanahbi_base"] = {"Tomb of Anahbi","Grabmal von Anahbi^nd,in"},
     ["glenumbra/tomboflostkings_base"] = {"Tomb of Lost Kings","Grabmal der vergessenen Könige^nd,bei","tombe des rois perdus^fd"},
     ["malabaltor/tomboftheapostates_base"] = {"Tomb of the Apostates"},
     ["craglorn/cryptoftarishzi2_base"] = {"Tombs of the Na-Totambu"},
@@ -557,7 +557,7 @@ HarvestMerge.mapSystem = {
     ["auridon/despair_base"] = {"Tower of the Vale - Despair"},
     ["auridon/rage_base"] = {"Tower of the Vale - Rage"},
     ["auridon/temple_base"] = {"Tower of the Vale - Temple"},
-    ["rivenspire/tribulationcrypt_base"] = {"Tribulation Crypt"},
+    ["rivenspire/tribulationcrypt_base"] = {"Tribulation Crypt","Kummerkrypta^fd,in"},
     ["deshaan/tribunaltemple_base"] = {"Tribunal Temple", "Tempel des Tribunals^md,in","temple du Tribunal^md"},
     ["therift/trolhettacave_base"] = {"Trolhetta Cave"},
     ["therift/trolhettasummit_base"] = {"Trolhetta Summit"},
@@ -572,7 +572,7 @@ HarvestMerge.mapSystem = {
     ["coldharbor/vaultsofmadness1_base"] = {"Vaults of Madness"},
     ["coldharbor/vaultsofmadness2_base"] = {"Vaults of Madness"},
     ["therift/vernimwood_base"] = {"Vaults of Vernim"},
-    ["malabaltor/velynharbor_base"] = {"Velyn Harbor"},
+    ["malabaltor/velynharbor_base"] = {"Velyn Harbor", "Velynhafen^N,in"},
     ["shadowfen/venomousfens_base"] = {"Venomous Fens"},
     ["coldharbor/villageofthelost_base"] = {"Village of the Lost", "Dorf der Verlorenen^nd,in","Village des perdus^md"},
     ["grahtwood/vindeathcave_base"] = {"Vinedeath Cave","Rankentodhöhle^fd,in","caverne de Roncemort^fd"},
@@ -585,9 +585,9 @@ HarvestMerge.mapSystem = {
     ["auridon/vulkhelguard_base"] = {"Vulkhel Guard", "Vulkhelwacht^N,in","Vulkhelwacht^fd,in","Guet de Vulkhel^md"},
     ["malabaltor/vulkwasten_base"] = {"Vulkwasten","Vulkwasten^N,in","Gastefoule^M"},
     ["auridon/wansalen_base"] = {"Wansalen", "Wansalen^N,in","Wansalen^M"},
-    ["stormhaven/wayrestsewers_base"] = {"Wayrest Sewers","Kanalisation von Wegesruh^N", "égouts d'Haltevoie"},
-    ["stormhaven/wayrest_base"] = {"Wayrest"},
-    ["reapersmarch/weepingwindcave_base"] = {"Weeping Wind Cave"},
+    ["stormhaven/wayrestsewers_base"] = {"Wayrest Sewers","Kanalisation von Wegesruh^N","Kanalisation von Wegesruh^fd,in", "égouts d'Haltevoie"},
+    ["stormhaven/wayrest_base"] = {"Wayrest","Wegesruh^N,in"},
+    ["reapersmarch/weepingwindcave_base"] = {"Weeping Wind Cave", "HeulwindhĂ¶hle^fd,in", "Heulwindhöhle^fd,in"},
     ["cyrodiil/westelsweyrgate_base"] = {"Western Elsweyr Gate"},
     ["shadowfen/whiteroseprison_base"] = {"White Rose Prison Dungeon"},
     ["cyrodiil/whitefallmountain_base"] = {"Whitefall Mountain"},
@@ -606,7 +606,13 @@ HarvestMerge.mapSystem = {
 }
 
 HarvestMerge.mapBlacklist = {
-    "tamriel/tamriel"
+    "tamriel/tamriel",
+    "tamriel/mundus_base",
+    "cyrodiil/ava_aldmeri",
+    "cyrodiil/ava_ebonheart",
+    "aldmeri/aldmeridominion_base",
+    "daggerfall/daggerfallalliance_base",
+    "ebonheart/ebonheartpact_base",
 }
 
 function HarvestMerge.blacklistMap(mapName)
@@ -645,14 +651,14 @@ function HarvestMerge.hasNewMapName(mapName)
     return false
 end
 
-function HarvestMerge.updateHarvestNodes(type)
+function HarvestMerge.updateHarvestNodes(nodeType)
 
-    if HarvestMerge.savedVars[type].data == nil then
+    if HarvestMerge.savedVars[nodeType].data == nil then
         return
     end
 
-    local oldData = HarvestMerge.savedVars[type].data
-    HarvestMerge.savedVars[type].data = {}
+    local oldData = HarvestMerge.savedVars[nodeType].data
+    HarvestMerge.savedVars[nodeType].data = {}
     --if not HarvestMerge.savedVars["nodes"].oldData then
     --    HarvestMerge.savedVars["nodes"].oldData = {}
     --end
@@ -662,12 +668,13 @@ function HarvestMerge.updateHarvestNodes(type)
     local newMapName
     local oldMapName
 
-    HarvestMerge.Debug("Starting update of " .. (type))
+    HarvestMerge.Debug("Starting update of " .. (nodeType))
     for map, data in pairs(oldData) do
         newMapName = HarvestMerge.GetNewMapName(map)
         if newMapName then
             for profession, nodes in pairs(data) do
-                for index, node in pairs(nodes) do
+                for index, item in ipairs(nodes) do
+                    local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                     for contents, nodeName in ipairs(node[3]) do
                         -- [1], [2] = X/Y, [3] = Node Names, [4] = itemID
                         if (nodeName) == "chest" or (nodeName) == "fish" then
@@ -682,7 +689,8 @@ function HarvestMerge.updateHarvestNodes(type)
         else -- << New Map Name NOT found
             oldMapName = map
             for profession, nodes in pairs(data) do
-                for index, node in pairs(nodes) do
+                for index, item in ipairs(nodes) do
+                    local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                     for contents, nodeName in ipairs(node[3]) do
                         -- [1], [2] = X/Y, [3] = Node Names, [4] = itemID
                         if (nodeName) == "chest" or (nodeName) == "fish" then
@@ -701,16 +709,16 @@ function HarvestMerge.updateHarvestNodes(type)
 end
 
 -- These nodes used the Esohead format at the time instead of the HarvestMap format
-function HarvestMerge.updateEsoheadNodes(type)
+function HarvestMerge.updateEsoheadNodes(nodeType)
 
-    if HarvestMerge.savedVars[type].data == nil then
+    if HarvestMerge.savedVars[nodeType].data == nil then
         return
     end
 
-    local oldData = HarvestMerge.savedVars[type].data
-    HarvestMerge.savedVars[type].data = {}
-    -- if not HarvestMerge.savedVars[type] then
-    --     HarvestMerge.savedVars[type] = {}
+    local oldData = HarvestMerge.savedVars[nodeType].data
+    HarvestMerge.savedVars[nodeType].data = {}
+    -- if not HarvestMerge.savedVars[nodeType] then
+    --     HarvestMerge.savedVars[nodeType] = {}
     -- end
     --if not HarvestMerge.savedVars["nodes"].oldMapData then
     --    HarvestMerge.savedVars["nodes"].oldMapData = {}
@@ -718,12 +726,13 @@ function HarvestMerge.updateEsoheadNodes(type)
     local newMapName
     local oldMapName
 
-    if type == "esoharvest" then
+    if nodeType == "esoharvest" then
         for map, data in pairs(oldData) do
             newMapName = HarvestMerge.GetNewMapName(map)
             if newMapName then
                 for profession, nodes in pairs(data) do
-                    for index, node in pairs(nodes) do
+                    for index, item in ipairs(nodes) do
+                        local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                         -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
                         -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[5])
                         -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
@@ -733,7 +742,8 @@ function HarvestMerge.updateEsoheadNodes(type)
             else -- << New Map Name NOT found
                 oldMapName = map
                 for profession, nodes in pairs(data) do
-                    for index, node in pairs(nodes) do
+                    for index, item in ipairs(nodes) do
+                        local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                         -- [1], [2] = X/Y, [3] = Stack Size, [4] = nodeName, [5] = itemID
                         -- HarvestMerge.Debug(node[1] .. " : " .. node[2] .. " : " .. profession .. " : " .. node[5])
                         -- [1] map name [2], [3] = X/Y, [4] profession [5] nodeName [6] itemID
@@ -743,33 +753,37 @@ function HarvestMerge.updateEsoheadNodes(type)
             end
 
         end
-    elseif type == "esochest" then
+    elseif nodeType == "esochest" then
         for map, nodes in pairs(oldData) do
             newMapName = HarvestMerge.GetNewMapName(map)
             if newMapName then
-                for _, node in pairs(nodes) do
+                for _, item in ipairs(nodes) do
+                    local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                     HarvestMerge.newMapNameFishChest("chest", newMapName, node[1], node[2])
                 end
             else -- << New Map Name NOT found
                 oldMapName = map
-                for v1, node in pairs(nodes) do
+                for v1, item in ipairs(nodes) do
+                    local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                     HarvestMerge.oldMapNameFishChest("chest", oldMapName, node[1], node[2])
                 end
             end
         end
-    elseif type == "esofish" then
+    elseif nodeType == "esofish" then
         for map, nodes in pairs(oldData) do
             newMapName = HarvestMerge.GetNewMapName(map)
             if newMapName then
-                for _, node in pairs(nodes) do
+                for _, item in pairs(nodes) do
+                    local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                     HarvestMerge.newMapNameFishChest("fish", newMapName, node[1], node[2])
                 end
             else -- << New Map Name NOT found
                 oldMapName = map
-                for v1, node in pairs(nodes) do
+                for v1, item in pairs(nodes) do
+                    local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
                     -- 1) map name 2) x 3) y 4) profession 5) nodeName 6) itemID
                     HarvestMerge.oldMapNameFishChest("fish", oldMapName, node[1], node[2])
                 end
