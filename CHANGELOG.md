@@ -1,3 +1,8 @@
+##0.3.1
+
+Updates
+- Updated TOC; Checked change notes no routines were effected
+
 ##0.3.0
 
 Updates

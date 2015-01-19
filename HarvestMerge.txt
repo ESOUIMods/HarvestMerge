@@ -1,6 +1,6 @@
 ## Title: HarvestMerge
 ## Author: Sharlikran
-## Version: 0.3.0
+## Version: 0.3.1
 ## APIVersion: 100010
 ## SavedVariables: HarvestMerge_SavedVariables
 
