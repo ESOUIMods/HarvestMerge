@@ -1,3 +1,9 @@
+##0.3.2
+
+Updates
+- Updated TOC; Checked change notes no routines were effected
+- Updated Map Names from Esohead
+
 ##0.3.1
 
 Updates
