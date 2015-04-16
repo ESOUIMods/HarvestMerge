@@ -605,6 +605,11 @@ function HarvestMerge.importFromEsoheadMerge()
 end
 
 function HarvestMerge.importFromHarvester()
+    if not Harvester then
+        d("Please enable the Harvester addon to import data!")
+        return
+    end
+
     HarvestMerge.NumNodesAdded = 0
     HarvestMerge.NumFalseNodes = 0
     HarvestMerge.NumContainerSkipped = 0
@@ -614,11 +619,6 @@ function HarvestMerge.importFromHarvester()
     HarvestMerge.NumUnlocalizedNodesAdded = 0
     HarvestMerge.NumRejectedNodes = 0
     HarvestMerge.NumInsertedNodes = 0
-
-    if not Harvester then
-        d("Please enable the Harvester addon to import data!")
-        return
-    end
 
     d("Starting import from Harvester")
     local profession
@@ -721,7 +721,42 @@ function HarvestMerge.importFromHarvester()
     d("Finished.")
 end
 
+local InternalHarvestMapImport
+function InternalHarvestMapImport(sourceTable, mapKey, professionKey)
+    local newMapName, data = next(sourceTable, mapKey)
+    if newMapName then
+        local profession, nodes = next(data, professionKey)
+        if nodes then
+            for index, item in pairs(nodes) do
+                local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
+                HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
+                for contents, nodeName in pairs(node[3]) do
+                    if (nodeName) == "chest" or (nodeName) == "fish" then
+                        HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
+                    else
+                        HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
+                    end
+                end
+            end
+        else
+            mapKey = newMapName
+        end
+        zo_callLater(function() InternalHarvestMapImport(sourceTable, mapKey, profession) end, 5)
+    else
+        d("Number of nodes processed: " .. tostring(HarvestMerge.NumNodesProcessed) )
+        d("Number of nodes added: " .. tostring(HarvestMerge.NumNodesAdded) )
+        d("Number of nodes inserted: " .. tostring(HarvestMerge.NumInsertedNodes) )
+        -- d("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
+        d("Finished.")
+    end
+end
+
 function HarvestMerge.importFromHarvestMap()
+    if not Harvest then
+        d("Please enable the HarvestMap addon to import data!")
+        return
+    end
+
     HarvestMerge.NumNodesAdded = 0
     HarvestMerge.NumFalseNodes = 0
     HarvestMerge.NumContainerSkipped = 0
@@ -732,36 +767,9 @@ function HarvestMerge.importFromHarvestMap()
     HarvestMerge.NumRejectedNodes = 0
     HarvestMerge.NumInsertedNodes = 0
 
-    if not Harvest then
-        d("Please enable the HarvestMap addon to import data!")
-        return
-    end
+    d("Starting import from HarvestMap.")
 
-    d("Starting import from HarvestMap")
-    for newMapName, data in pairs(Harvest.savedVars["nodes"].data) do
-        for profession, nodes in pairs(data) do
-            for index, item in pairs(nodes) do
-                local node = type(item) == "string" and HarvestMerge.Deserialize(item) or item
-                HarvestMerge.NumNodesProcessed = HarvestMerge.NumNodesProcessed + 1
-                for contents, nodeName in ipairs(node[3]) do
-
-                    -- [1], [2] = X/Y, [3] = Node Names, [4] = itemID
-                    if (nodeName) == "chest" or (nodeName) == "fish" then
-                        HarvestMerge.newMapNameFishChest(nodeName, newMapName, node[1], node[2])
-                    else
-                        HarvestMerge.newMapItemIDHarvest(newMapName, node[1], node[2], profession, nodeName, node[4])
-                    end
-
-                end
-            end
-        end
-    end
-
-    HarvestMerge.Debug("Number of nodes processed : " .. tostring(HarvestMerge.NumNodesProcessed) )
-    HarvestMerge.Debug("Number of nodes added : " .. tostring(HarvestMerge.NumNodesAdded) )
-    HarvestMerge.Debug("Number of nodes inserted : " .. tostring(HarvestMerge.NumInsertedNodes) )
-    -- HarvestMerge.Debug("Number of Rejected Nodes saved : " .. tostring(HarvestMerge.NumRejectedNodes) )
-    HarvestMerge.Debug("Finished.")
+    InternalHarvestMapImport(Harvest.savedVars["nodes"].data)
 end
 
 -----------------------------------------
@@ -1024,7 +1032,10 @@ function HarvestMerge.Initialize()
     --supported localizations
     HarvestMerge.langs = { "en", "de", "fr", }
 
-    HarvestMerge.language = (GetCVar("language.2") or "en")
+    HarvestMerge.language = GetCVar("language.2")
+    if not (HarvestMerge.language == "en" or HarvestMerge.language == "de" or HarvestMerge.language == "fr") then
+        HarvestMerge.language = "en"
+    end
 
     HarvestMerge.minDefault = 0.000025 -- 0.005^2
     HarvestMerge.minDist = 0.000025 -- 0.005^2

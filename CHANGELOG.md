@@ -1,3 +1,8 @@
+##0.3.3
+
+Updates
+- Optimized import routine for HarvestMap
+
 ##0.3.2
 
 Updates
